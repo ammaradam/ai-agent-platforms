@@ -33,7 +33,7 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
 
   return (
     <div>
-      <div className="flex flex-col gap-4 rounded-xl border bg-card p-4">
+      <div className="flex flex-col gap-4 rounded-lg border bg-card p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="flex h-10 min-w-0 flex-1 items-center gap-2 rounded-md border border-input bg-background px-3 focus-within:ring-2 focus-within:ring-ring">
             <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -48,25 +48,25 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
         <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
-              className={cn('inline-flex h-8 items-center gap-2 rounded-full border px-3 text-sm transition-colors', f === k ? 'border-foreground bg-foreground text-background' : 'bg-background text-muted-foreground hover:border-foreground/40 hover:text-foreground')}>
+              className={cn('inline-flex h-8 items-center gap-2 rounded-full border px-3 text-sm transition-colors', f === k ? 'border-foreground bg-mark text-foreground' : 'bg-background text-muted-foreground hover:border-foreground/40 hover:text-foreground')}>
               {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-xs tnum', f === k && 'opacity-70')}>{n}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <p className="mt-6 text-sm text-muted-foreground" aria-live="polite">{list.length === posts.length ? `${list.length} posts` : `Showing ${list.length} of ${posts.length} posts`}</p>
+      <p className="eyebrow mt-6" aria-live="polite">{list.length === posts.length ? `${list.length} posts` : `Showing ${list.length} of ${posts.length} posts`}</p>
       {groups.map(g => (
         <section key={g.m} className="mt-4">
-          <h2 className="sticky z-10 border-b bg-background/90 py-2 text-sm font-semibold backdrop-blur" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 56px)' }}>{g.m}</h2>
+          <h2 className="eyebrow sticky z-10 border-b bg-background/90 py-2 backdrop-blur" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 56px)' }}>{g.m}</h2>
           <div className="mt-1 flex flex-col">
             {g.items.map(p => (
-              <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6.5rem_minmax(0,1fr)]">
-                <time className="text-sm text-muted-foreground tnum sm:pt-0.5" dateTime={p.date}>{fmtDate(new Date(p.date), { day: 'numeric', month: 'short' })}</time>
+              <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)]">
+                <time className="font-mono text-xs text-muted-foreground tnum sm:pt-1.5" dateTime={p.date}>{fmtDate(new Date(p.date), { day: 'numeric', month: 'short' })}</time>
                 <div className="min-w-0">
-                  <h3 className="text-[16.5px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.title}</h3>
-                  <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground">{p.insight}</p>
-                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                  <h3 className="text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.title}</h3>
+                  <p className="mt-1 font-serif text-[16px] leading-relaxed text-muted-foreground">{p.insight}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-muted-foreground">
                     {p.themes.map(t => <span key={t} className="inline-flex items-center gap-1.5"><ThemeDot k={t} />{THEMES[t].name}</span>)}
                     <span className="inline-flex items-center gap-1 tnum"><Clock className="h-3 w-3" />{p.minutes} min</span>
                   </div>

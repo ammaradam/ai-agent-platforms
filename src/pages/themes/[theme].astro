@@ -17,18 +17,18 @@ const others = usedThemes(posts).filter(t => t !== k);
   <div class="grid gap-10 py-10 md:py-12 lg:grid-cols-[minmax(0,1fr)_14rem]">
     <div class="min-w-0">
       <nav class="flex items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb"><a href="/themes" class="hover:text-foreground">Themes</a><span>/</span><span class="text-foreground">{THEMES[k].name}</span></nav>
-      <h1 class="mt-4 flex items-center gap-3 text-3xl font-semibold tracking-tight sm:text-4xl"><span class="h-3.5 w-3.5 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</h1>
-      <p class="mt-2 max-w-2xl text-[16px] leading-relaxed text-muted-foreground">{THEMES[k].blurb}</p>
-      <p class="mt-6 text-sm text-muted-foreground">{list.length} {list.length === 1 ? 'post' : 'posts'}, oldest first</p>
+      <h1 class="mt-4 flex items-center gap-3 text-4xl font-bold tracking-[-0.035em] sm:text-5xl"><span class="h-3.5 w-3.5 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</h1>
+      <p class="mt-2 max-w-2xl font-serif text-[1.1rem] leading-relaxed text-muted-foreground">{THEMES[k].blurb}</p>
+      <p class="eyebrow mt-8">{list.length} {list.length === 1 ? 'post' : 'posts'}, oldest first</p>
       <ol class="mt-3 flex flex-col overflow-hidden rounded-lg border">
         {list.map((p, i) => (
           <li class:list={[i && 'border-t']}>
-            <a href={`/posts/${p.id}`} class="group grid grid-cols-[2rem_minmax(0,1fr)] gap-2 px-4 py-4 hover:bg-muted/50">
-              <span class="text-sm text-muted-foreground tnum">{i + 1}</span>
+            <a href={`/posts/${p.id}`} class="group grid grid-cols-[2rem_minmax(0,1fr)] gap-2 px-4 py-4 hover:bg-mark/20">
+              <span class="font-mono text-sm text-muted-foreground tnum">{i + 1}</span>
               <span class="min-w-0">
-                <span class="block font-medium leading-snug group-hover:text-brand">{p.data.title}</span>
-                <span class="mt-1 block text-sm leading-relaxed text-muted-foreground">{p.data.insight}</span>
-                <span class="mt-1.5 block text-xs text-muted-foreground tnum">{fmtDate(p.data.date)}, {minutesOf(p)} min</span>
+                <span class="block text-[17px] font-semibold leading-snug group-hover:text-brand">{p.data.title}</span>
+                <span class="mt-1 block font-serif text-[15.5px] leading-relaxed text-muted-foreground">{p.data.insight}</span>
+                <span class="mt-1.5 block font-mono text-[11px] text-muted-foreground tnum">{fmtDate(p.data.date)}, {minutesOf(p)} min</span>
               </span>
             </a>
           </li>
@@ -36,7 +36,7 @@ const others = usedThemes(posts).filter(t => t !== k);
       </ol>
     </div>
     <aside>
-      <p class="text-sm font-medium">Other themes</p>
+      <p class="eyebrow">Other themes</p>
       <ul class="mt-3 flex flex-col gap-0.5">
         {others.map(t => <li><a href={`/themes/${t}`} class="flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>{THEMES[t].name}</a></li>)}
       </ul>
