@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import type { PostSummary } from './types';
 
 type Item = { group: string; label: string; sub?: string; href: string; icon: React.ReactNode };
-const PAGES = [['Insights', '/insights'], ['Themes', '/themes'], ['Projects', '/projects'], ['About', '/about']] as const;
+const PAGES = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/about']] as const;
 
 export default function SiteNav({ posts, counts, current }: { posts: PostSummary[]; counts: Record<string, number>; current: string }) {
   const [menu, setMenu] = React.useState(false);
@@ -29,7 +29,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
 
   const items: Item[] = React.useMemo(() => {
     const s = q.trim().toLowerCase();
-    const ps = posts.filter(p => !s || p.text.includes(s)).map(p => ({ group: 'Insights', label: p.title, sub: p.insight, href: `/posts/${p.slug}`, icon: <FileText /> }));
+    const ps = posts.filter(p => !s || p.text.includes(s)).map(p => ({ group: 'Writing', label: p.title, sub: p.insight, href: `/posts/${p.slug}`, icon: <FileText /> }));
     const ts = (Object.keys(THEMES) as ThemeKey[]).filter(k => counts[k] && (!s || THEMES[k].name.toLowerCase().includes(s)))
       .map(k => ({ group: 'Themes', label: THEMES[k].name, href: `/themes/${k}`, icon: <ThemeDot k={k} className="m-1" /> }));
     const pg = PAGES.filter(([l]) => !s || l.toLowerCase().includes(s)).map(([l, h]) => ({ group: 'Pages', label: l, href: h, icon: l === 'Projects' ? <FolderGit2 /> : l === 'About' ? <User /> : <Hash /> }));
@@ -48,7 +48,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
     <>
       <div className="ml-auto flex items-center gap-2">
         <button type="button" onClick={() => setCmd(true)} className="hidden h-9 w-60 items-center gap-2 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground  transition-colors hover:bg-accent sm:flex">
-          <Search className="h-4 w-4" /> Search insights
+          <Search className="h-4 w-4" /> Search writing
           <kbd className="ml-auto rounded border bg-muted px-1.5 font-mono text-[10px]">⌘K</kbd>
         </button>
         <Button variant="ghost" size="icon" className="sm:hidden" onClick={() => setCmd(true)} aria-label="Search"><Search /></Button>
@@ -80,7 +80,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
           <DialogTitle className="sr-only">Search</DialogTitle>
           <div className="flex items-center gap-2 border-b px-4">
             <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <input autoFocus value={q} onChange={e => setQ(e.target.value)} onKeyDown={onKey} placeholder="Search insights, themes and pages" aria-label="Search" className="h-12 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <input autoFocus value={q} onChange={e => setQ(e.target.value)} onKeyDown={onKey} placeholder="Search writing, topics and pages" aria-label="Search" className="h-12 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
           </div>
           <div className="max-h-[55vh] overflow-y-auto p-2" role="listbox">
             {items.length === 0 && <p className="px-3 py-10 text-center text-sm text-muted-foreground">Nothing matches "{q}". Try a shorter word.</p>}

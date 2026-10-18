@@ -13,7 +13,7 @@ const posts = await getPosts();
 const list = themePosts(posts, k);
 const others = usedThemes(posts).filter(t => t !== k);
 ---
-<Base title={THEMES[k].name} nav="/themes" description={THEMES[k].blurb}>
+<Base title={THEMES[k].name} nav="/insights" description={THEMES[k].blurb}>
   <div class="grid gap-10 py-10 md:py-12 lg:grid-cols-[minmax(0,1fr)_14rem]">
     <div class="min-w-0">
       <nav class="flex items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb"><a href="/themes" class="hover:text-foreground">Themes</a><span>/</span><span class="text-foreground">{THEMES[k].name}</span></nav>

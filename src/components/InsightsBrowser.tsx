@@ -37,7 +37,7 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="flex h-10 min-w-0 flex-1 items-center gap-2 rounded-md border border-input bg-background px-3 focus-within:ring-2 focus-within:ring-ring">
             <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search titles and text" aria-label="Search insights" className="h-full w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search titles and text" aria-label="Search writing" className="h-full w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
           </label>
           <div className="inline-flex h-10 shrink-0 items-center rounded-md bg-muted p-1 text-sm" role="group" aria-label="Sort">
             {(['new', 'old'] as const).map(k => (

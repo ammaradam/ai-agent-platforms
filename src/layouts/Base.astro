@@ -5,12 +5,12 @@ import SiteNav from '@/components/SiteNav';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 
 interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date }
-const { image, title, description = 'Notes on AI platforms, agents and the systems around them, each tied to public sources.', nav = '', type = 'website', published } = Astro.props;
+const { image, title, description = 'Ammar Adam is an engineer in Kuala Lumpur. Writing, projects and interactive demos on ML systems, AI platforms and agents.', nav = '', type = 'website', published } = Astro.props;
 const posts = await getPosts();
 const counts = themeCounts(posts);
-const fullTitle = title ? `${title} | AI Agent Platforms` : 'AI Agent Platforms';
+const fullTitle = title ? `${title} | Ammar Adam` : 'Ammar Adam';
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const NAV = [['Insights', '/insights'], ['Themes', '/themes'], ['Projects', '/projects'], ['About', '/about']];
+const NAV = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/about']];
 ---
 <!doctype html>
 <html lang="en">
@@ -20,13 +20,13 @@ const NAV = [['Insights', '/insights'], ['Themes', '/themes'], ['Projects', '/pr
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title="AI Agent Platforms" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Ammar Adam" href="/rss.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content={type} />
-    <meta property="og:title" content={title ?? 'AI Agent Platforms'} />
+    <meta property="og:title" content={title ?? 'Ammar Adam'} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:site_name" content="AI Agent Platforms" />
+    <meta property="og:site_name" content="Ammar Adam" />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
     <meta property="og:image" content={new URL(image ?? '/og.jpg', Astro.site)} />
     <meta property="og:image:width" content={image ? '1280' : '1200'} />
@@ -37,7 +37,7 @@ const NAV = [['Insights', '/insights'], ['Themes', '/themes'], ['Projects', '/pr
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2">Skip to content</a>
     <header class="sticky z-40 border-b bg-background/80 backdrop-blur-xl backdrop-saturate-150" style="top:env(safe-area-inset-top,0px)">
       <div class="gutter mx-auto flex h-12 max-w-6xl items-center gap-4">
-        <a href="/" class="flex items-baseline gap-2.5"><span class="text-[17px] font-semibold tracking-tight">AI Agent Platforms</span></a>
+        <a href="/" class="flex items-baseline gap-2.5"><span class="text-[17px] font-semibold tracking-tight">Ammar Adam</span></a>
         <nav class="ml-4 hidden items-center gap-1 md:flex" aria-label="Main">
           {NAV.map(([l, h]) => (
             <a href={h} aria-current={nav === h ? 'page' : undefined}
@@ -50,7 +50,7 @@ const NAV = [['Insights', '/insights'], ['Themes', '/themes'], ['Projects', '/pr
     <main id="main" class="gutter mx-auto w-full max-w-6xl flex-1"><slot /></main>
     <footer class="mt-16 bg-muted">
       <div class="gutter mx-auto flex max-w-6xl flex-col gap-4 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between" style="padding-bottom:calc(env(safe-area-inset-bottom,0px) + 32px)">
-        <p>&copy; {new Date().getFullYear()} AI Agent Platforms</p>
+        <p>&copy; {new Date().getFullYear()} Ammar Adam</p>
         <nav aria-label="Footer" class="flex flex-wrap gap-x-5 gap-y-2">
           {[...NAV, ['RSS', '/rss.xml']].map(([l, h]) => <a href={h} class="hover:text-foreground">{l}</a>)}
         </nav>

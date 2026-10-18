@@ -1,4 +1,4 @@
-# AI Agent Platforms
+# Ammar Adam
 
 Practical notes on running AI in production, each tied to public sources. Built with Astro, React islands, Tailwind and shadcn-style components.
 

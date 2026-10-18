@@ -6,7 +6,7 @@ import { fmtDate } from '@/lib/utils';
 const posts = await getPosts();
 const themes = usedThemes(posts);
 ---
-<Base title="Themes" nav="/themes" description="Posts grouped by topic, oldest first so each theme reads as a series.">
+<Base title="Themes" nav="/insights" description="Posts grouped by topic, oldest first so each theme reads as a series.">
   <div class="py-10 md:py-12">
     <p class="eyebrow">{themes.length} topics</p>
     <h1 class="mt-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">Themes</h1>

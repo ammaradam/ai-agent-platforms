@@ -31,7 +31,7 @@ const playground = PLAYGROUND[post.id];
   <div class="grid gap-12 py-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
     <article class="min-w-0">
       <nav class="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb">
-        <a href="/insights" class="hover:text-foreground">Insights</a><span>/</span>
+        <a href="/insights" class="hover:text-foreground">Writing</a><span>/</span>
         <a href={`/themes/${k}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</a>
       </nav>
       <h1 class="mt-4 max-w-3xl text-[2.2rem] font-semibold leading-[1.07] tracking-[-0.035em] sm:text-[3.25rem]">{post.data.title}</h1>
@@ -113,7 +113,12 @@ const playground = PLAYGROUND[post.id];
           : <a href={`/posts/${x.id}`} class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-muted/60 hover:text-foreground"><span class="tnum">{n + 1}</span>{x.data.title}</a>}</li>)}</ol>
       </section>
 
-      <Subscribe class="mt-12 max-w-3xl" />
+      <aside class="mt-12 flex max-w-3xl items-start gap-4 border-t pt-6" aria-label="About the author">
+        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-muted text-sm font-semibold" aria-hidden="true">AA</span>
+        <p class="text-sm leading-relaxed text-muted-foreground"><strong class="font-semibold text-foreground">Written by Ammar Adam</strong>, an engineer in Kuala Lumpur who writes about ML systems, AI platforms and agents. <a href="/about" class="text-brand hover:underline">More about me &rsaquo;</a></p>
+      </aside>
+
+      <Subscribe class="mt-8 max-w-3xl" />
 
       <nav class="mt-10 grid max-w-3xl gap-3 sm:grid-cols-2" aria-label="Previous and next post">
         {older ? <a href={`/posts/${older.id}`} class="group rounded-lg border p-4 transition-colors hover:bg-muted/50"><span class="text-xs text-muted-foreground">Previous post</span><span class="mt-1.5 block font-medium leading-snug group-hover:text-brand">{older.data.title}</span></a> : <span class="hidden sm:block"></span>}
