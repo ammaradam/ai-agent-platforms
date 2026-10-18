@@ -47,6 +47,12 @@ const NAV = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/ab
         </nav>
         <SiteNav client:idle posts={summaries(posts)} counts={counts} current={nav} />
       </div>
+      <nav class="gutter mx-auto flex max-w-6xl items-center gap-1 pb-2 md:hidden" aria-label="Main">
+        {NAV.map(([l, h]) => (
+          <a href={h} aria-current={nav === h ? 'page' : undefined}
+            class:list={['rounded-full px-3.5 py-1.5 text-[14px] transition-colors first:-ml-3.5', nav === h ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground']}>{l}</a>
+        ))}
+      </nav>
     </header>
     <main id="main" class="gutter mx-auto w-full max-w-6xl flex-1"><slot /></main>
     <footer class="mt-16 bg-muted">

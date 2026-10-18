@@ -1,0 +1,33 @@
+---
+// Email signup. It posts to Buttondown's embed form, so Buttondown handles the confirmation email,
+// the unsubscribe link and the sending. It shows once PUBLIC_BUTTONDOWN_USERNAME is set;
+// until then it falls back to following by RSS, so there is never a form that goes nowhere.
+interface Props { class?: string; id?: string; note?: boolean; formOnly?: boolean }
+const { class: cls = '', id = 'nl', note = true, formOnly = false } = Astro.props;
+const raw = import.meta.env.PUBLIC_BUTTONDOWN_USERNAME as string | undefined;
+const user = raw && /^[A-Za-z0-9_-]{2,40}$/.test(raw) ? raw : '';
+const feed = new URL('/rss.xml', Astro.site).href;
+const pill = 'inline-flex h-10 items-center rounded-full px-5 text-sm font-medium transition-colors';
+---
+{user ? (
+  <div class:list={[cls]}>
+    <form action={`https://buttondown.com/api/emails/embed-subscribe/${user}`} method="post" target="_blank" class="flex max-w-xl flex-col gap-3 sm:flex-row">
+      <label for={`${id}-email`} class="sr-only">Email address</label>
+      <input id={`${id}-email`} type="email" name="email" required autocomplete="email" placeholder="Your email address…"
+        class="h-12 w-full min-w-0 rounded-xl border border-input bg-card px-4 text-[16px] outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring" />
+      <input type="hidden" value="1" name="embed" />
+      <button type="submit" class="h-12 shrink-0 rounded-xl bg-primary px-6 text-[16px] font-semibold text-primary-foreground transition-colors hover:bg-primary/90">Get email updates</button>
+    </form>
+    {note && (
+      <p class="mt-2.5 text-[13px] leading-relaxed text-muted-foreground">New posts every Tuesday and Thursday. No spam, and you can unsubscribe any time. Prefer a feed reader? <a href="/rss.xml" class="text-brand hover:underline">Follow by RSS</a>.</p>
+    )}
+  </div>
+) : !formOnly && (
+  <div class:list={['flex flex-wrap items-center gap-x-5 gap-y-3', cls]}>
+    <p class="text-[15px]"><strong class="font-semibold">New posts every Tuesday and Thursday.</strong> <span class="text-muted-foreground">Follow in any feed reader.</span></p>
+    <div class="flex flex-wrap items-center gap-2">
+      <a href={`https://feedly.com/i/subscription/feed/${encodeURIComponent(feed)}`} target="_blank" rel="noopener noreferrer" class:list={[pill, 'bg-primary text-primary-foreground hover:bg-primary/90']}>Follow in Feedly</a>
+      <a href="/rss.xml" class:list={[pill, 'bg-muted hover:bg-accent']}>RSS</a>
+    </div>
+  </div>
+)}

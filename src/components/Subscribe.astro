@@ -1,4 +1,5 @@
 ---
+import Newsletter from './Newsletter.astro';
 interface Props { class?: string }
 const { class: cls = '' } = Astro.props;
 const feed = new URL('/rss.xml', Astro.site).href;
@@ -9,6 +10,7 @@ const pill = 'inline-flex h-10 items-center rounded-full px-5 text-sm font-mediu
   <p class="eyebrow">Subscribe</p>
   <h2 id="sub-h" class="mt-1 text-[1.5rem] font-semibold tracking-[-0.025em]">Get new posts as they come out</h2>
   <p class="mt-2 text-muted-foreground">A new post every Tuesday and Thursday. Follow in any feed reader: no account with me, no tracking, and you can leave any time.</p>
+  <Newsletter formOnly note={false} id="nl-post" class="mt-4" />
   <div class="mt-4 flex flex-wrap items-center gap-2">
     <a href={`https://feedly.com/i/subscription/feed/${enc(feed)}`} target="_blank" rel="noopener noreferrer" class:list={[pill, 'bg-primary text-primary-foreground hover:bg-primary/90']}>Follow in Feedly</a>
     <a href={`https://www.inoreader.com/?add_feed=${enc(feed)}`} target="_blank" rel="noopener noreferrer" class:list={[pill, 'bg-background hover:bg-accent']}>Inoreader</a>

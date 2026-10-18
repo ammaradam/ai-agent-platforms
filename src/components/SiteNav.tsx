@@ -52,7 +52,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
           <kbd className="ml-auto rounded border bg-muted px-1.5 font-mono text-[10px]">⌘K</kbd>
         </button>
         <Button variant="ghost" size="icon" className="sm:hidden" onClick={() => setCmd(true)} aria-label="Search"><Search /></Button>
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenu(true)} aria-label="Open menu"><Menu /></Button>
+        <Button variant="ghost" size="icon" className="hidden" onClick={() => setMenu(true)} aria-label="Open menu"><Menu /></Button>
       </div>
 
       <Sheet open={menu} onOpenChange={setMenu}>
