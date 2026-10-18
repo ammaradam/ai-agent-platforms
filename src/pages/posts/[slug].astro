@@ -1,0 +1,115 @@
+---
+import Base from '@/layouts/Base.astro';
+import MobilePostNav, { DesktopToc } from '@/components/PostNav';
+import { getPosts, headingsOf, minutesOf, themePosts } from '@/lib/posts';
+import { THEMES, themeColor } from '@/data/themes';
+import { fmtDate } from '@/lib/utils';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map(p => ({ params: { slug: p.id }, props: { post: p } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const posts = await getPosts();
+const asc = [...posts].reverse();
+const i = asc.findIndex(p => p.id === post.id);
+const older = asc[i - 1], newer = asc[i + 1];
+const k = post.data.themes[0];
+const series = themePosts(posts, k);
+const pos = series.findIndex(p => p.id === post.id);
+const headings = headingsOf(post);
+---
+<Base title={post.data.title} description={post.data.insight} nav="/insights" type="article" published={post.data.date}>
+  <MobilePostNav client:idle headings={headings} />
+  <div class="grid gap-12 py-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+    <article class="min-w-0">
+      <nav class="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb">
+        <a href="/insights" class="hover:text-foreground">Insights</a><span>/</span>
+        <a href={`/themes/${k}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</a>
+      </nav>
+      <h1 class="mt-4 max-w-3xl text-[2rem] font-semibold leading-[1.12] tracking-[-0.03em] sm:text-[2.6rem]">{post.data.title}</h1>
+      <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+        <time class="tnum" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+        <span class="tnum">{minutesOf(post)} min read</span>
+        <a href="#sources" class="hover:text-foreground">{post.data.sources.length} sources</a>
+        {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
+      </div>
+
+      <div class="mt-7 max-w-3xl rounded-lg border-l-[3px] bg-muted/70 px-5 py-4" style={`border-color:${themeColor(k)}`}>
+        <p class="text-sm font-medium text-muted-foreground">The takeaway</p>
+        <p class="mt-1 text-[1.15rem] font-medium leading-snug tracking-tight">{post.data.insight}</p>
+      </div>
+
+      <div class="mt-4 grid max-w-3xl gap-4 sm:grid-cols-2">
+        <a href={post.data.linkedin} class="group flex items-center gap-3 rounded-lg border bg-card px-4 py-3.5 transition-colors hover:bg-muted/50 lg:col-span-2">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-md border text-muted-foreground group-hover:text-brand">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+          </span>
+          <span class="min-w-0"><span class="block text-sm font-medium group-hover:text-brand">Original post on LinkedIn</span><span class="block text-xs text-muted-foreground">The short version, posted {fmtDate(post.data.date)}</span></span>
+        </a>
+        <div id="inline-toc" class="rounded-lg border bg-card px-4 py-3.5 lg:hidden">
+          <p class="text-sm font-medium">In this post</p>
+          <ol class="mt-2 flex flex-col gap-0.5">{headings.map(h => <li><a href={`#${h.id}`} class="block py-0.5 text-sm text-muted-foreground hover:text-foreground">{h.text}</a></li>)}</ol>
+        </div>
+      </div>
+
+      <div class="prose mt-8"><Content /></div>
+
+      {post.data.caveats.length > 0 && (
+        <section class="mt-12 max-w-3xl">
+          <h2 class="text-xl font-semibold tracking-tight">Limitations</h2>
+          <div class="mt-4 overflow-hidden rounded-lg border">
+            {post.data.caveats.map((c, j) => (
+              <div class:list={['grid gap-1 px-4 py-3.5 sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] sm:gap-6', j && 'border-t']}>
+                <p class="text-[15px] font-medium leading-snug">{c.title}</p>
+                <p class="text-sm leading-relaxed text-muted-foreground">{c.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section id="sources" class="mt-12 max-w-3xl scroll-mt-24">
+        <h2 class="text-xl font-semibold tracking-tight">Sources</h2>
+        <div class="mt-4 flex flex-col divide-y rounded-lg border">
+          {post.data.sources.map(s => (
+            <a href={s.url} class="group flex items-center gap-3 px-4 py-3.5 hover:bg-muted/50">
+              <span class="min-w-0"><span class="block text-sm font-medium group-hover:text-brand">{s.title}</span><span class="block text-xs text-muted-foreground">{s.site}</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-12 max-w-3xl rounded-xl border bg-card p-5 lg:hidden">
+        <p class="flex items-center gap-2 text-sm font-medium"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</p>
+        <p class="mt-0.5 text-xs text-muted-foreground tnum">Post {pos + 1} of {series.length} in this theme</p>
+        <ol class="mt-3 flex flex-col">{series.map((x, n) => <li>{x.id === post.id
+          ? <span aria-current="page" class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md bg-muted px-2 py-1.5 text-sm font-medium"><span class="text-muted-foreground tnum">{n + 1}</span>{x.data.title}</span>
+          : <a href={`/posts/${x.id}`} class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-muted/60 hover:text-foreground"><span class="tnum">{n + 1}</span>{x.data.title}</a>}</li>)}</ol>
+      </section>
+
+      <nav class="mt-10 grid max-w-3xl gap-3 sm:grid-cols-2" aria-label="Previous and next post">
+        {older ? <a href={`/posts/${older.id}`} class="group rounded-lg border p-4 transition-colors hover:bg-muted/50"><span class="text-xs text-muted-foreground">Previous post</span><span class="mt-1.5 block font-medium leading-snug group-hover:text-brand">{older.data.title}</span></a> : <span class="hidden sm:block"></span>}
+        {newer && <a href={`/posts/${newer.id}`} class="group rounded-lg border p-4 transition-colors hover:bg-muted/50 sm:text-right"><span class="text-xs text-muted-foreground">Next post</span><span class="mt-1.5 block font-medium leading-snug group-hover:text-brand">{newer.data.title}</span></a>}
+      </nav>
+    </article>
+
+    <aside class="hidden lg:block">
+      <div class="sticky flex flex-col gap-8" style="top:calc(env(safe-area-inset-top,0px) + 84px)">
+        <div>
+          <p class="mb-3 text-sm font-medium">On this page</p>
+          <DesktopToc client:visible headings={headings} />
+        </div>
+        <div>
+          <p class="flex items-center gap-2 text-sm font-medium"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</p>
+          <p class="mt-0.5 text-xs text-muted-foreground tnum">Post {pos + 1} of {series.length} in this theme</p>
+          <ol class="mt-3 flex flex-col">{series.map((x, n) => <li>{x.id === post.id
+            ? <span aria-current="page" class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md bg-muted px-2 py-1.5 text-sm font-medium"><span class="text-muted-foreground tnum">{n + 1}</span>{x.data.title}</span>
+            : <a href={`/posts/${x.id}`} class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-muted/60 hover:text-foreground"><span class="tnum">{n + 1}</span>{x.data.title}</a>}</li>)}</ol>
+        </div>
+      </div>
+    </aside>
+  </div>
+</Base>

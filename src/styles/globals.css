@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 99%; --foreground: 222 26% 11%;
+    --card: 0 0% 100%; --card-foreground: 222 26% 11%;
+    --muted: 220 16% 95.5%; --muted-foreground: 220 9% 42%;
+    --accent: 220 16% 94%; --accent-foreground: 222 26% 11%;
+    --border: 220 14% 89%; --input: 220 14% 89%;
+    --primary: 222 26% 12%; --primary-foreground: 0 0% 98%;
+    --ring: 228 76% 56%; --brand: 228 76% 54%;
+    --t-platform: 228 76% 54%; --t-obs: 172 62% 34%; --t-agents: 265 58% 56%;
+    --t-sec: 350 66% 50%; --t-dx: 33 88% 44%; --t-rel: 198 80% 40%;
+    --radius: 0.75rem;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --background: 224 20% 6.5%; --foreground: 220 14% 94%;
+      --card: 224 18% 9%; --card-foreground: 220 14% 94%;
+      --muted: 224 15% 13%; --muted-foreground: 220 10% 64%;
+      --accent: 224 15% 15%; --accent-foreground: 220 14% 94%;
+      --border: 224 14% 18%; --input: 224 14% 18%;
+      --primary: 220 14% 94%; --primary-foreground: 224 20% 8%;
+      --ring: 228 90% 70%; --brand: 228 92% 72%;
+      --t-platform: 228 92% 70%; --t-obs: 170 60% 52%; --t-agents: 265 80% 74%;
+      --t-sec: 350 82% 68%; --t-dx: 36 92% 60%; --t-rel: 196 85% 62%;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme='dark'] {
+    --background: 224 20% 6.5%; --foreground: 220 14% 94%;
+    --card: 224 18% 9%; --card-foreground: 220 14% 94%;
+    --muted: 224 15% 13%; --muted-foreground: 220 10% 64%;
+    --accent: 224 15% 15%; --accent-foreground: 220 14% 94%;
+    --border: 224 14% 18%; --input: 224 14% 18%;
+    --primary: 220 14% 94%; --primary-foreground: 224 20% 8%;
+    --ring: 228 90% 70%; --brand: 228 92% 72%;
+    --t-platform: 228 92% 70%; --t-obs: 170 60% 52%; --t-agents: 265 80% 74%;
+    --t-sec: 350 82% 68%; --t-dx: 36 92% 60%; --t-rel: 196 85% 62%;
+    color-scheme: dark;
+  }
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-size: 15px; line-height: 1.6;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  :focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
+}
+
+@layer components {
+  .gutter {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* long-form post body */
+  .prose { font-size: 1.0625rem; line-height: 1.78; }
+  .prose > * { max-width: 68ch; }
+  .prose h3 { font-size: 1.375rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.015em; margin: 2.6rem 0 0.75rem; scroll-margin-top: 88px; }
+  .prose p { margin: 0 0 1.1em; }
+  .prose ul, .prose ol { margin: 0 0 1.25em; padding-left: 1.25em; }
+  .prose ul { list-style: disc; } .prose ol { list-style: decimal; }
+  .prose li { margin: 0.4em 0; padding-left: 0.2em; }
+  .prose li::marker { color: hsl(var(--muted-foreground)); }
+  .prose strong { font-weight: 600; }
+  .prose a { color: hsl(var(--brand)); text-underline-offset: 3px; }
+  .prose code { font-family: theme('fontFamily.mono'); font-size: 0.84em; background: hsl(var(--muted)); border: 1px solid hsl(var(--border)); padding: 0.08em 0.38em; border-radius: 6px; }
+  .prose pre { font-family: theme('fontFamily.mono'); font-size: 0.82rem; line-height: 1.7; background: hsl(var(--muted)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 16px 18px; overflow-x: auto; margin: 0 0 1.5em; max-width: none; }
+  .prose pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+  .prose .tbl { overflow-x: auto; border: 1px solid hsl(var(--border)); border-radius: var(--radius); margin: 0 0 1.5em; max-width: none; }
+  .prose table { border-collapse: collapse; width: 100%; font-size: 0.875rem; line-height: 1.5; }
+  .prose th { text-align: left; font-weight: 500; color: hsl(var(--muted-foreground)); background: hsl(var(--muted)); padding: 10px 14px; white-space: nowrap; }
+  .prose td { padding: 11px 14px; border-top: 1px solid hsl(var(--border)); vertical-align: top; }
+  .prose td code { white-space: nowrap; }
+  .prose figure { margin: 0.75rem 0 1.75rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 18px; background: hsl(var(--card)); max-width: none; }
+  .prose .fig-scroll { overflow-x: auto; }
+  .prose figure svg { display: block; width: 100%; min-width: 400px; max-width: 560px; height: auto; margin: 0 auto; color: hsl(var(--foreground)); }
+  .prose figcaption { font-size: 0.82rem; color: hsl(var(--muted-foreground)); text-align: center; margin-top: 8px; }
+
+  /* topic map nodes */
+  .topic-node rect { fill: hsl(var(--background)); stroke: hsl(var(--border)); transition: stroke .15s, fill .15s; }
+  .topic-node text { fill: hsl(var(--foreground)); }
+  .topic-node .tn-count { fill: hsl(var(--muted-foreground)); }
+  .topic-node:hover rect, .topic-node:focus-visible rect { stroke: hsl(var(--brand)); fill: hsl(var(--muted)); }
+  .topic-node:focus { outline: none; }
+}
+
+/* Motion: only for panels opening and closing, in response to the reader. */
+@layer utilities {
+  @keyframes overlay-in { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes right-in { from { transform: translateX(100%) } to { transform: none } }
+  @keyframes bottom-in { from { transform: translateY(100%) } to { transform: none } }
+  @keyframes pop-in { from { opacity: 0; transform: translate(-50%, -6px) scale(.98) } to { opacity: 1; transform: translate(-50%, 0) } }
+  .sheet-overlay[data-state='open'] { animation: overlay-in .18s ease-out; }
+  .sheet-right[data-state='open'] { animation: right-in .24s cubic-bezier(.22,1,.36,1); }
+  .sheet-bottom[data-state='open'] { animation: bottom-in .24s cubic-bezier(.22,1,.36,1); }
+  .dialog-pop[data-state='open'] { animation: pop-in .16s ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    .sheet-overlay[data-state='open'], .sheet-right[data-state='open'], .sheet-bottom[data-state='open'], .dialog-pop[data-state='open'] { animation: none; }
+  }
+}
+@layer utilities {
+  @keyframes row-in { from { opacity: 0 } to { opacity: 1 } }
+  .row-in { animation: row-in .18s ease-out; }
+  @media (prefers-reduced-motion: reduce) { .row-in { animation: none; } }
+}
