@@ -6,11 +6,11 @@ interface Props { post: Post }
 const { post } = Astro.props;
 ---
 <a href={`/posts/${post.id}`} class="group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)]">
-  <time class="font-mono text-xs text-muted-foreground tnum sm:pt-1.5" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'short' })}</time>
+  <time class="text-xs text-muted-foreground tnum sm:pt-1.5" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'short' })}</time>
   <div class="min-w-0">
     <h3 class="text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{post.data.title}</h3>
-    <p class="mt-1 font-serif text-[16px] leading-relaxed text-muted-foreground">{post.data.insight}</p>
-    <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-muted-foreground">
+    <p class="mt-1 text-[16px] leading-relaxed text-muted-foreground">{post.data.insight}</p>
+    <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-muted-foreground">
       {post.data.themes.map(t => <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>{THEMES[t].name}</span>)}
       <span class="tnum">{minutesOf(post)} min</span>
     </div>

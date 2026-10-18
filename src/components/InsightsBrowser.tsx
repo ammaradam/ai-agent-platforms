@@ -33,7 +33,7 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
 
   return (
     <div>
-      <div className="flex flex-col gap-4 rounded-lg border bg-card p-4">
+      <div className="flex flex-col gap-4 rounded-3xl bg-muted p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="flex h-10 min-w-0 flex-1 items-center gap-2 rounded-md border border-input bg-background px-3 focus-within:ring-2 focus-within:ring-ring">
             <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -41,14 +41,14 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
           </label>
           <div className="inline-flex h-10 shrink-0 items-center rounded-md bg-muted p-1 text-sm" role="group" aria-label="Sort">
             {(['new', 'old'] as const).map(k => (
-              <button key={k} type="button" aria-pressed={order === k} onClick={() => setOrder(k)} className={cn('h-8 rounded px-3 transition-colors', order === k ? 'bg-background font-medium shadow-sm' : 'text-muted-foreground hover:text-foreground')}>{k === 'new' ? 'Newest' : 'Oldest'}</button>
+              <button key={k} type="button" aria-pressed={order === k} onClick={() => setOrder(k)} className={cn('h-8 rounded px-3 transition-colors', order === k ? 'bg-background font-medium ' : 'text-muted-foreground hover:text-foreground')}>{k === 'new' ? 'Newest' : 'Oldest'}</button>
             ))}
           </div>
         </div>
         <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
-              className={cn('inline-flex h-8 items-center gap-2 rounded-full border px-3 text-sm transition-colors', f === k ? 'border-foreground bg-mark text-foreground' : 'bg-background text-muted-foreground hover:border-foreground/40 hover:text-foreground')}>
+              className={cn('inline-flex h-8 items-center gap-2 rounded-full border px-3 text-sm transition-colors', f === k ? 'border-foreground bg-foreground text-background' : 'bg-background text-muted-foreground hover:border-foreground/40 hover:text-foreground')}>
               {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-xs tnum', f === k && 'opacity-70')}>{n}</span>
             </button>
           ))}
@@ -62,11 +62,11 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
           <div className="mt-1 flex flex-col">
             {g.items.map(p => (
               <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)]">
-                <time className="font-mono text-xs text-muted-foreground tnum sm:pt-1.5" dateTime={p.date}>{fmtDate(new Date(p.date), { day: 'numeric', month: 'short' })}</time>
+                <time className="text-xs text-muted-foreground tnum sm:pt-1.5" dateTime={p.date}>{fmtDate(new Date(p.date), { day: 'numeric', month: 'short' })}</time>
                 <div className="min-w-0">
                   <h3 className="text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.title}</h3>
-                  <p className="mt-1 font-serif text-[16px] leading-relaxed text-muted-foreground">{p.insight}</p>
-                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-muted-foreground">
+                  <p className="mt-1 text-[16px] leading-relaxed text-muted-foreground">{p.insight}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-muted-foreground">
                     {p.themes.map(t => <span key={t} className="inline-flex items-center gap-1.5"><ThemeDot k={t} />{THEMES[t].name}</span>)}
                     <span className="inline-flex items-center gap-1 tnum"><Clock className="h-3 w-3" />{p.minutes} min</span>
                   </div>

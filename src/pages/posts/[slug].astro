@@ -30,7 +30,7 @@ const headings = headingsOf(post);
         <a href="/insights" class="hover:text-foreground">Insights</a><span>/</span>
         <a href={`/themes/${k}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</a>
       </nav>
-      <h1 class="mt-4 max-w-3xl text-[2.1rem] font-bold leading-[1.08] tracking-[-0.035em] sm:text-5xl">{post.data.title}</h1>
+      <h1 class="mt-4 max-w-3xl text-[2.2rem] font-semibold leading-[1.07] tracking-[-0.035em] sm:text-[3.25rem]">{post.data.title}</h1>
       <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
         <time class="tnum" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
         <span class="tnum">{minutesOf(post)} min read</span>
@@ -38,19 +38,19 @@ const headings = headingsOf(post);
         {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
       </div>
 
-      <div class="mt-7 max-w-3xl rounded-lg border bg-mark/35 px-5 py-4" style={`border-left:4px solid ${themeColor(k)}`}>
-        <p class="eyebrow">The takeaway</p>
-        <p class="mt-1.5 font-serif text-[1.3rem] font-medium leading-snug">{post.data.insight}</p>
+      <div class="mt-7 max-w-3xl rounded-3xl bg-muted px-6 py-5" style={`border-left:4px solid ${themeColor(k)}`}>
+        <p class="eyebrow">Takeaway</p>
+        <p class="mt-1.5 text-[1.4rem] font-semibold leading-snug tracking-[-0.02em]">{post.data.insight}</p>
       </div>
 
       <div class="mt-4 grid max-w-3xl gap-4 sm:grid-cols-2">
-        <a href={post.data.linkedin} class="group flex items-center gap-3 rounded-lg border bg-card px-4 py-3.5 transition-colors hover:bg-muted/50 lg:col-span-2">
+        <a href={post.data.linkedin} class="group flex items-center gap-3 rounded-3xl bg-muted px-4 py-3.5 transition-colors hover:bg-muted/50 lg:col-span-2">
           <span class="grid h-9 w-9 shrink-0 place-items-center rounded-md border text-muted-foreground group-hover:text-brand">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
           </span>
           <span class="min-w-0"><span class="block text-sm font-medium group-hover:text-brand">Original post on LinkedIn</span><span class="block text-xs text-muted-foreground">The short version, posted {fmtDate(post.data.date)}</span></span>
         </a>
-        <div id="inline-toc" class="rounded-lg border bg-card px-4 py-3.5 lg:hidden">
+        <div id="inline-toc" class="rounded-3xl bg-muted px-4 py-3.5 lg:hidden">
           <p class="text-sm font-medium">In this post</p>
           <ol class="mt-2 flex flex-col gap-0.5">{headings.map(h => <li><a href={`#${h.id}`} class="block py-0.5 text-sm text-muted-foreground hover:text-foreground">{h.text}</a></li>)}</ol>
         </div>
@@ -83,7 +83,7 @@ const headings = headingsOf(post);
         </div>
       </section>
 
-      <section class="mt-12 max-w-3xl rounded-xl border bg-card p-5 lg:hidden">
+      <section class="mt-12 max-w-3xl rounded-3xl bg-muted p-5 lg:hidden">
         <p class="flex items-center gap-2 text-sm font-medium"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</p>
         <p class="mt-0.5 text-xs text-muted-foreground tnum">Post {pos + 1} of {series.length} in this theme</p>
         <ol class="mt-3 flex flex-col">{series.map((x, n) => <li>{x.id === post.id

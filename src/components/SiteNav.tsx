@@ -47,7 +47,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
   return (
     <>
       <div className="ml-auto flex items-center gap-2">
-        <button type="button" onClick={() => setCmd(true)} className="hidden h-9 w-60 items-center gap-2 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground shadow-sm transition-colors hover:bg-accent sm:flex">
+        <button type="button" onClick={() => setCmd(true)} className="hidden h-9 w-60 items-center gap-2 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground  transition-colors hover:bg-accent sm:flex">
           <Search className="h-4 w-4" /> Search insights
           <kbd className="ml-auto rounded border bg-muted px-1.5 font-mono text-[10px]">⌘K</kbd>
         </button>

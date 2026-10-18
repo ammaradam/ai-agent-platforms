@@ -7,8 +7,8 @@ const posts = await getPosts();
 <Base title="All insights" nav="/insights" description="Every post with its one-line takeaway. Filter by theme or search the full text.">
   <div class="py-10 md:py-12">
     <nav class="flex items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb"><a href="/" class="hover:text-foreground">Home</a><span>/</span><span class="text-foreground">Insights</span></nav>
-    <h1 class="mt-4 text-4xl font-bold tracking-[-0.035em] sm:text-5xl">All insights</h1>
-    <p class="mt-2 max-w-2xl font-serif text-[1.1rem] leading-relaxed text-muted-foreground">Every post with its one-line takeaway. Filter by theme or search the full text.</p>
+    <h1 class="mt-4 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">All insights</h1>
+    <p class="mt-2 max-w-2xl leading-relaxed text-muted-foreground">Every post with its one-line takeaway. Filter by theme or search the full text.</p>
     <div class="mt-8"><InsightsBrowser client:load posts={summaries(posts)} counts={themeCounts(posts)} /></div>
   </div>
 </Base>

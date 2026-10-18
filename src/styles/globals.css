@@ -4,43 +4,43 @@
 
 @layer base {
   :root {
-    --background: 72 14% 94.5%; --foreground: 163 32% 10%;
-    --card: 75 22% 98%; --card-foreground: 163 32% 10%;
-    --muted: 85 12% 91%; --muted-foreground: 150 8% 36%;
-    --accent: 85 14% 89%; --accent-foreground: 163 32% 10%;
-    --border: 96 10% 82%; --input: 96 10% 82%;
-    --primary: 163 32% 10%; --primary-foreground: 75 22% 97%;
-    --ring: 166 80% 26%; --brand: 166 80% 26%;
-    --mark: 47 100% 68%; --fail: 8 70% 46%;
+    --background: 0 0% 100%; --foreground: 0 0% 11.4%;
+    --card: 240 5% 96.5%; --card-foreground: 0 0% 11.4%;
+    --muted: 240 5% 96.5%; --muted-foreground: 240 2% 43%;
+    --accent: 240 5% 92%; --accent-foreground: 0 0% 11.4%;
+    --border: 240 4% 87%; --input: 240 4% 83%;
+    --primary: 211 100% 45%; --primary-foreground: 0 0% 100%;
+    --ring: 211 100% 45%; --brand: 211 100% 40%;
+    --mark: 240 5% 92%; --fail: 4 78% 52%;
     --t-platform: 228 76% 54%; --t-obs: 172 62% 34%; --t-agents: 265 58% 56%;
     --t-sec: 350 66% 50%; --t-dx: 33 88% 44%; --t-rel: 198 80% 40%;
-    --radius: 0.5rem;
+    --radius: 1.125rem;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) {
-      --background: 157 32% 6%; --foreground: 100 14% 90%;
-      --card: 157 28% 8.5%; --card-foreground: 100 14% 90%;
-      --muted: 157 22% 12%; --muted-foreground: 150 10% 64%;
-      --accent: 157 20% 14%; --accent-foreground: 100 14% 90%;
-      --border: 157 18% 18%; --input: 157 18% 18%;
-      --primary: 100 14% 92%; --primary-foreground: 157 32% 7%;
-      --ring: 160 70% 55%; --brand: 160 70% 55%;
-      --mark: 47 100% 62%; --fail: 8 85% 66%;
+      --background: 0 0% 0%; --foreground: 240 6% 96%;
+      --card: 240 3% 11%; --card-foreground: 240 6% 96%;
+      --muted: 240 3% 11%; --muted-foreground: 240 2% 62%;
+      --accent: 240 3% 17%; --accent-foreground: 240 6% 96%;
+      --border: 240 3% 20%; --input: 240 3% 24%;
+      --primary: 211 100% 50%; --primary-foreground: 0 0% 100%;
+      --ring: 210 100% 58%; --brand: 210 100% 58%;
+      --mark: 240 3% 17%; --fail: 4 90% 64%;
       --t-platform: 228 92% 70%; --t-obs: 170 60% 52%; --t-agents: 265 80% 74%;
       --t-sec: 350 82% 68%; --t-dx: 36 92% 60%; --t-rel: 196 85% 62%;
       color-scheme: dark;
     }
   }
   :root[data-theme='dark'] {
-    --background: 157 32% 6%; --foreground: 100 14% 90%;
-    --card: 157 28% 8.5%; --card-foreground: 100 14% 90%;
-    --muted: 157 22% 12%; --muted-foreground: 150 10% 64%;
-    --accent: 157 20% 14%; --accent-foreground: 100 14% 90%;
-    --border: 157 18% 18%; --input: 157 18% 18%;
-    --primary: 100 14% 92%; --primary-foreground: 157 32% 7%;
-    --ring: 160 70% 55%; --brand: 160 70% 55%;
-    --mark: 47 100% 62%; --fail: 8 85% 66%;
+    --background: 0 0% 0%; --foreground: 240 6% 96%;
+      --card: 240 3% 11%; --card-foreground: 240 6% 96%;
+      --muted: 240 3% 11%; --muted-foreground: 240 2% 62%;
+      --accent: 240 3% 17%; --accent-foreground: 240 6% 96%;
+      --border: 240 3% 20%; --input: 240 3% 24%;
+      --primary: 211 100% 50%; --primary-foreground: 0 0% 100%;
+      --ring: 210 100% 58%; --brand: 210 100% 58%;
+      --mark: 240 3% 17%; --fail: 4 90% 64%;
     --t-platform: 228 92% 70%; --t-obs: 170 60% 52%; --t-agents: 265 80% 74%;
     --t-sec: 350 82% 68%; --t-dx: 36 92% 60%; --t-rel: 196 85% 62%;
     color-scheme: dark;
@@ -50,11 +50,11 @@
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
     @apply bg-background text-foreground antialiased;
-    font-size: 15px; line-height: 1.6;
-    font-variation-settings: 'opsz' 14;
+    font-size: 15px; line-height: 1.5; letter-spacing: -0.01em;
+    
   }
-  h1, h2, h3 { text-wrap: balance; font-variation-settings: 'opsz' 48; }
-  ::selection { background: hsl(var(--mark) / .55); }
+  h1, h2, h3 { text-wrap: balance; }
+  ::selection { background: hsl(var(--brand) / .25); }
   :focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
 }
 
@@ -66,9 +66,9 @@
   .tnum { font-variant-numeric: tabular-nums; }
 
   /* long-form post body */
-  .prose { font-family: theme('fontFamily.serif'); font-size: 1.125rem; line-height: 1.75; }
+  .prose { font-size: 1.0625rem; line-height: 1.65; letter-spacing: -0.016em; }
   .prose > * { max-width: 68ch; }
-  .prose h3 { font-family: theme('fontFamily.sans'); font-size: 1.4rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.015em; margin: 2.6rem 0 0.75rem; scroll-margin-top: 88px; }
+  .prose h3 { font-size: 1.5rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.022em; margin: 2.6rem 0 0.75rem; scroll-margin-top: 88px; }
   .prose p { margin: 0 0 1.1em; }
   .prose ul, .prose ol { margin: 0 0 1.25em; padding-left: 1.25em; }
   .prose ul { list-style: disc; } .prose ol { list-style: decimal; }
@@ -76,7 +76,7 @@
   .prose li::marker { color: hsl(var(--muted-foreground)); }
   .prose strong { font-weight: 600; }
   .prose a { color: hsl(var(--brand)); text-underline-offset: 3px; text-decoration-thickness: 1px; }
-  .prose a:hover { background: hsl(var(--mark) / .45); }
+  .prose a:hover { text-decoration: underline; }
   .prose code { font-family: theme('fontFamily.mono'); font-size: 0.84em; background: hsl(var(--muted)); border: 1px solid hsl(var(--border)); padding: 0.08em 0.38em; border-radius: 6px; }
   .prose pre { font-family: theme('fontFamily.mono'); font-size: 0.82rem; line-height: 1.7; background: hsl(var(--muted)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 16px 18px; overflow-x: auto; margin: 0 0 1.5em; max-width: none; }
   .prose pre code { background: none; border: 0; padding: 0; font-size: inherit; }
@@ -120,7 +120,7 @@
 
 /* Signature: request trace on the home page */
 @layer components {
-  .eyebrow { font-family: theme('fontFamily.mono'); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: hsl(var(--muted-foreground)); }
+  .eyebrow { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em; color: hsl(var(--muted-foreground)); }
   .trace-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 10px 14px; border-top: 1px solid hsl(var(--border)); transition: background .15s; }
   .trace-row:hover, .trace-row:focus-visible { background: hsl(var(--mark) / .22); }
   @media (min-width: 768px) { .trace-row { grid-template-columns: 15rem minmax(0, 1fr); gap: 20px; align-items: center; padding: 11px 18px; } }

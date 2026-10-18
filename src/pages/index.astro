@@ -18,25 +18,25 @@ const TRACE: [ThemeKey, number, number, string, string][] = [
 const featured = PROJECTS.filter(p => p.featured);
 ---
 <Base nav="/">
-  <section class="pt-12 md:pt-16">
-    <p class="eyebrow">{posts.length} field notes · Kuala Lumpur · new on Tue and Thu</p>
-    <h1 class="mt-4 max-w-4xl text-[2.6rem] font-bold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-[4.4rem]">Notes on AI platforms, agents and the systems around them</h1>
-    <p class="mt-6 max-w-[38rem] font-serif text-[1.2rem] leading-relaxed text-muted-foreground">I'm Ammar, an engineer in Kuala Lumpur. Each of my LinkedIn posts gets a longer version here, with diagrams, tables and the public sources behind it.</p>
-    <div class="mt-7 flex flex-wrap gap-3">
-      <a href="/insights" class="inline-flex h-11 items-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground hover:bg-primary/90">Browse all insights</a>
-      <a href={`/posts/${posts[0].id}`} class="inline-flex h-11 items-center rounded-md border border-input bg-card px-6 text-sm font-semibold hover:bg-mark/40">Read the latest</a>
+  <section class="pt-14 text-center md:pt-24">
+    <p class="text-[17px] font-semibold text-brand">Field Notes</p>
+    <h1 class="mx-auto mt-3 max-w-4xl text-[2.9rem] font-semibold leading-[1.03] tracking-[-0.045em] sm:text-6xl lg:text-[5.25rem]">AI platforms, agents and the systems around them.</h1>
+    <p class="mx-auto mt-6 max-w-2xl text-[1.3rem] leading-snug tracking-[-0.015em] text-muted-foreground sm:text-[1.5rem]">I'm Ammar, an engineer in Kuala Lumpur. Each of my LinkedIn posts gets a longer version here, with diagrams, tables and the public sources behind it.</p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+      <a href="/insights" class="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[17px] text-primary-foreground hover:bg-primary/90">Browse all {posts.length} insights</a>
+      <a href={`/posts/${posts[0].id}`} class="text-[17px] text-brand hover:underline">Read the latest &rsaquo;</a>
     </div>
   </section>
 
-  <section class="mt-12 md:mt-16" aria-labelledby="trace-h">
-    <div class="overflow-hidden rounded-lg border bg-card">
+  <section class="mt-16 md:mt-24" aria-labelledby="trace-h">
+    <div class="overflow-hidden rounded-3xl bg-muted">
       <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-3 md:px-[18px]">
         <h2 id="trace-h" class="font-mono text-[13px] font-medium">agent.create_ticket <span class="text-muted-foreground">· one request, six topics</span></h2>
-        <p class="eyebrow">Select a row to open its notes</p>
+        <p class="text-xs text-muted-foreground">Select a row to open its notes</p>
       </div>
       {TRACE.map(([k, start, end, label, kind], i) => (
         <a href={`/themes/${k}`} class="trace-row" style={`--i:${i}`}>
-          <span class="flex items-center gap-2.5 text-[14px] font-medium"><span class="h-2.5 w-2.5 shrink-0 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}<span class="ml-auto font-mono text-xs text-muted-foreground tnum">{counts[k] ?? 0}</span></span>
+          <span class="flex items-center gap-2.5 text-[14px] font-medium"><span class="h-2.5 w-2.5 shrink-0 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}<span class="ml-auto text-xs text-muted-foreground tnum">{counts[k] ?? 0}</span></span>
           <span class="trace-track" aria-hidden="true">
             <span class:list={['trace-span', kind === 'fail' && 'hatch']} style={`left:${start}%;width:${end - start}%;background:${kind === 'fail' ? 'hsl(var(--fail))' : themeColor(k)}`}>{end - start >= 16 ? label : ''}</span>
             {end - start < 16 && <span class="trace-lbl" style={`left:calc(${end}% + 6px)`}>{label}</span>}
@@ -50,20 +50,20 @@ const featured = PROJECTS.filter(p => p.featured);
 
   <section class="mt-14 border-t pt-12">
     <div class="flex items-end justify-between gap-4">
-      <h2 class="text-2xl font-bold tracking-tight">Latest</h2>
+      <h2 class="text-[1.75rem] font-semibold tracking-[-0.025em]">Latest</h2>
       <a href="/insights" class="text-sm text-muted-foreground hover:text-foreground">All {posts.length} insights</a>
     </div>
     <div class="mt-3 flex flex-col">{posts.slice(0, 3).map(p => <PostRow post={p} />)}</div>
   </section>
 
   <section class="mt-14 border-t pt-12">
-    <h2 class="text-2xl font-bold tracking-tight">Browse by theme</h2>
+    <h2 class="text-[1.75rem] font-semibold tracking-[-0.025em]">Browse by theme</h2>
     <p class="mt-1 text-sm text-muted-foreground">Posts in each theme, oldest first, so they read as a series.</p>
     <div class="mt-6 grid gap-4 md:grid-cols-2">
       {themes.map(k => {
         const list = themePosts(posts, k);
         return (
-          <div class="flex min-w-0 flex-col rounded-lg border bg-card p-5">
+          <div class="flex min-w-0 flex-col rounded-3xl bg-muted p-5">
             <div class="flex items-center gap-2.5"><span class="h-2.5 w-2.5 rounded-full" style={`background:${themeColor(k)}`}></span><h3 class="font-semibold tracking-tight">{THEMES[k].name}</h3><span class="ml-auto text-xs text-muted-foreground tnum">{list.length} {list.length === 1 ? 'post' : 'posts'}</span></div>
             <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{THEMES[k].blurb}</p>
             <ol class="mt-3 flex flex-col">{list.slice(0, 4).map(p => <li><a href={`/posts/${p.id}`} class="block truncate rounded py-1 text-sm hover:text-brand">{p.data.title}</a></li>)}</ol>
@@ -76,16 +76,16 @@ const featured = PROJECTS.filter(p => p.featured);
 
   <section class="mt-14 border-t pt-12">
     <div class="flex items-end justify-between gap-4">
-      <h2 class="text-2xl font-bold tracking-tight">Projects</h2>
+      <h2 class="text-[1.75rem] font-semibold tracking-[-0.025em]">Projects</h2>
       <a href="/projects" class="text-sm text-muted-foreground hover:text-foreground">All projects</a>
     </div>
     <div class="mt-6 grid gap-4 md:grid-cols-2">
       {featured.map(p => (
-        <a href={p.repo} class="group flex min-w-0 flex-col rounded-lg border bg-card p-5 transition-colors hover:bg-muted/40">
+        <a href={p.repo} class="group flex min-w-0 flex-col rounded-3xl bg-muted p-5 transition-colors hover:bg-muted/40">
           <div class="flex items-center justify-between gap-3"><h3 class="font-mono text-[15px] font-medium group-hover:text-brand">{p.name}</h3><span class="rounded-full border px-2 py-0.5 text-xs text-muted-foreground">{p.status}</span></div>
           <p class="mt-2 text-[15px] font-medium leading-snug">{p.tagline}</p>
           <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
-          <div class="mt-4 flex flex-wrap gap-1.5">{p.stack.map(s => <span class="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground">{s}</span>)}</div>
+          <div class="mt-4 flex flex-wrap gap-1.5">{p.stack.map(s => <span class="rounded-full bg-background px-2.5 py-0.5 text-xs text-muted-foreground">{s}</span>)}</div>
         </a>
       ))}
     </div>
