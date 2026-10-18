@@ -1,5 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
+import Logo from '@/components/Logo.astro';
 import PostRow from '@/components/PostRow.astro';
 import { getPosts, themeCounts } from '@/lib/posts';
 import { THEMES, themeColor, type ThemeKey } from '@/data/themes';
@@ -26,7 +27,10 @@ const pill = 'inline-flex h-9 items-center rounded-full px-4 text-sm font-medium
 <Base nav="/">
   <section class="pt-12 md:pt-20">
     <p class="eyebrow">Engineer · Kuala Lumpur</p>
-    <h1 class="mt-3 text-[3rem] font-semibold leading-[1.02] tracking-[-0.045em] sm:text-6xl lg:text-[4.6rem]">Ammar Adam</h1>
+    <div class="mt-4 flex items-center gap-3.5 sm:gap-5">
+      <Logo size={64} animate class="logo-hero hidden h-12 w-12 sm:block sm:h-16 sm:w-16 lg:h-[72px] lg:w-[72px]" />
+      <h1 class="wordmark wordmark-xl text-[2.7rem] sm:text-6xl lg:text-[4.8rem]" aria-label="AmmarAdam">Ammar<span class="wm-adam">Adam</span></h1>
+    </div>
     <p class="mt-5 max-w-2xl text-[1.3rem] leading-snug tracking-[-0.015em] text-muted-foreground sm:text-[1.5rem]">I write about ML systems, AI platforms and agents, and build open-source tools to go with it.</p>
     <p class="mt-4 max-w-2xl text-muted-foreground">{posts.length} posts with diagrams and public sources, plus interactive demos you can run in the browser.</p>
     <div class="mt-7 flex flex-wrap items-center gap-2">

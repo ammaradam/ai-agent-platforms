@@ -1,0 +1,22 @@
+---
+import { THEMES, themeColor } from '@/data/themes';
+import type { Post } from '@/lib/posts';
+interface Props { posts: Post[]; class?: string }
+const { posts, class: cls = '' } = Astro.props;
+---
+{posts.length > 0 && (
+  <section class:list={[cls]} aria-labelledby="next-h">
+    <h2 id="next-h" class="text-[1.5rem] font-semibold tracking-[-0.025em]">You might also like</h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      {posts.map(p => (
+        <a href={`/posts/${p.id}`} class="group flex min-w-0 flex-col overflow-hidden rounded-3xl bg-muted transition-colors hover:bg-accent">
+          <img src={`/posts/thumb/${p.id}.jpg`} alt="" width="480" height="270" loading="lazy" class="aspect-video w-full object-cover" />
+          <div class="p-4">
+            <p class="flex items-center gap-1.5 text-xs text-muted-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(p.data.themes[0])}`}></span>{THEMES[p.data.themes[0]].name}</p>
+            <h3 class="mt-1 line-clamp-3 text-[15.5px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.data.title}</h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

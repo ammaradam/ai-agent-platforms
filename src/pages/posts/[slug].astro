@@ -1,12 +1,14 @@
 ---
 import Base from '@/layouts/Base.astro';
 import MobilePostNav, { DesktopToc } from '@/components/PostNav';
-import { getPosts, headingsOf, minutesOf, themePosts } from '@/lib/posts';
+import { getPosts, headingsOf, minutesOf, recommend, themePosts } from '@/lib/posts';
 import { THEMES, themeColor } from '@/data/themes';
 import { fmtDate } from '@/lib/utils';
 import { render } from 'astro:content';
 import Share from '@/components/Share.astro';
 import Subscribe from '@/components/Subscribe.astro';
+import Cite from '@/components/Cite.astro';
+import NextReads from '@/components/NextReads.astro';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -22,6 +24,7 @@ const k = post.data.themes[0];
 const series = themePosts(posts, k);
 const pos = series.findIndex(p => p.id === post.id);
 const headings = headingsOf(post);
+const nextReads = recommend(posts, post);
 const PLAYGROUND: Record<string, string> = { 'tool-call-timeouts': 'timeout', 'agent-identity-is-not-authorization': 'permission', 'agent-success-is-not-a-200': 'wrong200' };
 const playground = PLAYGROUND[post.id];
 ---
@@ -41,8 +44,6 @@ const playground = PLAYGROUND[post.id];
         <a href="#sources" class="hover:text-foreground">{post.data.sources.length} sources</a>
         {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
       </div>
-
-      <Share title={post.data.title} class="mt-5 max-w-3xl" />
 
       <div class="mt-7 max-w-3xl overflow-hidden rounded-3xl bg-muted">
         <img src={`/posts/${post.id}.jpg`} alt="" width="1280" height="720" class="h-auto w-full" fetchpriority="high" />
@@ -105,6 +106,10 @@ const playground = PLAYGROUND[post.id];
         </div>
       </section>
 
+      <Cite title={post.data.title} date={post.data.date} id={post.id} class="mt-12 max-w-3xl" />
+
+      <Share title={post.data.title} class="mt-8 max-w-3xl" />
+
       <section class="mt-12 max-w-3xl rounded-3xl bg-muted p-5 lg:hidden">
         <p class="flex items-center gap-2 text-sm font-medium"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</p>
         <p class="mt-0.5 text-xs text-muted-foreground tnum">Post {pos + 1} of {series.length} in this theme</p>
@@ -120,10 +125,7 @@ const playground = PLAYGROUND[post.id];
 
       <Subscribe class="mt-8 max-w-3xl" />
 
-      <nav class="mt-10 grid max-w-3xl gap-3 sm:grid-cols-2" aria-label="Previous and next post">
-        {older ? <a href={`/posts/${older.id}`} class="group rounded-lg border p-4 transition-colors hover:bg-muted/50"><span class="text-xs text-muted-foreground">Previous post</span><span class="mt-1.5 block font-medium leading-snug group-hover:text-brand">{older.data.title}</span></a> : <span class="hidden sm:block"></span>}
-        {newer && <a href={`/posts/${newer.id}`} class="group rounded-lg border p-4 transition-colors hover:bg-muted/50 sm:text-right"><span class="text-xs text-muted-foreground">Next post</span><span class="mt-1.5 block font-medium leading-snug group-hover:text-brand">{newer.data.title}</span></a>}
-      </nav>
+      <NextReads posts={nextReads} class="mt-12 max-w-3xl" />
     </article>
 
     <aside class="hidden lg:block">

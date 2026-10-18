@@ -39,3 +39,21 @@ export function summaries(posts: Post[]): PostSummary[] {
     text: (p.data.title + ' ' + p.data.insight + ' ' + (p.body ?? '').replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<[^>]+>/g, ' ')).toLowerCase().replace(/\s+/g, ' '),
   }));
 }
+
+/**
+ * Up to `n` posts to read next. A post scores higher when it is listed as related (in either
+ * direction) and when it shares topics; ties go to the newer post.
+ */
+export function recommend(posts: Post[], post: Post, n = 3): Post[] {
+  const mine = new Set(post.data.related ?? []);
+  const score = (p: Post) =>
+    (mine.has(p.id) ? 6 : 0) +
+    ((p.data.related ?? []).includes(post.id) ? 3 : 0) +
+    2 * p.data.themes.filter(t => post.data.themes.includes(t)).length;
+  return posts
+    .filter(p => p.id !== post.id)
+    .map(p => ({ p, s: score(p) }))
+    .sort((a, b) => b.s - a.s || b.p.data.date.getTime() - a.p.data.date.getTime())
+    .slice(0, n)
+    .map(x => x.p);
+}
