@@ -1,0 +1,48 @@
+---
+interface Props { title: string; class?: string }
+const { title, class: cls = '' } = Astro.props;
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const enc = encodeURIComponent;
+const links = [
+  ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`],
+  ['X', `https://twitter.com/intent/tweet?text=${enc(title)}&url=${enc(url)}`],
+  ['Email', `mailto:?subject=${enc(title)}&body=${enc(`${title}\n${url}`)}`],
+];
+const pill = 'inline-flex h-9 items-center gap-1.5 rounded-full bg-muted px-3.5 text-sm sm:gap-2 sm:px-4 font-medium transition-colors hover:bg-accent';
+---
+<div class:list={['share flex flex-wrap items-center gap-2', cls]} data-url={url} data-title={title} role="group" aria-label="Share this post">
+  <span class="mr-1 hidden text-sm text-muted-foreground sm:inline">Share</span>
+  <button type="button" data-native hidden class:list={[pill, '!bg-primary !text-primary-foreground']}>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
+    Share
+  </button>
+  <button type="button" data-copy class={pill}>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>
+    <span data-label>Copy link</span>
+  </button>
+  {links.map(([label, href]) => <a href={href} class={pill} target={label === 'Email' ? undefined : '_blank'} rel="noopener noreferrer">{label}</a>)}
+  <span class="sr-only" role="status" aria-live="polite" data-status></span>
+</div>
+
+<style>
+  .share [hidden] { display: none !important; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.share').forEach(box => {
+    const url = box.dataset.url!, title = box.dataset.title!;
+    const status = box.querySelector<HTMLElement>('[data-status]')!;
+    const native = box.querySelector<HTMLButtonElement>('[data-native]')!;
+    if (typeof navigator.share === 'function') {
+      native.hidden = false;
+      native.addEventListener('click', () => { navigator.share({ title, url }).catch(() => undefined); });
+    }
+    const copy = box.querySelector<HTMLButtonElement>('[data-copy]')!;
+    const label = copy.querySelector<HTMLElement>('[data-label]')!;
+    copy.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(url); label.textContent = 'Copied'; status.textContent = 'Link copied'; }
+      catch { window.prompt('Copy this link', url); return; }
+      setTimeout(() => { label.textContent = 'Copy link'; status.textContent = ''; }, 2000);
+    });
+  });
+</script>

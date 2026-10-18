@@ -1,0 +1,34 @@
+---
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const feed = new URL('/rss.xml', Astro.site).href;
+const enc = encodeURIComponent;
+const pill = 'inline-flex h-10 items-center rounded-full px-5 text-sm font-medium transition-colors';
+---
+<aside class:list={['subscribe rounded-3xl bg-muted p-6', cls]} data-feed={feed} aria-labelledby="sub-h">
+  <p class="eyebrow">Subscribe</p>
+  <h2 id="sub-h" class="mt-1 text-[1.5rem] font-semibold tracking-[-0.025em]">Get new posts as they come out</h2>
+  <p class="mt-2 text-muted-foreground">A new post every Tuesday and Thursday. Follow in any feed reader: no account with me, no tracking, and you can leave any time.</p>
+  <div class="mt-4 flex flex-wrap items-center gap-2">
+    <a href={`https://feedly.com/i/subscription/feed/${enc(feed)}`} target="_blank" rel="noopener noreferrer" class:list={[pill, 'bg-primary text-primary-foreground hover:bg-primary/90']}>Follow in Feedly</a>
+    <a href={`https://www.inoreader.com/?add_feed=${enc(feed)}`} target="_blank" rel="noopener noreferrer" class:list={[pill, 'bg-background hover:bg-accent']}>Inoreader</a>
+    <button type="button" data-copy-feed class:list={[pill, 'bg-background hover:bg-accent']}><span data-label>Copy feed URL</span></button>
+    <a href="/rss.xml" class="px-2 text-sm text-brand hover:underline">Open the RSS feed &rsaquo;</a>
+  </div>
+  <p class="mt-3 text-xs text-muted-foreground">New to RSS? It is a list of new posts that your feed reader app checks for you. Paste the feed URL into any reader, such as NetNewsWire, Reeder or Feedly.</p>
+  <span class="sr-only" role="status" aria-live="polite" data-status></span>
+</aside>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.subscribe').forEach(box => {
+    const btn = box.querySelector<HTMLButtonElement>('[data-copy-feed]')!;
+    const label = btn.querySelector<HTMLElement>('[data-label]')!;
+    const status = box.querySelector<HTMLElement>('[data-status]')!;
+    btn.addEventListener('click', async () => {
+      const feed = box.dataset.feed!;
+      try { await navigator.clipboard.writeText(feed); label.textContent = 'Copied'; status.textContent = 'Feed URL copied'; }
+      catch { window.prompt('Copy this feed URL', feed); return; }
+      setTimeout(() => { label.textContent = 'Copy feed URL'; status.textContent = ''; }, 2000);
+    });
+  });
+</script>

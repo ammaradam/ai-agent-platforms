@@ -5,6 +5,8 @@ import { getPosts, headingsOf, minutesOf, themePosts } from '@/lib/posts';
 import { THEMES, themeColor } from '@/data/themes';
 import { fmtDate } from '@/lib/utils';
 import { render } from 'astro:content';
+import Share from '@/components/Share.astro';
+import Subscribe from '@/components/Subscribe.astro';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -39,6 +41,8 @@ const playground = PLAYGROUND[post.id];
         <a href="#sources" class="hover:text-foreground">{post.data.sources.length} sources</a>
         {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
       </div>
+
+      <Share title={post.data.title} class="mt-5 max-w-3xl" />
 
       <div class="mt-7 max-w-3xl overflow-hidden rounded-3xl bg-muted">
         <img src={`/posts/${post.id}.jpg`} alt="" width="1280" height="720" class="h-auto w-full" fetchpriority="high" />
@@ -108,6 +112,8 @@ const playground = PLAYGROUND[post.id];
           ? <span aria-current="page" class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md bg-muted px-2 py-1.5 text-sm font-medium"><span class="text-muted-foreground tnum">{n + 1}</span>{x.data.title}</span>
           : <a href={`/posts/${x.id}`} class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-muted/60 hover:text-foreground"><span class="tnum">{n + 1}</span>{x.data.title}</a>}</li>)}</ol>
       </section>
+
+      <Subscribe class="mt-12 max-w-3xl" />
 
       <nav class="mt-10 grid max-w-3xl gap-3 sm:grid-cols-2" aria-label="Previous and next post">
         {older ? <a href={`/posts/${older.id}`} class="group rounded-lg border p-4 transition-colors hover:bg-muted/50"><span class="text-xs text-muted-foreground">Previous post</span><span class="mt-1.5 block font-medium leading-snug group-hover:text-brand">{older.data.title}</span></a> : <span class="hidden sm:block"></span>}
