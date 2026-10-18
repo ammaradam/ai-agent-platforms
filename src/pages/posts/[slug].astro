@@ -20,6 +20,8 @@ const k = post.data.themes[0];
 const series = themePosts(posts, k);
 const pos = series.findIndex(p => p.id === post.id);
 const headings = headingsOf(post);
+const PLAYGROUND: Record<string, string> = { 'tool-call-timeouts': 'timeout', 'agent-identity-is-not-authorization': 'permission', 'agent-success-is-not-a-200': 'wrong200' };
+const playground = PLAYGROUND[post.id];
 ---
 <Base title={post.data.title} description={post.data.insight} image={`/posts/${post.id}.jpg`} nav="/insights" type="article" published={post.data.date}>
   <div id="read-bar" aria-hidden="true" class="fixed left-0 top-0 z-50 h-[3px] w-full origin-left scale-x-0" style="background:hsl(var(--brand))"></div>
@@ -61,6 +63,18 @@ const headings = headingsOf(post);
       </div>
 
       <div class="prose mt-8"><Content /></div>
+
+      {playground && (
+        <aside class="mt-12 max-w-3xl rounded-3xl bg-muted p-6">
+          <p class="eyebrow">Interactive</p>
+          <h2 class="mt-1 text-[1.5rem] font-semibold tracking-[-0.025em]">Break it yourself</h2>
+          <p class="mt-2 text-muted-foreground">Run this exact failure in the Agent Gateway Playground. Flip the switches and watch each step as an animated trace.</p>
+          <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a href={`https://agent-gateway-playground.vercel.app/?scenario=${playground}`} class="inline-flex h-10 items-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90">Open the playground</a>
+            <a href="https://github.com/ammaradam/agent-gateway-playground" class="text-sm text-brand hover:underline">View the code &rsaquo;</a>
+          </div>
+        </aside>
+      )}
 
       {post.data.caveats.length > 0 && (
         <section class="mt-12 max-w-3xl">

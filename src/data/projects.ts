@@ -1,9 +1,26 @@
 export type Project = {
   name: string; repo: string; tagline: string; summary: string; stack: string[];
-  highlights: string[]; status: string; featured?: boolean;
+  highlights: string[]; status: string; featured?: boolean; demo?: string;
 };
 
 export const PROJECTS: Project[] = [
+  {
+    name: 'agent-gateway-playground',
+    repo: 'https://github.com/ammaradam/agent-gateway-playground',
+    demo: 'https://agent-gateway-playground.vercel.app',
+    tagline: 'Break an AI agent on purpose, and watch every step.',
+    summary: 'A Microsoft Agent Framework agent calls tools through a mock agent gateway. Flip a switch, such as a lost response, a missing idempotency key or a tool that returns a wrong 200, and watch the request move through the system as an animated trace with an outcome at the end. It turns the ideas in these posts into things you can test.',
+    stack: ['Python', 'Microsoft Agent Framework', 'FastAPI', 'React', 'TypeScript', 'Vercel'],
+    highlights: [
+      'Real Agent Framework agent, with a function middleware that routes every tool call through the gateway',
+      'Scripted planner, so every run is repeatable and needs no API key',
+      'Three scenarios: timeouts and retries, who may delete a record, and a 200 that is wrong',
+      'Animated flow with play, pause, step, scrub and speed, plus a trace waterfall',
+      'Add a scenario by writing one small planner and one list of toggles',
+    ],
+    status: 'Active',
+    featured: true,
+  },
   {
     name: 'mlops-toolbox',
     repo: 'https://github.com/ammaradam/MLOps-Toolbox',

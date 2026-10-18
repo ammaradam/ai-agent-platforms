@@ -16,7 +16,7 @@ const earlier = PROJECTS.filter(p => !p.featured);
           <div class="flex flex-wrap items-center gap-3">
             <h2 class="font-mono text-lg font-medium">{p.name}</h2>
             <span class="rounded-full border px-2 py-0.5 text-[12px] text-muted-foreground">{p.status}</span>
-            <a href={p.repo} class="ml-auto inline-flex h-8 items-center rounded-full bg-primary px-4 text-xs font-medium text-primary-foreground hover:bg-accent">View on GitHub</a>
+            <span class="ml-auto flex gap-2">{p.demo && <a href={p.demo} class="inline-flex h-8 items-center rounded-full bg-primary px-4 text-xs font-medium text-primary-foreground hover:bg-primary/90">Try it live</a>}<a href={p.repo} class={p.demo ? 'inline-flex h-8 items-center rounded-full bg-background px-4 text-xs font-medium hover:bg-accent' : 'inline-flex h-8 items-center rounded-full bg-primary px-4 text-xs font-medium text-primary-foreground hover:bg-primary/90'}>View on GitHub</a></span>
           </div>
           <p class="mt-3 text-xl font-semibold leading-snug tracking-tight">{p.tagline}</p>
           <div class="mt-4 grid gap-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
