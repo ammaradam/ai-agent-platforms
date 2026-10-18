@@ -24,6 +24,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'mlops-toolbox',
     repo: 'https://github.com/ammaradam/MLOps-Toolbox',
+    demo: 'https://mlops-toolbox-playground.vercel.app',
     tagline: 'A model that carries its own contract from training to production.',
     summary: 'A Python library built around contract propagation. Registering a model stores its input schema, evaluation report, reference data and baseline predictions; serving, batch scoring, drift checks and CI gates read that contract instead of being configured separately.',
     stack: ['Python 3.11', 'pydantic', 'mypy --strict', 'uv'],
