@@ -10,7 +10,7 @@
     --accent: 240 5% 92%; --accent-foreground: 0 0% 11.4%;
     --border: 240 4% 87%; --input: 240 4% 83%;
     --primary: 211 100% 45%; --primary-foreground: 0 0% 100%;
-    --ring: 211 100% 45%; --brand: 211 100% 40%; --brand-2: 190 92% 40%;
+    --ring: 211 100% 45%; --brand: 211 100% 40%; --brand-2: 190 92% 40%; --logo: 218 47% 13%;
     --mark: 240 5% 92%; --fail: 4 78% 52%;
     --t-platform: 228 76% 54%; --t-obs: 172 62% 34%; --t-agents: 265 58% 56%;
     --t-sec: 350 66% 50%; --t-dx: 33 88% 44%; --t-rel: 198 80% 40%;
@@ -25,7 +25,7 @@
       --accent: 240 3% 17%; --accent-foreground: 240 6% 96%;
       --border: 240 3% 20%; --input: 240 3% 24%;
       --primary: 211 100% 50%; --primary-foreground: 0 0% 100%;
-      --ring: 210 100% 58%; --brand: 210 100% 58%; --brand-2: 188 95% 62%;
+      --ring: 210 100% 58%; --brand: 210 100% 58%; --brand-2: 188 95% 62%; --logo: 0 0% 98%;
       --mark: 240 3% 17%; --fail: 4 90% 64%;
       --t-platform: 228 92% 70%; --t-obs: 170 60% 52%; --t-agents: 265 80% 74%;
       --t-sec: 350 82% 68%; --t-dx: 36 92% 60%; --t-rel: 196 85% 62%;
@@ -39,7 +39,7 @@
       --accent: 240 3% 17%; --accent-foreground: 240 6% 96%;
       --border: 240 3% 20%; --input: 240 3% 24%;
       --primary: 211 100% 50%; --primary-foreground: 0 0% 100%;
-      --ring: 210 100% 58%; --brand: 210 100% 58%; --brand-2: 188 95% 62%;
+      --ring: 210 100% 58%; --brand: 210 100% 58%; --brand-2: 188 95% 62%; --logo: 0 0% 98%;
       --mark: 240 3% 17%; --fail: 4 90% 64%;
     --t-platform: 228 92% 70%; --t-obs: 170 60% 52%; --t-agents: 265 80% 74%;
     --t-sec: 350 82% 68%; --t-dx: 36 92% 60%; --t-rel: 196 85% 62%;
@@ -132,18 +132,12 @@
   @media (prefers-reduced-motion: reduce) { .trace-span { animation: none; } }
 }
 
-/* Brand: the AmmarAdam wordmark and logomark */
+/* Brand: the ammaradam logo (navy on light, white on dark) */
 @layer components {
-  .wordmark { font-weight: 700; letter-spacing: -0.045em; line-height: 1; white-space: nowrap; }
-  .wordmark .wm-adam { color: hsl(var(--brand)); }
-  .wordmark-xl .wm-adam {
-    background-image: linear-gradient(95deg, hsl(var(--brand)) 10%, hsl(var(--brand-2)));
-    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
-    padding-right: .04em;
-  }
-  .logo-mark { border-radius: 28%; }
-  .logo-hero { filter: drop-shadow(0 8px 18px hsl(var(--brand) / .28)); }
-  .logo-draw { stroke-dasharray: 9; stroke-dashoffset: 9; animation: logo-draw .7s .25s cubic-bezier(.22,1,.36,1) forwards; }
+  .brand-ink { color: hsl(var(--logo)); }
+  .wordmark { font-weight: 400; letter-spacing: .16em; line-height: 1; white-space: nowrap; color: hsl(var(--logo)); }
+  .wordmark-xl { font-weight: 300; letter-spacing: .13em; }
+  .logo-draw { stroke-dasharray: 32; stroke-dashoffset: 32; animation: logo-draw .8s .3s cubic-bezier(.22,1,.36,1) forwards; }
   @keyframes logo-draw { to { stroke-dashoffset: 0; } }
   @media (prefers-reduced-motion: reduce) { .logo-draw { animation: none; stroke-dashoffset: 0; } }
 }

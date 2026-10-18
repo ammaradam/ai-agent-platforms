@@ -38,7 +38,7 @@ const NAV = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/ab
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2">Skip to content</a>
     <header class="sticky z-40 border-b bg-background/80 backdrop-blur-xl backdrop-saturate-150" style="top:env(safe-area-inset-top,0px)">
       <div class="gutter mx-auto flex h-12 max-w-6xl items-center gap-4">
-        <a href="/" class="flex items-center gap-2.5" aria-label="AmmarAdam, home"><Logo size={26} /><span class="wordmark text-[18px]">Ammar<span class="wm-adam">Adam</span></span></a>
+        <a href="/" class="brand-ink flex items-center gap-3" aria-label="ammaradam, home"><Logo size={28} /><span class="wordmark text-[16px]">ammaradam</span></a>
         <nav class="ml-4 hidden items-center gap-1 md:flex" aria-label="Main">
           {NAV.map(([l, h]) => (
             <a href={h} aria-current={nav === h ? 'page' : undefined}
@@ -51,7 +51,7 @@ const NAV = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/ab
     <main id="main" class="gutter mx-auto w-full max-w-6xl flex-1"><slot /></main>
     <footer class="mt-16 bg-muted">
       <div class="gutter mx-auto flex max-w-6xl flex-col gap-4 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between" style="padding-bottom:calc(env(safe-area-inset-bottom,0px) + 32px)">
-        <p>&copy; {new Date().getFullYear()} <span class="wordmark">Ammar<span class="wm-adam">Adam</span></span></p>
+        <p>&copy; {new Date().getFullYear()} <span class="wordmark !tracking-[.12em]">ammaradam</span></p>
         <nav aria-label="Footer" class="flex flex-wrap gap-x-5 gap-y-2">
           {[...NAV, ['RSS', '/rss.xml']].map(([l, h]) => <a href={h} class="hover:text-foreground">{l}</a>)}
         </nav>
