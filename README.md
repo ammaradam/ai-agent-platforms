@@ -1,4 +1,4 @@
-# Ammar Adam Field Notes
+# Ammar Adam
 
 Long versions of my LinkedIn posts, each tied to public sources. Built with Astro, React islands, Tailwind and shadcn-style components.
 
