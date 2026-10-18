@@ -1,6 +1,8 @@
 ---
-import '@fontsource-variable/geist';
-import '@fontsource-variable/geist-mono';
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/source-serif-4';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import '@/styles/globals.css';
 import SiteNav from '@/components/SiteNav';
 import { getPosts, summaries, themeCounts, usedThemes } from '@/lib/posts';
@@ -36,11 +38,11 @@ const NAV = [['Insights', '/insights'], ['Themes', '/themes'], ['Projects', '/pr
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2">Skip to content</a>
     <header class="sticky z-40 border-b bg-background/85 backdrop-blur-md" style="top:env(safe-area-inset-top,0px)">
       <div class="gutter mx-auto flex h-14 max-w-6xl items-center gap-4">
-        <a href="/" class="text-[15px] font-semibold tracking-tight">Ammar Adam</a>
+        <a href="/" class="flex items-baseline gap-2.5"><span class="text-[17px] font-bold tracking-tight">Ammar Adam</span><span class="eyebrow hidden sm:inline">field notes</span></a>
         <nav class="ml-4 hidden items-center gap-1 md:flex" aria-label="Main">
           {NAV.map(([l, h]) => (
             <a href={h} aria-current={nav === h ? 'page' : undefined}
-              class:list={['rounded-md px-3 py-1.5 text-sm transition-colors', nav === h ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground']}>{l}</a>
+              class:list={['rounded-md px-3 py-1.5 text-sm transition-colors', nav === h ? 'bg-mark/60 text-foreground' : 'text-muted-foreground hover:text-foreground']}>{l}</a>
           ))}
         </nav>
         <SiteNav client:idle posts={summaries(posts)} counts={counts} current={nav} />
