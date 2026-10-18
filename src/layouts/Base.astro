@@ -5,8 +5,8 @@ import SiteNav from '@/components/SiteNav';
 import { getPosts, summaries, themeCounts, usedThemes } from '@/lib/posts';
 import { THEMES } from '@/data/themes';
 
-interface Props { title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date }
-const { title, description = 'Notes on AI platforms, agents and the systems around them, each tied to public sources.', nav = '', type = 'website', published } = Astro.props;
+interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date }
+const { image, title, description = 'Notes on AI platforms, agents and the systems around them, each tied to public sources.', nav = '', type = 'website', published } = Astro.props;
 const posts = await getPosts();
 const counts = themeCounts(posts);
 const fullTitle = title ? `${title} | Ammar Adam` : 'Ammar Adam';
@@ -29,9 +29,9 @@ const NAV = [['Insights', '/insights'], ['Themes', '/themes'], ['Projects', '/pr
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Ammar Adam" />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
-    <meta property="og:image" content={new URL('/og.jpg', Astro.site)} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image" content={new URL(image ?? '/og.jpg', Astro.site)} />
+    <meta property="og:image:width" content={image ? '1280' : '1200'} />
+    <meta property="og:image:height" content={image ? '720' : '630'} />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body class="flex min-h-screen flex-col">

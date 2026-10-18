@@ -5,7 +5,7 @@ import { minutesOf, type Post } from '@/lib/posts';
 interface Props { post: Post }
 const { post } = Astro.props;
 ---
-<a href={`/posts/${post.id}`} class="group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)]">
+<a href={`/posts/${post.id}`} class="group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)_9.5rem]">
   <time class="text-xs text-muted-foreground tnum sm:pt-1.5" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'short' })}</time>
   <div class="min-w-0">
     <h3 class="text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{post.data.title}</h3>
@@ -15,4 +15,5 @@ const { post } = Astro.props;
       <span class="tnum">{minutesOf(post)} min</span>
     </div>
   </div>
+  <img src={`/posts/thumb/${post.id}.jpg`} alt="" width="480" height="270" loading="lazy" class="hidden aspect-video w-full rounded-xl object-cover sm:block" />
 </a>

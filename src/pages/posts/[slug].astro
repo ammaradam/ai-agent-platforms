@@ -21,7 +21,7 @@ const series = themePosts(posts, k);
 const pos = series.findIndex(p => p.id === post.id);
 const headings = headingsOf(post);
 ---
-<Base title={post.data.title} description={post.data.insight} nav="/insights" type="article" published={post.data.date}>
+<Base title={post.data.title} description={post.data.insight} image={`/posts/${post.id}.jpg`} nav="/insights" type="article" published={post.data.date}>
   <div id="read-bar" aria-hidden="true" class="fixed left-0 top-0 z-50 h-[3px] w-full origin-left scale-x-0" style="background:hsl(var(--brand))"></div>
   <MobilePostNav client:idle headings={headings} />
   <div class="grid gap-12 py-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
@@ -38,7 +38,11 @@ const headings = headingsOf(post);
         {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
       </div>
 
-      <div class="mt-7 max-w-3xl rounded-3xl bg-muted px-6 py-5" style={`border-left:4px solid ${themeColor(k)}`}>
+      <div class="mt-7 max-w-3xl overflow-hidden rounded-3xl bg-muted">
+        <img src={`/posts/${post.id}.jpg`} alt="" width="1280" height="720" class="h-auto w-full" fetchpriority="high" />
+      </div>
+
+      <div class="mt-4 max-w-3xl rounded-3xl bg-muted px-6 py-5" style={`border-left:4px solid ${themeColor(k)}`}>
         <p class="eyebrow">Takeaway</p>
         <p class="mt-1.5 text-[1.4rem] font-semibold leading-snug tracking-[-0.02em]">{post.data.insight}</p>
       </div>

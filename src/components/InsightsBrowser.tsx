@@ -61,7 +61,7 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
           <h2 className="eyebrow sticky z-10 border-b bg-background/90 py-2 backdrop-blur" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 56px)' }}>{g.m}</h2>
           <div className="mt-1 flex flex-col">
             {g.items.map(p => (
-              <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)]">
+              <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)_9.5rem]">
                 <time className="text-xs text-muted-foreground tnum sm:pt-1.5" dateTime={p.date}>{fmtDate(new Date(p.date), { day: 'numeric', month: 'short' })}</time>
                 <div className="min-w-0">
                   <h3 className="text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.title}</h3>
@@ -71,6 +71,7 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
                     <span className="inline-flex items-center gap-1 tnum"><Clock className="h-3 w-3" />{p.minutes} min</span>
                   </div>
                 </div>
+                <img src={`/posts/thumb/${p.slug}.jpg`} alt="" width={480} height={270} loading="lazy" className="hidden aspect-video w-full rounded-xl object-cover sm:block" />
               </a>
             ))}
           </div>
