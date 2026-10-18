@@ -66,7 +66,7 @@ Content-Type: application/problem+json
 
 <h3 id="questions">Four questions as a design check</h3>
 
-<p>The LinkedIn post frames this as four questions an error should answer. They map onto the standard fairly directly:</p>
+<p>A good error answers four questions. They map onto the standard fairly directly:</p>
 
 <ul>
 <li><strong>What happened?</strong> <code>type</code> and <code>title</code>.</li>

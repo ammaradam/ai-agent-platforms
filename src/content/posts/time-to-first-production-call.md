@@ -47,7 +47,7 @@ related: ["gateway-errors-that-help", "standardise-the-right-things"]
 
 <h3 id="mapping">How the scorecard maps to these sources</h3>
 
-<p>Each item in the LinkedIn post's scorecard corresponds to a measure in one of the public frameworks:</p>
+<p>Each item in this scorecard corresponds to a measure in one of the public frameworks:</p>
 
 <div class="tbl"><table>
 <thead><tr><th>Scorecard item</th><th>Closest published measure</th><th>Source</th></tr></thead>

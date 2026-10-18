@@ -1,6 +1,6 @@
-# Ammar Adam
+# AI Agent Platforms
 
-Long versions of my LinkedIn posts, each tied to public sources. Built with Astro, React islands, Tailwind and shadcn-style components.
+Practical notes on running AI in production, each tied to public sources. Built with Astro, React islands, Tailwind and shadcn-style components.
 
 ## Run it
 

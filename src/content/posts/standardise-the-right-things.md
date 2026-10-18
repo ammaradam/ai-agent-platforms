@@ -31,7 +31,7 @@ related: ["first-users-shape-the-design", "time-to-first-production-call"]
 
 <h3 id="capabilities">The capabilities CNCF lists</h3>
 
-<p>The CNCF Platforms White Paper names thirteen capability domains a platform may provide. Several match the shared list in the LinkedIn post:</p>
+<p>The CNCF Platforms White Paper names thirteen capability domains a platform may provide. Several match the shared list in this post:</p>
 
 <div class="tbl"><table>
 <thead><tr><th>Post's shared list</th><th>Closest CNCF capability</th></tr></thead>
