@@ -25,6 +25,9 @@ const featured = PROJECTS.filter(p => p.featured);
       <a href="/insights" class="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[17px] text-primary-foreground hover:bg-primary/90">Browse all {posts.length} insights</a>
       <a href={`/posts/${posts[0].id}`} class="text-[17px] text-brand hover:underline">Read the latest &rsaquo;</a>
     </div>
+    <div class="mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl bg-muted md:mt-16">
+      <img src="/hero.jpg" alt="Abstract glass network of connected nodes, one glowing blue, on a pale grey background" width="1600" height="900" class="h-auto w-full" fetchpriority="high" />
+    </div>
   </section>
 
   <section class="mt-16 md:mt-24" aria-labelledby="trace-h">

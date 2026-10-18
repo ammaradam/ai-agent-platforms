@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // Change `site` to your real domain before deploying (used for RSS, sitemap and link previews).
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://ammar-adam.vercel.app',
+  site: process.env.SITE_URL || 'https://ammar-site-black.vercel.app',
   integrations: [react(), tailwind({ applyBaseStyles: false }), sitemap()],
   trailingSlash: 'ignore',
 });
