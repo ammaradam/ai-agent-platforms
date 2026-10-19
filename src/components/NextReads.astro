@@ -13,7 +13,7 @@ const { posts, class: cls = '' } = Astro.props;
           <img src={`/posts/thumb/${p.id}.jpg`} alt="" width="480" height="270" loading="lazy" class="aspect-video w-full object-cover" />
           <div class="flex gap-1.5 p-2.5">
             <span class="mt-[0.4rem] h-1.5 w-1.5 shrink-0 rounded-full" style={`background:${themeColor(p.data.themes[0])}`} aria-hidden="true"></span>
-            <h3 class="line-clamp-3 text-[13px] font-medium leading-snug group-hover:text-brand">{p.data.title}</h3>
+            <h3 class="line-clamp-3 text-[13px] [text-wrap:pretty] font-medium leading-snug group-hover:text-brand">{p.data.title}</h3>
           </div>
         </a>
       ))}
