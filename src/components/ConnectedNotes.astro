@@ -31,13 +31,22 @@ const ring = ids.map((id, i) => {
         {ring.map(r => (
           <a href={`/posts/${r.n.id}`} class="group" aria-label={r.n.title}>
             <circle cx={r.x} cy={r.y} r="22" fill="transparent" />
-            <circle cx={r.x} cy={r.y} r="8" style={`fill:${themeColor(r.n.theme)}`} class="stroke-background" stroke-width="3" />
-            <text x={r.x} y={r.below ? r.y + 28 : r.y - 17} text-anchor="middle" class="fill-foreground text-[15px] group-hover:fill-brand" style="paint-order:stroke;stroke:hsl(var(--background));stroke-width:6px;stroke-linejoin:round">{r.n.label}</text>
+            <circle class="cn-dot" cx={r.x} cy={r.y} r="8" style={`fill:${themeColor(r.n.theme)}`} class="stroke-background" stroke-width="3" />
+            <text x={r.x} y={r.below ? r.y + 28 : r.y - 17} text-anchor="middle" class="cn-label fill-foreground text-[15px] group-hover:fill-brand" style="paint-order:stroke;stroke:hsl(var(--background));stroke-width:6px;stroke-linejoin:round">{r.n.label}</text>
           </a>
         ))}
         <circle cx={cx} cy={cy} r="13" style={`fill:${themeColor(me.theme)}`} stroke="hsl(var(--brand))" stroke-width="3" />
-        <text x={cx} y={cy + 36} text-anchor="middle" class="fill-muted-foreground text-[13px] font-medium">This note</text>
+        <text x={cx} y={cy + 36} text-anchor="middle" class="cn-me fill-muted-foreground text-[13px] font-medium">This note</text>
       </svg>
     </div>
   </section>
 )}
+
+<style>
+  /* The mini-map is drawn 640 wide; on a phone it shrinks to about half, so labels and dots grow to compensate. */
+  @media (max-width: 767px) {
+    .cn-label { font-size: 26px; }
+    .cn-me { font-size: 22px; }
+    .cn-dot { r: 13px; }
+  }
+</style>

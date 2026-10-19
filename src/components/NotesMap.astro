@@ -20,7 +20,7 @@ const used = [...new Set(g.nodes.map(n => n.theme))];
         const x = MAP.left + i * MAP.laneGap;
         return (
           <g>
-            <text x={x} y="32" text-anchor="middle" class="fill-muted-foreground text-[13px] font-medium">{l.name}</text>
+            <text x={x} y="32" text-anchor="middle" class="fill-muted-foreground text-[15px] font-medium">{l.name}</text>
             <line x1={x} y1="62" x2={x} y2={g.height - 20} class="text-border" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5" />
           </g>
         );
@@ -35,7 +35,7 @@ const used = [...new Set(g.nodes.map(n => n.theme))];
         <a href={`/posts/${n.id}`} class="nm-node" data-id={n.id} data-title={n.title} data-insight={n.insight} aria-label={n.title}>
           <circle cx={n.x} cy={n.y} r="22" fill="transparent" />
           <circle cx={n.x} cy={n.y} r={n.big ? 12 : 8} style={`fill:${themeColor(n.theme)}`} class="nm-dot stroke-background" stroke-width="3" />
-          <text x={n.x} y={n.y + (n.big ? 32 : 27)} text-anchor="middle" class="fill-foreground text-[13px]">{n.label}</text>
+          <text x={n.x} y={n.y + (n.big ? 32 : 27)} text-anchor="middle" class="fill-foreground text-[15px]">{n.label}</text>
         </a>
       ))}
     </svg>
