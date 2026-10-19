@@ -42,7 +42,7 @@ const playground = PLAYGROUND[post.id];
         <time class="tnum" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
         <span class="tnum">{minutesOf(post)} min read</span>
         <a href="#sources" class="hover:text-foreground">{post.data.sources.length} sources</a>
-        <a href={post.data.linkedin} class="hover:text-foreground">Discuss on LinkedIn &rsaquo;</a>
+        {post.data.linkedin && <a href={post.data.linkedin} class="hover:text-foreground">Discuss on LinkedIn &rsaquo;</a>}
         {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
       </div>
 
