@@ -1,16 +1,13 @@
 ---
 import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
 import InsightsBrowser from '@/components/InsightsBrowser';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 const posts = await getPosts();
 ---
 <Base title="Writing" nav="/insights" description="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text.">
   <div class="py-10 md:py-12">
-    <nav class="flex items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb"><a href="/" class="hover:text-foreground">Home</a><span>/</span><span class="text-foreground">Writing</span></nav>
-    <div class="mt-4 text-center">
-      <h1 class="text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">Writing</h1>
-      <p class="mx-auto mt-2 max-w-xl text-balance leading-relaxed text-muted-foreground">Everything I have written, each with a one-line takeaway. Filter by topic or search the full text.</p>
-    </div>
+    <PageHeader eyebrow="Blog" title="Writing" lede="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text." />
     <div class="mt-8"><InsightsBrowser client:load posts={summaries(posts)} counts={themeCounts(posts)} /></div>
   </div>
 </Base>

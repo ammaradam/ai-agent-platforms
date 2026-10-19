@@ -33,12 +33,12 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
 
   return (
     <div>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-start gap-4">
         <label className="flex h-11 w-full max-w-xl items-center gap-2.5 rounded-full bg-muted px-4 transition-colors focus-within:bg-background focus-within:ring-2 focus-within:ring-ring">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
           <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search writing" aria-label="Search writing" className="h-full w-full min-w-0 bg-transparent text-[16px] outline-none placeholder:text-muted-foreground sm:text-sm" />
         </label>
-        <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Filter by theme">
+        <div className="flex flex-wrap justify-start gap-2" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
               className={cn('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] transition-colors', f === k ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-accent hover:text-foreground')}>

@@ -1,0 +1,13 @@
+---
+// The one header every page uses: a small label, the title, then a short intro. Left-aligned.
+interface Props { eyebrow?: string; title: string; lede?: string; dot?: string; class?: string }
+const { eyebrow, title, lede, dot, class: cls = '' } = Astro.props;
+---
+<header class:list={['max-w-2xl', cls]}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h1 class:list={[eyebrow && 'mt-3', 'flex items-center gap-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl']}>
+    {dot && <span class="h-3.5 w-3.5 shrink-0 rounded-full" style={`background:${dot}`} aria-hidden="true"></span>}
+    {title}
+  </h1>
+  {lede && <p class="mt-3 text-balance text-[1.05rem] leading-relaxed text-muted-foreground">{lede}</p>}
+</header>
