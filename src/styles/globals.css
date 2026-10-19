@@ -87,6 +87,7 @@
   .prose td code { white-space: nowrap; }
   .prose figure { margin: 0.75rem 0 1.75rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 18px; background: hsl(var(--card)); max-width: none; }
   .prose .fig-scroll { overflow-x: auto; }
+  @media (max-width: 480px) { .prose figure { overflow-x: auto; padding: 14px; -webkit-overflow-scrolling: touch; } .prose figure svg { min-width: 420px; } }
   .prose figure svg { display: block; width: 100%; min-width: 400px; max-width: 560px; height: auto; margin: 0 auto; color: hsl(var(--foreground)); }
   .prose figcaption { font-family: theme('fontFamily.sans'); font-size: 0.82rem; color: hsl(var(--muted-foreground)); text-align: center; margin-top: 8px; }
 
