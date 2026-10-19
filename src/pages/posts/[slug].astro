@@ -24,7 +24,7 @@ const k = post.data.themes[0];
 const series = themePosts(posts, k);
 const pos = series.findIndex(p => p.id === post.id);
 const headings = headingsOf(post);
-const nextReads = recommend(posts, post);
+const nextReads = recommend(posts, post, 5);
 const PLAYGROUND: Record<string, string> = { 'tool-call-timeouts': 'timeout', 'agent-identity-is-not-authorization': 'permission', 'agent-success-is-not-a-200': 'wrong200' };
 const playground = PLAYGROUND[post.id];
 ---
