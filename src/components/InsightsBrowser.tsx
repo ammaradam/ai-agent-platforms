@@ -42,7 +42,7 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
               className={cn('inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[13px] transition-colors', f === k ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-accent hover:text-foreground')}>
-              {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-[11px] tnum', f === k ? 'opacity-70' : 'opacity-80')}>{n}</span>
+              {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-[12px] tnum', f === k ? 'opacity-70' : 'opacity-80')}>{n}</span>
             </button>
           ))}
         </div>
