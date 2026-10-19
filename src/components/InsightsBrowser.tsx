@@ -33,29 +33,29 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
 
   return (
     <div>
-      <div className="flex flex-col gap-4 rounded-3xl bg-muted p-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <label className="flex h-10 min-w-0 flex-1 items-center gap-2 rounded-md border border-input bg-background px-3 focus-within:ring-2 focus-within:ring-ring">
-            <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search titles and text" aria-label="Search writing" className="h-full w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
-          </label>
-          <div className="inline-flex h-10 shrink-0 items-center rounded-md bg-muted p-1 text-sm" role="group" aria-label="Sort">
-            {(['new', 'old'] as const).map(k => (
-              <button key={k} type="button" aria-pressed={order === k} onClick={() => setOrder(k)} className={cn('h-8 rounded px-3 transition-colors', order === k ? 'bg-background font-medium ' : 'text-muted-foreground hover:text-foreground')}>{k === 'new' ? 'Newest' : 'Oldest'}</button>
-            ))}
-          </div>
-        </div>
+      <div className="flex flex-col items-center gap-4">
+        <label className="flex h-11 w-full max-w-xl items-center gap-2.5 rounded-full bg-muted px-4 transition-colors focus-within:bg-background focus-within:ring-2 focus-within:ring-ring">
+          <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
+          <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search writing" aria-label="Search writing" className="h-full w-full min-w-0 bg-transparent text-[16px] outline-none placeholder:text-muted-foreground sm:text-sm" />
+        </label>
         <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
-              className={cn('inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-[13px] transition-colors', f === k ? 'border-foreground bg-foreground text-background' : 'bg-background text-muted-foreground hover:border-foreground/40 hover:text-foreground')}>
-              {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-[11px] tnum', f === k && 'opacity-70')}>{n}</span>
+              className={cn('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] transition-colors', f === k ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-accent hover:text-foreground')}>
+              {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-[11px] tnum', f === k ? 'opacity-70' : 'opacity-80')}>{n}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <p className="eyebrow mt-6" aria-live="polite">{list.length === posts.length ? `${list.length} posts` : `Showing ${list.length} of ${posts.length} posts`}</p>
+      <div className="mt-8 flex items-center justify-between gap-4">
+        <p className="eyebrow" aria-live="polite">{list.length === posts.length ? `${list.length} posts` : `Showing ${list.length} of ${posts.length} posts`}</p>
+        <div className="flex items-center gap-1 text-sm" role="group" aria-label="Sort">
+          {(['new', 'old'] as const).map(k => (
+            <button key={k} type="button" aria-pressed={order === k} onClick={() => setOrder(k)} className={cn('rounded-full px-3 py-1 transition-colors', order === k ? 'bg-muted font-medium text-foreground' : 'text-muted-foreground hover:text-foreground')}>{k === 'new' ? 'Newest' : 'Oldest'}</button>
+          ))}
+        </div>
+      </div>
       {groups.map(g => (
         <section key={g.m} className="mt-4">
           <h2 className="eyebrow sticky z-10 border-b bg-background/90 py-2 backdrop-blur" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 56px)' }}>{g.m}</h2>
