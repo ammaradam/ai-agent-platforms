@@ -6,7 +6,6 @@ import { THEMES, themeColor } from '@/data/themes';
 import { fmtDate } from '@/lib/utils';
 import { render } from 'astro:content';
 import Share from '@/components/Share.astro';
-import Subscribe from '@/components/Subscribe.astro';
 import Cite from '@/components/Cite.astro';
 import NextReads from '@/components/NextReads.astro';
 
@@ -99,7 +98,6 @@ const playground = PLAYGROUND[post.id];
       </aside>
       <Share title={post.data.title} class="mt-4 max-w-3xl" />
 
-      <Subscribe class="mt-10 max-w-3xl" />
 
       <NextReads posts={nextReads} class="mt-16 max-w-3xl" />
     </article>
