@@ -42,37 +42,22 @@ const playground = PLAYGROUND[post.id];
         <time class="tnum" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
         <span class="tnum">{minutesOf(post)} min read</span>
         <a href="#sources" class="hover:text-foreground">{post.data.sources.length} sources</a>
+        <a href={post.data.linkedin} class="hover:text-foreground">Discuss on LinkedIn &rsaquo;</a>
         {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
       </div>
 
-      <div class="mt-7 max-w-3xl overflow-hidden rounded-3xl bg-muted">
+      <div class="mt-6 max-w-3xl overflow-hidden rounded-3xl bg-muted">
         <img src={`/posts/${post.id}.jpg`} alt="" width="1280" height="720" class="h-auto w-full" fetchpriority="high" />
       </div>
 
-      <div class="mt-4 max-w-3xl rounded-3xl bg-muted px-6 py-5" style={`border-left:4px solid ${themeColor(k)}`}>
-        <p class="eyebrow">Takeaway</p>
-        <p class="mt-1.5 text-[1.4rem] font-semibold leading-snug tracking-[-0.02em]">{post.data.insight}</p>
-      </div>
+      <p class="mt-8 max-w-3xl text-[1.3rem] font-medium leading-snug tracking-[-0.015em] sm:text-[1.45rem]" style={`border-left:3px solid ${themeColor(k)}; padding-left:1rem`}>{post.data.insight}</p>
 
-      <div class="mt-4 grid max-w-3xl gap-4 sm:grid-cols-2">
-        <a href={post.data.linkedin} class="group flex items-center gap-3 rounded-3xl bg-muted px-4 py-3.5 transition-colors hover:bg-muted/50 lg:col-span-2">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-md border text-muted-foreground group-hover:text-brand">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-          </span>
-          <span class="min-w-0"><span class="block text-sm font-medium group-hover:text-brand">View the post on LinkedIn</span><span class="block text-xs text-muted-foreground">Posted {fmtDate(post.data.date)}</span></span>
-        </a>
-        <div id="inline-toc" class="rounded-3xl bg-muted px-4 py-3.5 lg:hidden">
-          <p class="text-sm font-medium">In this post</p>
-          <ol class="mt-2 flex flex-col gap-0.5">{headings.map(h => <li><a href={`#${h.id}`} class="block py-0.5 text-sm text-muted-foreground hover:text-foreground">{h.text}</a></li>)}</ol>
-        </div>
-      </div>
-
-      <div class="prose mt-8"><Content /></div>
+      <div class="prose mt-10"><Content /></div>
 
       {playground && (
-        <aside class="mt-12 max-w-3xl rounded-3xl bg-muted p-6">
+        <aside class="mt-14 max-w-3xl rounded-3xl border p-6">
           <p class="eyebrow">Interactive</p>
-          <h2 class="mt-1 text-[1.5rem] font-semibold tracking-[-0.025em]">Break it yourself</h2>
+          <h2 class="mt-1 text-[1.4rem] font-semibold tracking-[-0.02em]">Break it yourself</h2>
           <p class="mt-2 text-muted-foreground">Run this exact failure in the Agent Gateway Playground. Flip the switches and watch each step as an animated trace.</p>
           <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
             <a href={`https://agent-gateway-playground.vercel.app/?scenario=${playground}`} class="inline-flex h-10 items-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90">Open the playground</a>
@@ -82,8 +67,8 @@ const playground = PLAYGROUND[post.id];
       )}
 
       {post.data.caveats.length > 0 && (
-        <section class="mt-12 max-w-3xl">
-          <h2 class="text-xl font-semibold tracking-tight">Limitations</h2>
+        <section class="mt-14 max-w-3xl">
+          <h2 class="text-[1.4rem] font-semibold tracking-[-0.02em]">Limitations</h2>
           <div class="mt-4 overflow-hidden rounded-lg border">
             {post.data.caveats.map((c, j) => (
               <div class:list={['grid gap-1 px-4 py-3.5 sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] sm:gap-6', j && 'border-t']}>
@@ -95,8 +80,8 @@ const playground = PLAYGROUND[post.id];
         </section>
       )}
 
-      <section id="sources" class="mt-12 max-w-3xl scroll-mt-24">
-        <h2 class="text-xl font-semibold tracking-tight">Sources</h2>
+      <section id="sources" class="mt-10 max-w-3xl scroll-mt-24">
+        <h2 class="text-[1.4rem] font-semibold tracking-[-0.02em]">Sources</h2>
         <div class="mt-4 flex flex-col divide-y rounded-lg border">
           {post.data.sources.map(s => (
             <a href={s.url} class="group flex items-center gap-3 px-4 py-3.5 hover:bg-muted/50">
@@ -106,26 +91,18 @@ const playground = PLAYGROUND[post.id];
         </div>
       </section>
 
-      <Cite title={post.data.title} date={post.data.date} id={post.id} class="mt-12 max-w-3xl" />
+      <Cite title={post.data.title} date={post.data.date} id={post.id} class="mt-10 max-w-3xl" />
 
-      <Share title={post.data.title} class="mt-8 max-w-3xl" />
+      <Share title={post.data.title} class="mt-6 max-w-3xl" />
 
-      <section class="mt-12 max-w-3xl rounded-3xl bg-muted p-5 lg:hidden">
-        <p class="flex items-center gap-2 text-sm font-medium"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</p>
-        <p class="mt-0.5 text-xs text-muted-foreground tnum">Post {pos + 1} of {series.length} in this theme</p>
-        <ol class="mt-3 flex flex-col">{series.map((x, n) => <li>{x.id === post.id
-          ? <span aria-current="page" class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md bg-muted px-2 py-1.5 text-sm font-medium"><span class="text-muted-foreground tnum">{n + 1}</span>{x.data.title}</span>
-          : <a href={`/posts/${x.id}`} class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-muted/60 hover:text-foreground"><span class="tnum">{n + 1}</span>{x.data.title}</a>}</li>)}</ol>
-      </section>
-
-      <aside class="mt-12 flex max-w-3xl items-start gap-4 border-t pt-6" aria-label="About the author">
+      <aside class="mt-14 flex max-w-3xl items-start gap-4 border-t pt-8" aria-label="About the author">
         <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-muted text-sm font-semibold" aria-hidden="true">AA</span>
         <p class="text-sm leading-relaxed text-muted-foreground"><strong class="font-semibold text-foreground">Written by Ammar Adam</strong>, an engineer in Kuala Lumpur who writes about ML systems, AI platforms and agents. <a href="/about" class="text-brand hover:underline">More about me &rsaquo;</a></p>
       </aside>
 
-      <Subscribe class="mt-8 max-w-3xl" />
+      <Subscribe class="mt-10 max-w-3xl" />
 
-      <NextReads posts={nextReads} class="mt-12 max-w-3xl" />
+      <NextReads posts={nextReads} class="mt-16 max-w-3xl" />
     </article>
 
     <aside class="hidden lg:block">

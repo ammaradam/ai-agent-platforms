@@ -6,7 +6,7 @@ const { posts, class: cls = '' } = Astro.props;
 ---
 {posts.length > 0 && (
   <section class:list={[cls]} aria-labelledby="next-h">
-    <h2 id="next-h" class="text-[1.5rem] font-semibold tracking-[-0.025em]">Read next</h2>
+    <h2 id="next-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Read next</h2>
     <div class="mt-4 grid gap-3 sm:grid-cols-3">
       {posts.map(p => (
         <a href={`/posts/${p.id}`} class="group flex min-w-0 flex-col overflow-hidden rounded-3xl bg-muted transition-colors hover:bg-accent">
