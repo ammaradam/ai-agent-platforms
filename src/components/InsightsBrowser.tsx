@@ -38,10 +38,10 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
           <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search writing" aria-label="Search writing" className="h-full w-full min-w-0 bg-transparent text-[16px] outline-none placeholder:text-muted-foreground sm:text-sm" />
         </label>
-        <div className="flex flex-wrap justify-start gap-2" role="group" aria-label="Filter by theme">
+        <div className="-mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:w-full sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
-              className={cn('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] transition-colors', f === k ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-accent hover:text-foreground')}>
+              className={cn('inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[13px] transition-colors', f === k ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-accent hover:text-foreground')}>
               {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-[11px] tnum', f === k ? 'opacity-70' : 'opacity-80')}>{n}</span>
             </button>
           ))}
@@ -61,13 +61,13 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
           <h2 className="eyebrow sticky z-10 border-b bg-background/90 py-2 backdrop-blur" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 56px)' }}>{g.m}</h2>
           <div className="mt-1 flex flex-col">
             {g.items.map(p => (
-              <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-4 transition-colors hover:bg-muted/60 sm:grid-cols-[6rem_minmax(0,1fr)_9.5rem]">
+              <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-3.5 transition-colors hover:bg-muted/60 sm:py-4 sm:grid-cols-[6rem_minmax(0,1fr)_9.5rem]">
                 <time className="text-xs text-muted-foreground tnum sm:pt-1.5" dateTime={p.date}>{fmtDate(new Date(p.date), { day: 'numeric', month: 'short' })}</time>
                 <div className="min-w-0">
                   <h3 className="text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.title}</h3>
-                  <p className="mt-1 text-[16px] leading-relaxed text-muted-foreground">{p.insight}</p>
+                  <p className="mt-1 line-clamp-2 text-[15px] leading-relaxed text-muted-foreground sm:line-clamp-none sm:text-[16px]">{p.insight}</p>
                   <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-muted-foreground">
-                    {p.themes.map(t => <span key={t} className="inline-flex items-center gap-1.5"><ThemeDot k={t} />{THEMES[t].name}</span>)}
+                    {p.themes.map((t, i) => <span key={t} className={cn('items-center gap-1.5', i ? 'hidden sm:inline-flex' : 'inline-flex')}><ThemeDot k={t} />{THEMES[t].name}</span>)}
                     <span className="inline-flex items-center gap-1 tnum"><Clock className="h-3 w-3" />{p.minutes} min</span>
                   </div>
                 </div>
