@@ -36,26 +36,19 @@ export function DesktopToc({ headings }: { headings: H[] }) {
   return <TocList headings={headings} active={active} />;
 }
 
-/** Mobile: a Contents button that appears after the inline outline scrolls away, plus the reading progress bar. */
+/** Mobile: a Contents button that appears once the reader is into the post body. */
 export default function MobilePostNav({ headings }: { headings: H[] }) {
   const active = useActive(headings);
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
   React.useEffect(() => {
-    const inline = document.getElementById('inline-toc');
-    const io = inline ? new IntersectionObserver(([e]) => setShow(!e.isIntersecting && e.boundingClientRect.top < 0)) : null;
-    if (inline && io) io.observe(inline);
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      setProgress(max > 0 ? Math.min(1, scrollY / max) : 0);
-    };
+    const body = document.querySelector('.prose');
+    const onScroll = () => setShow(!!body && body.getBoundingClientRect().top < innerHeight * 0.5);
     onScroll(); addEventListener('scroll', onScroll, { passive: true });
-    return () => { io?.disconnect(); removeEventListener('scroll', onScroll); };
+    return () => removeEventListener('scroll', onScroll);
   }, []);
   return (
     <>
-      <div aria-hidden="true" className="fixed inset-x-0 z-40 h-0.5 origin-left bg-brand" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 56px)', transform: `scaleX(${progress})` }} />
       <div className={cn('fixed z-40 transition-all duration-200 lg:hidden', show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0')}
         style={{ right: 'calc(env(safe-area-inset-right, 0px) + 16px)', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)' }}>
         <Button className="h-11 rounded-full px-4 shadow-lg" onClick={() => setOpen(true)} tabIndex={show ? 0 : -1}><List />Contents</Button>

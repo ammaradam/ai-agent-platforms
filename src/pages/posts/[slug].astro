@@ -29,7 +29,7 @@ const PLAYGROUND: Record<string, string> = { 'tool-call-timeouts': 'timeout', 'a
 const playground = PLAYGROUND[post.id];
 ---
 <Base title={post.data.title} description={post.data.insight} image={`/posts/${post.id}.jpg`} nav="/insights" type="article" published={post.data.date}>
-  <div id="read-bar" aria-hidden="true" class="fixed left-0 top-0 z-50 h-[3px] w-full origin-left scale-x-0" style="background:hsl(var(--brand))"></div>
+  <div id="read-bar" aria-hidden="true" class="pointer-events-none fixed left-0 z-50 h-0.5 w-full origin-left scale-x-0" style="top:calc(env(safe-area-inset-top,0px) + 47px);background:hsl(var(--brand))"></div>
   <MobilePostNav client:idle headings={headings} />
   <div class="grid gap-12 py-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
     <article class="min-w-0">
