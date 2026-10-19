@@ -8,6 +8,7 @@ import { render } from 'astro:content';
 import Share from '@/components/Share.astro';
 import Cite from '@/components/Cite.astro';
 import NextReads from '@/components/NextReads.astro';
+import Comments from '@/components/Comments.astro';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -97,6 +98,8 @@ const playground = PLAYGROUND[post.id];
         <p class="text-sm leading-relaxed text-muted-foreground"><strong class="font-semibold text-foreground">Written by Ammar Adam</strong>, an engineer in Kuala Lumpur who writes about ML systems, AI platforms and agents. <a href="/about" class="text-brand hover:underline">More about me &rsaquo;</a></p>
       </aside>
       <Share title={post.data.title} class="mt-4 max-w-3xl" />
+
+      <Comments class="mt-14 max-w-3xl border-t pt-8" />
 
 
       <NextReads posts={nextReads} class="mt-16 max-w-3xl" />

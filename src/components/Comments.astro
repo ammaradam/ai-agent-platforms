@@ -1,0 +1,48 @@
+---
+// Likes and comments through Giscus: each post gets a thread in this repo's GitHub Discussions
+// (Announcements category, so only giscus and the owner can start threads). Readers sign in with GitHub
+// to react or comment. The widget loads only when the reader scrolls near it.
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<section class:list={['comments', cls]} aria-labelledby="comments-h">
+  <h2 id="comments-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Comments</h2>
+  <p class="mt-1 text-sm text-muted-foreground">Sign in with GitHub to like this post or join the discussion.</p>
+  <div class="giscus mt-5 min-h-[180px]"></div>
+</section>
+
+<script is:inline>
+  (function () {
+    var box = document.querySelector('.comments .giscus');
+    if (!box) return;
+    var mq = matchMedia('(prefers-color-scheme: dark)');
+    function theme() {
+      var t = document.documentElement.getAttribute('data-theme');
+      return (t ? t === 'dark' : mq.matches) ? 'noborder_dark' : 'noborder_light';
+    }
+    function load() {
+      var s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.async = true;
+      s.crossOrigin = 'anonymous';
+      var a = {
+        repo: 'ammaradam/ai-agent-platforms', 'repo-id': 'R_kgDOVN5jFA',
+        category: 'Announcements', 'category-id': 'DIC_kwDOVN5jFM4DJBfZ',
+        mapping: 'pathname', strict: '1', 'reactions-enabled': '1', 'emit-metadata': '0',
+        'input-position': 'top', theme: theme(), lang: 'en', loading: 'lazy'
+      };
+      for (var k in a) s.setAttribute('data-' + k, a[k]);
+      box.appendChild(s);
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { io.disconnect(); load(); }
+      }, { rootMargin: '600px 0px' });
+      io.observe(box);
+    } else load();
+    mq.addEventListener('change', function () {
+      var f = document.querySelector('iframe.giscus-frame');
+      if (f) f.contentWindow.postMessage({ giscus: { setConfig: { theme: theme() } } }, 'https://giscus.app');
+    });
+  })();
+</script>
