@@ -7,18 +7,17 @@ import { fmtDate } from '@/lib/utils';
 const posts = await getPosts();
 const themes = usedThemes(posts);
 ---
-<Base title="Topics" nav="/insights" description="Posts grouped by topic, oldest first so each theme reads as a series.">
+<Base title="Topics" nav="/insights" description="Posts grouped by topic, oldest first so each topic reads as a series.">
   <div class="py-10 md:py-12">
-    <PageHeader eyebrow="Writing" title="Topics" lede="Posts grouped by topic, oldest first so each topic reads as a series. A post can sit in more than one topic." />
+    <PageHeader eyebrow="Writing" href="/insights" title="Topics" lede="Posts grouped by topic, oldest first so each topic reads as a series. A post can sit in more than one topic." />
     <div class="mt-8 grid gap-4 md:grid-cols-2">
       {themes.map(k => {
         const list = themePosts(posts, k);
         return (
-          <a href={`/themes/${k}`} class="group flex flex-col rounded-3xl bg-muted p-5 transition-colors hover:bg-accent">
+          <a href={`/themes/${k}`} class="group flex flex-col rounded-2xl border p-5 transition-colors hover:bg-muted/60">
             <div class="flex items-center gap-2.5"><span class="h-3 w-3 rounded-full" style={`background:${themeColor(k)}`}></span><h2 class="text-xl font-semibold tracking-tight group-hover:text-brand">{THEMES[k].name}</h2><span class="ml-auto text-xs text-muted-foreground tnum">{list.length} {list.length === 1 ? 'post' : 'posts'}</span></div>
             <p class="mt-2 text-[16px] leading-relaxed text-muted-foreground">{THEMES[k].blurb}</p>
-            <div class="mt-4 flex gap-1" aria-hidden="true">{list.map(() => <span class="h-4 w-1.5 rounded-sm" style={`background:${themeColor(k)}`}></span>)}</div>
-            <p class="mt-2 text-[12px] text-muted-foreground tnum">Latest: {list[list.length - 1].data.title}, {fmtDate(list[list.length - 1].data.date)}</p>
+            <p class="mt-auto pt-4 text-[12px] text-muted-foreground tnum">Latest: {list[list.length - 1].data.title}, {fmtDate(list[list.length - 1].data.date)}</p>
           </a>
         );
       })}

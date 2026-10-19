@@ -45,11 +45,11 @@ const NAV = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/ab
               class:list={['rounded-full px-3.5 py-1 text-[13px] transition-colors', nav === h ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground']}>{l}</a>
           ))}
         </nav>
-        <SiteNav client:idle posts={summaries(posts)} counts={counts} current={nav} />
+        <SiteNav client:idle posts={summaries(posts)} counts={counts} current={nav} ownSearch={Astro.url.pathname.replace(/\/$/, '') === '/insights'} />
       </div>
     </header>
     <main id="main" class="gutter mx-auto w-full max-w-6xl flex-1"><slot /></main>
-    <footer class="mt-16 bg-muted">
+    <footer class="mt-16 border-t">
       <div class="gutter mx-auto flex max-w-6xl flex-col gap-4 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between" style="padding-bottom:calc(env(safe-area-inset-bottom,0px) + 32px)">
         <p>&copy; {new Date().getFullYear()} <span class="wordmark !tracking-[.12em]">ammaradam</span></p>
         <nav aria-label="Footer" class="flex flex-wrap gap-x-5 gap-y-2">

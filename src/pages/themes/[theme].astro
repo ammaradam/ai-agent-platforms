@@ -17,12 +17,12 @@ const others = usedThemes(posts).filter(t => t !== k);
 <Base title={THEMES[k].name} nav="/insights" description={THEMES[k].blurb}>
   <div class="grid gap-10 py-10 md:py-12 lg:grid-cols-[minmax(0,1fr)_14rem]">
     <div class="min-w-0">
-      <PageHeader eyebrow="Topic" title={THEMES[k].name} lede={THEMES[k].blurb} dot={themeColor(k)} />
+      <PageHeader eyebrow="Topics" href="/themes" title={THEMES[k].name} lede={THEMES[k].blurb} dot={themeColor(k)} />
       <p class="eyebrow mt-8">{list.length} {list.length === 1 ? 'post' : 'posts'}, oldest first</p>
-      <ol class="mt-3 flex flex-col overflow-hidden rounded-lg border">
+      <ol class="mt-3 flex flex-col divide-y border-t">
         {list.map((p, i) => (
-          <li class:list={[i && 'border-t']}>
-            <a href={`/posts/${p.id}`} class="group grid grid-cols-[2rem_minmax(0,1fr)] gap-2 px-4 py-4 hover:bg-accent">
+          <li>
+            <a href={`/posts/${p.id}`} class="group grid grid-cols-[2rem_minmax(0,1fr)] gap-2 py-4">
               <span class="text-sm text-muted-foreground tnum">{i + 1}</span>
               <span class="min-w-0">
                 <span class="block text-[17px] font-semibold leading-snug group-hover:text-brand">{p.data.title}</span>
@@ -35,11 +35,11 @@ const others = usedThemes(posts).filter(t => t !== k);
       </ol>
     </div>
     <aside>
-      <p class="eyebrow">Other themes</p>
+      <p class="eyebrow">Other topics</p>
       <ul class="mt-3 flex flex-col gap-0.5">
         {others.map(t => <li><a href={`/themes/${t}`} class="flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>{THEMES[t].name}</a></li>)}
       </ul>
-      <a href={`/insights?theme=${k}`} class="mt-4 inline-block text-sm text-brand">Search within this theme</a>
+      <a href={`/insights?theme=${k}`} class="mt-4 inline-block text-sm text-brand">Search within this topic</a>
     </aside>
   </div>
 </Base>

@@ -11,7 +11,7 @@ import type { PostSummary } from './types';
 type Item = { group: string; label: string; sub?: string; href: string; icon: React.ReactNode };
 const PAGES = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/about']] as const;
 
-export default function SiteNav({ posts, counts, current }: { posts: PostSummary[]; counts: Record<string, number>; current: string }) {
+export default function SiteNav({ posts, counts, current, ownSearch = false }: { posts: PostSummary[]; counts: Record<string, number>; current: string; ownSearch?: boolean }) {
   const [menu, setMenu] = React.useState(false);
   const [cmd, setCmd] = React.useState(false);
   const [q, setQ] = React.useState('');
@@ -31,7 +31,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
     const s = q.trim().toLowerCase();
     const ps = posts.filter(p => !s || p.text.includes(s)).map(p => ({ group: 'Writing', label: p.title, sub: p.insight, href: `/posts/${p.slug}`, icon: <FileText /> }));
     const ts = (Object.keys(THEMES) as ThemeKey[]).filter(k => counts[k] && (!s || THEMES[k].name.toLowerCase().includes(s)))
-      .map(k => ({ group: 'Themes', label: THEMES[k].name, href: `/themes/${k}`, icon: <ThemeDot k={k} className="m-1" /> }));
+      .map(k => ({ group: 'Topics', label: THEMES[k].name, href: `/themes/${k}`, icon: <ThemeDot k={k} className="m-1" /> }));
     const pg = PAGES.filter(([l]) => !s || l.toLowerCase().includes(s)).map(([l, h]) => ({ group: 'Pages', label: l, href: h, icon: l === 'Projects' ? <FolderGit2 /> : l === 'About' ? <User /> : <Hash /> }));
     return [...ps, ...ts, ...pg];
   }, [q, posts, counts]);
@@ -47,7 +47,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
   return (
     <>
       <div className="ml-auto flex items-center gap-2">
-        <button type="button" onClick={() => setCmd(true)} className="hidden h-9 w-60 items-center gap-2 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground  transition-colors hover:bg-accent sm:flex">
+        <button type="button" onClick={() => setCmd(true)} className={cn('hidden h-9 w-60 items-center gap-2 rounded-full border border-input bg-background px-3.5 text-sm text-muted-foreground transition-colors hover:bg-accent', ownSearch ? 'sm:hidden' : 'sm:flex')}>
           <Search className="h-4 w-4" /> Search writing
           <kbd className="ml-auto rounded border bg-muted px-1.5 font-mono text-[10px]">⌘K</kbd>
         </button>
@@ -64,7 +64,7 @@ export default function SiteNav({ posts, counts, current }: { posts: PostSummary
             ))}
           </nav>
           <div className="h-px bg-border" />
-          <p className="text-xs font-medium text-muted-foreground">Themes</p>
+          <p className="text-xs font-medium text-muted-foreground">Topics</p>
           <div className="flex flex-col gap-0.5">
             {(Object.keys(THEMES) as ThemeKey[]).filter(k => counts[k]).map(k => (
               <a key={k} href={`/themes/${k}`} className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm hover:bg-muted">
