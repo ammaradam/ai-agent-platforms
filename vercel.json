@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/insights",
+      "destination": "/notes",
+      "permanent": true
+    },
+    {
+      "source": "/insights/",
+      "destination": "/notes",
+      "permanent": true
+    }
+  ]
+}

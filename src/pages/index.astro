@@ -21,18 +21,18 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
     <h1 class="max-w-3xl text-[2.15rem] font-semibold leading-[1.1] tracking-[-0.022em] sm:text-5xl">Hi, I'm Ammar Adam, an engineer in Kuala Lumpur.</h1>
     <p class="mt-4 max-w-2xl text-[1.1rem] leading-relaxed text-muted-foreground sm:text-[1.2rem]">I write about ML systems, AI platforms and agents, and build open-source tools to go with it. This site is where the writing and the projects live. On it, I:</p>
     <ul class="mt-4 flex max-w-2xl list-disc flex-col gap-2.5 pl-5 text-[1.05rem] leading-relaxed marker:text-muted-foreground">
-      <li><a href="/insights" class={link}>Write</a> about running AI in production: agent tools, identity, observability and reliability.</li>
+      <li><a href="/notes" class={link}>Write</a> about running AI in production: agent tools, identity, observability and reliability.</li>
       <li><a href="/projects" class={link}>Build</a> open-source tools, such as mlops-toolbox, with live demos you can try in the browser.</li>
       <li>Back every post with diagrams and the public sources behind it. <a href="/about" class={link}>More about me</a>.</li>
     </ul>
     <Newsletter formOnly class="mt-7" />
   </section>
 
-  <!-- Writing: a peek at the newest and a few to start with -->
-  <section class="mt-12 border-t pt-8" aria-labelledby="writing-h">
+  <!-- Notes: a peek at the newest and a few to start with -->
+  <section class="mt-12 border-t pt-8" aria-labelledby="notes-h">
     <div class="flex items-baseline justify-between gap-4">
-      <h2 id="writing-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Writing</h2>
-      <a href="/insights" class={seeAll}>All {posts.length} posts &rsaquo;</a>
+      <h2 id="notes-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Notes</h2>
+      <a href="/notes" class={seeAll}>All {posts.length} posts &rsaquo;</a>
     </div>
     <div class="mt-4 grid gap-x-10 gap-y-6 md:grid-cols-2">
       <div>

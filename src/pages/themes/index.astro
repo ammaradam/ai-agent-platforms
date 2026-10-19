@@ -7,9 +7,9 @@ import { fmtDate } from '@/lib/utils';
 const posts = await getPosts();
 const themes = usedThemes(posts);
 ---
-<Base title="Topics" nav="/insights" description="Posts grouped by topic, oldest first so each topic reads as a series.">
+<Base title="Topics" nav="/notes" description="Posts grouped by topic, oldest first so each topic reads as a series.">
   <div class="py-10 md:py-12">
-    <PageHeader eyebrow="Writing" href="/insights" title="Topics" lede="Posts grouped by topic, oldest first so each topic reads as a series. A post can sit in more than one topic." />
+    <PageHeader eyebrow="Notes" href="/notes" title="Topics" lede="Posts grouped by topic, oldest first so each topic reads as a series. A post can sit in more than one topic." />
     <div class="mt-8 grid gap-4 md:grid-cols-2">
       {themes.map(k => {
         const list = themePosts(posts, k);

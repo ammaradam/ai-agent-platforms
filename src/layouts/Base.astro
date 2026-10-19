@@ -8,12 +8,12 @@ import Logo from '@/components/Logo.astro';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 
 interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date }
-const { image, title, description = 'Ammar Adam is an engineer in Kuala Lumpur. Writing, projects and interactive demos on ML systems, AI platforms and agents.', nav = '', type = 'website', published } = Astro.props;
+const { image, title, description = 'Ammar Adam is an engineer in Kuala Lumpur. Notes, projects and interactive demos on ML systems, AI platforms and agents.', nav = '', type = 'website', published } = Astro.props;
 const posts = await getPosts();
 const counts = themeCounts(posts);
 const fullTitle = title ? `${title} | AmmarAdam` : 'AmmarAdam';
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const NAV = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/about']];
+const NAV = [['Notes', '/notes'], ['Projects', '/projects'], ['About', '/about']];
 ---
 <!doctype html>
 <html lang="en">
@@ -47,7 +47,7 @@ const NAV = [['Writing', '/insights'], ['Projects', '/projects'], ['About', '/ab
               class:list={['rounded-full px-3.5 py-1 text-[13px] transition-colors', nav === h ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground']}>{l}</a>
           ))}
         </nav>
-        <SiteNav client:idle posts={summaries(posts)} counts={counts} current={nav} ownSearch={Astro.url.pathname.replace(/\/$/, '') === '/insights'} />
+        <SiteNav client:idle posts={summaries(posts)} counts={counts} current={nav} ownSearch={Astro.url.pathname.replace(/\/$/, '') === '/notes'} />
       </div>
     </header>
     <main id="main" class="gutter mx-auto w-full max-w-6xl flex-1"><slot /></main>

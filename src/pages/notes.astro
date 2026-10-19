@@ -5,9 +5,9 @@ import InsightsBrowser from '@/components/InsightsBrowser';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 const posts = await getPosts();
 ---
-<Base title="Writing" nav="/insights" description="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text.">
+<Base title="Notes" nav="/notes" description="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text.">
   <div class="py-10 md:py-12">
-    <PageHeader title="Writing" lede="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text." />
+    <PageHeader title="Notes" lede="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text." />
     <div class="mt-8"><InsightsBrowser client:load posts={summaries(posts)} counts={themeCounts(posts)} /></div>
   </div>
 </Base>

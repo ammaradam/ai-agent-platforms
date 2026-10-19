@@ -36,7 +36,7 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
       <div className="flex flex-col items-start gap-4">
         <label className="flex h-11 w-full max-w-xl items-center gap-2.5 rounded-full bg-muted px-4 transition-colors focus-within:bg-background focus-within:ring-2 focus-within:ring-ring">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
-          <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search writing" aria-label="Search writing" className="h-full w-full min-w-0 bg-transparent text-[16px] outline-none placeholder:text-muted-foreground sm:text-sm" />
+          <input id="insight-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search notes" aria-label="Search notes" className="h-full w-full min-w-0 bg-transparent text-[16px] outline-none placeholder:text-muted-foreground sm:text-sm" />
         </label>
         <div className="-mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:w-full sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
