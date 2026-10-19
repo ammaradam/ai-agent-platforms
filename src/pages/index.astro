@@ -17,6 +17,9 @@ const link = 'font-medium text-brand hover:underline';
 const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
 ---
 <Base nav="/">
+  <script is:inline>
+    try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('reveal-on'); } catch (e) {}
+  </script>
   <section class="pt-8 md:pt-14">
     <h1 class="max-w-3xl text-[2.15rem] font-semibold leading-[1.1] tracking-[-0.022em] sm:text-5xl">Hi, I'm Ammar Adam, an engineer in Kuala Lumpur.</h1>
     <p class="mt-4 max-w-2xl text-[1.1rem] leading-relaxed text-muted-foreground sm:text-[1.2rem]">I write about ML systems, AI platforms and agents, and build open-source tools to go with it. This site is where the writing and the projects live. On it, I:</p>
@@ -29,7 +32,7 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
   </section>
 
   <!-- Notes: a peek at the newest and a few to start with -->
-  <section class="mt-12 border-t pt-8" aria-labelledby="notes-h">
+  <section data-reveal class="mt-12 border-t pt-8" aria-labelledby="notes-h">
     <div class="flex items-baseline justify-between gap-4">
       <h2 id="notes-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Notes</h2>
       <a href="/notes" class={seeAll}>All {posts.length} posts &rsaquo;</a>
@@ -55,7 +58,7 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
   </section>
 
   <!-- Projects: a peek, one line each -->
-  <section class="mt-10 border-t pt-8" aria-labelledby="projects-h">
+  <section data-reveal class="mt-10 border-t pt-8" aria-labelledby="projects-h">
     <div class="flex items-baseline justify-between gap-4">
       <h2 id="projects-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Projects</h2>
       <a href="/projects" class={seeAll}>All projects &rsaquo;</a>
@@ -76,7 +79,7 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
   </section>
 
   <!-- Topics: a peek, as chips -->
-  <section class="mt-10 border-t pt-8" aria-labelledby="topics-h">
+  <section data-reveal class="mt-10 border-t pt-8" aria-labelledby="topics-h">
     <div class="flex items-baseline justify-between gap-4">
       <h2 id="topics-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Topics</h2>
       <a href="/themes" class={seeAll}>All topics &rsaquo;</a>
@@ -88,3 +91,18 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
     </ul>
   </section>
 </Base>
+
+<script is:inline>
+  (function () {
+    if (!document.documentElement.classList.contains('reveal-on')) return;
+    var secs = document.querySelectorAll('[data-reveal]');
+    secs.forEach(function (sec) {
+      var parts = [sec.firstElementChild].concat([].slice.call(sec.querySelectorAll('h3, li')));
+      parts.forEach(function (el, i) { el.classList.add('rv'); el.style.setProperty('--i', Math.min(i, 8)); });
+    });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    secs.forEach(function (sec) { io.observe(sec); });
+  })();
+</script>

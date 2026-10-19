@@ -8,8 +8,8 @@ const ink = tile ? '#fff' : 'currentColor';
 <svg width={size} height={size} viewBox="0 0 64 64" class:list={['logo-mark shrink-0', cls]} aria-hidden="true" focusable="false">
   {tile && <rect width="64" height="64" rx="15" fill="#0f1b2d" />}
   <g fill="none" stroke={ink} stroke-width="9.6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M52 46 31.5 15 14 39.5C11 44.5 17.5 48.5 21.5 45" />
-    <path d="M21.5 45 44.5 29.5" opacity=".82" class:list={[animate && 'logo-draw']} />
+    <path class="logo-a" pathLength="1" d="M52 46 31.5 15 14 39.5C11 44.5 17.5 48.5 21.5 45" />
+    <path class:list={['logo-b', animate && 'logo-draw']} pathLength="1" d="M21.5 45 44.5 29.5" opacity=".82" />
   </g>
-  <circle cx="55" cy="18" r="4" fill={ink} />
+  <circle class="logo-dot" cx="55" cy="18" r="4" fill={ink} />
 </svg>
