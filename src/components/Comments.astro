@@ -1,14 +1,15 @@
 ---
 // Likes and comments through Giscus: each post gets a thread in this repo's GitHub Discussions
-// (Announcements category, so only giscus and the owner can start threads). Readers sign in with GitHub
+// (Announcements category, so only giscus and the owner can start threads), keyed by post slug
+// so /posts/x and /posts/x/ share one thread. Readers sign in with GitHub
 // to react or comment. The widget loads only when the reader scrolls near it.
-interface Props { class?: string }
-const { class: cls = '' } = Astro.props;
+interface Props { slug: string; class?: string }
+const { slug, class: cls = '' } = Astro.props;
 ---
 <section class:list={['comments', cls]} aria-labelledby="comments-h">
   <h2 id="comments-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Comments</h2>
   <p class="mt-1 text-sm text-muted-foreground">Sign in with GitHub to like this post or join the discussion.</p>
-  <div class="giscus mt-5 min-h-[180px]"></div>
+  <div class="giscus mt-5 min-h-[180px]" data-term={`posts/${slug}`}></div>
 </section>
 
 <script is:inline>
@@ -28,7 +29,7 @@ const { class: cls = '' } = Astro.props;
       var a = {
         repo: 'ammaradam/ai-agent-platforms', 'repo-id': 'R_kgDOVN5jFA',
         category: 'Announcements', 'category-id': 'DIC_kwDOVN5jFM4DJBfZ',
-        mapping: 'pathname', strict: '1', 'reactions-enabled': '1', 'emit-metadata': '0',
+        mapping: 'specific', term: box.getAttribute('data-term'), strict: '1', 'reactions-enabled': '1', 'emit-metadata': '0',
         'input-position': 'top', theme: theme(), lang: 'en', loading: 'lazy'
       };
       for (var k in a) s.setAttribute('data-' + k, a[k]);

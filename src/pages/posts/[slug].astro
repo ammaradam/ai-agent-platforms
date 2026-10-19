@@ -99,7 +99,7 @@ const playground = PLAYGROUND[post.id];
       </aside>
       <Share title={post.data.title} class="mt-4 max-w-3xl" />
 
-      <Comments class="mt-14 max-w-3xl border-t pt-8" />
+      <Comments slug={post.id} class="mt-14 max-w-3xl border-t pt-8" />
 
 
       <NextReads posts={nextReads} class="mt-16 max-w-3xl" />
