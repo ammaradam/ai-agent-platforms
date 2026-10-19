@@ -13,7 +13,7 @@ const mail = `mailto:?subject=${enc(title)}&body=${enc(`${title}\n${url}`)}`;
 const btn = 'grid h-10 w-10 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground';
 ---
 <div class:list={['flex flex-wrap items-center gap-1.5', cls]} role="group" aria-label="Share this post">
-  <span class="mr-2 text-[17px] font-medium">Share on:</span>
+  <span class="mr-2 text-[15px] font-medium text-muted-foreground">Share</span>
   {links.map(l => (
     <a href={l.href} class={btn} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${l.label}`} title={l.label}>
       <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={l.path} /></svg>
