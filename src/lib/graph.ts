@@ -79,10 +79,6 @@ export function noteGraph(posts: Post[]) {
   return { nodes, edges, height: MAP.top + (rows - 1) * MAP.rowGap + 60 };
 }
 
-/** The notes linked to `id`, in either direction. */
-export const neighbours = (g: ReturnType<typeof noteGraph>, id: string) =>
-  g.edges.filter(e => e.a === id || e.b === id).map(e => (e.a === id ? e.b : e.a));
-
 /** A curved path between two nodes: arcs left within a lane, bows upward across lanes. */
 export function edgePath(a: GraphNode, b: GraphNode) {
   if (a.x === b.x) return `M${a.x} ${a.y} Q${a.x - 44} ${(a.y + b.y) / 2} ${b.x} ${b.y}`;
