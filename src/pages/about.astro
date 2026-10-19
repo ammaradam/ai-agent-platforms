@@ -1,40 +1,44 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { getPosts, themeCounts, usedThemes } from '@/lib/posts';
-import { THEMES, themeColor } from '@/data/themes';
+import Social from '@/components/Social.astro';
 import { PROJECTS } from '@/data/projects';
-const posts = await getPosts();
-const counts = themeCounts(posts);
-const demos = PROJECTS.filter(p => p.demo).length;
-const pill = 'inline-flex h-10 items-center rounded-full px-5 text-sm font-medium transition-colors';
+const built = PROJECTS.slice(0, 4);
+const FOCUS = ['MLOps', 'Model deployment', 'AI platforms', 'AI agents', 'Computer vision', 'Retrieval-augmented generation'];
 ---
-<Base title="About" nav="/about" description="About Ammar Adam, an engineer in Kuala Lumpur who writes about ML systems, AI platforms and agents.">
-  <div class="grid gap-10 py-10 md:py-14 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-    <div class="max-w-2xl">
-      <p class="eyebrow">About</p>
-      <h1 class="mt-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">Hi, I'm Ammar.</h1>
-      <div class="mt-6 flex flex-col gap-4 text-[1.1rem] leading-relaxed">
-        <p>I'm an engineer in Kuala Lumpur. I write about ML systems, AI platforms and the engineering around them, and I build open-source tools to go with it.</p>
-        <p class="text-muted-foreground">Each post comes with diagrams, tables and the public sources behind it. A few come with interactive demos you can run in the browser, so you can break the thing yourself instead of taking my word for it.</p>
-      </div>
-      <div class="mt-8 flex flex-wrap gap-2">
-        <a href="/insights" class:list={[pill, 'bg-primary text-primary-foreground hover:bg-primary/90']}>Read the writing</a>
-        <a href="/projects" class:list={[pill, 'bg-muted hover:bg-accent']}>See the projects</a>
-        <a href="https://github.com/ammaradam" class:list={[pill, 'bg-muted hover:bg-accent']}>GitHub</a>
-        <a href="/rss.xml" class:list={[pill, 'bg-muted hover:bg-accent']}>RSS</a>
-      </div>
-      <dl class="mt-10 grid max-w-md grid-cols-3 gap-3 text-sm">
-        <div class="rounded-2xl bg-muted px-4 py-3"><dt class="text-xs text-muted-foreground">Posts</dt><dd class="mt-0.5 text-xl font-semibold tnum">{posts.length}</dd></div>
-        <div class="rounded-2xl bg-muted px-4 py-3"><dt class="text-xs text-muted-foreground">Topics</dt><dd class="mt-0.5 text-xl font-semibold tnum">{usedThemes(posts).length}</dd></div>
-        <div class="rounded-2xl bg-muted px-4 py-3"><dt class="text-xs text-muted-foreground">Live demos</dt><dd class="mt-0.5 text-xl font-semibold tnum">{demos}</dd></div>
-      </dl>
+<Base title="About" nav="/about" description="About Ammar Adam, a machine learning engineer in Kuala Lumpur focused on MLOps, AI platforms and agents.">
+  <div class="max-w-2xl py-10 md:py-14">
+    <p class="eyebrow">About</p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">Hi, I'm Ammar.</h1>
+    <div class="mt-6 flex flex-col gap-4 text-[1.1rem] leading-relaxed">
+      <p>I'm a machine learning engineer in Kuala Lumpur, Malaysia, with a focus on MLOps: getting models out of notebooks and into services that people can rely on.</p>
+      <p class="text-muted-foreground">That means standard pipelines, monitoring, and deployment that scales. Lately my attention is on AI platforms and agents: how they call tools safely, who they act for, and how you can tell when they quietly go wrong. I write about it here, and I build small open-source tools and live demos to test the ideas.</p>
     </div>
-    <div class="h-fit rounded-3xl bg-muted p-5">
-      <p class="eyebrow">What I write about</p>
-      <ul class="mt-3 flex flex-col gap-1">
-        {usedThemes(posts).map(k => <li><a href={`/themes/${k}`} class="flex items-center gap-2.5 rounded-xl px-2 py-1.5 text-sm hover:bg-accent"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}<span class="ml-auto text-xs text-muted-foreground tnum">{counts[k]}</span></a></li>)}
-      </ul>
-      <p class="mt-4 text-sm text-muted-foreground">New posts on Tuesdays and Thursdays.</p>
-    </div>
+
+    <dl class="mt-8 grid max-w-xl grid-cols-[6.5rem_minmax(0,1fr)] gap-x-5 gap-y-3 text-[15px] leading-snug">
+      <dt class="text-muted-foreground">Based in</dt><dd>Kuala Lumpur, Malaysia</dd>
+      <dt class="text-muted-foreground">What I do</dt><dd>Machine learning engineer, focused on MLOps and model deployment</dd>
+      <dt class="text-muted-foreground">Working on</dt><dd>AI platforms and agents: tool calls, identity, observability and reliability</dd>
+      <dt class="text-muted-foreground">Building since</dt><dd>2017, in public on GitHub</dd>
+    </dl>
+
+    <h2 class="mt-10 text-[1.15rem] font-semibold tracking-tight">Focus</h2>
+    <ul class="mt-3 flex flex-wrap gap-2" aria-label="Focus areas">
+      {FOCUS.map(f => <li class="rounded-full bg-muted px-3.5 py-1.5 text-sm">{f}</li>)}
+    </ul>
+
+    <h2 class="mt-10 text-[1.15rem] font-semibold tracking-tight">A few things I've built</h2>
+    <ul class="mt-3 flex flex-col divide-y">
+      {built.map(p => (
+        <li>
+          <a href={p.demo ?? p.repo} class="group flex flex-col gap-0.5 py-3 sm:flex-row sm:items-baseline sm:gap-4">
+            <span class="font-mono text-[14px] font-medium group-hover:text-brand sm:w-56 sm:shrink-0">{p.name}</span>
+            <span class="text-sm leading-snug text-muted-foreground">{p.tagline}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-3 text-sm leading-relaxed text-muted-foreground">I've been building in public on GitHub since 2017: computer vision and NLP experiments, deployment pipelines on Azure and GitHub Actions, and MLOps and RAG toolkits. <a href="/projects" class="text-brand hover:underline">All projects &rsaquo;</a></p>
+
+    <Social class="mt-8" />
   </div>
 </Base>

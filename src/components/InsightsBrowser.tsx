@@ -45,11 +45,11 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
             ))}
           </div>
         </div>
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by theme">
+        <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
-              className={cn('inline-flex h-8 items-center gap-2 rounded-full border px-3 text-sm transition-colors', f === k ? 'border-foreground bg-foreground text-background' : 'bg-background text-muted-foreground hover:border-foreground/40 hover:text-foreground')}>
-              {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-xs tnum', f === k && 'opacity-70')}>{n}</span>
+              className={cn('inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-[13px] transition-colors', f === k ? 'border-foreground bg-foreground text-background' : 'bg-background text-muted-foreground hover:border-foreground/40 hover:text-foreground')}>
+              {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-[11px] tnum', f === k && 'opacity-70')}>{n}</span>
             </button>
           ))}
         </div>

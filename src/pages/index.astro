@@ -1,28 +1,20 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Newsletter from '@/components/Newsletter.astro';
-import PostRow from '@/components/PostRow.astro';
-import { getPosts, themeCounts } from '@/lib/posts';
-import { THEMES, themeColor, type ThemeKey } from '@/data/themes';
+import { getPosts, themeCounts, usedThemes } from '@/lib/posts';
+import { THEMES, themeColor } from '@/data/themes';
 import { PROJECTS } from '@/data/projects';
+import { fmtDate } from '@/lib/utils';
 const posts = await getPosts();
 const counts = themeCounts(posts);
 
-// Four posts that show how I think about it, one per angle.
-const START_HERE = ['tool-call-timeouts', 'agent-identity-is-not-authorization', 'agent-success-is-not-a-200', 'standardise-the-right-things'];
+// A short list of posts that show how I think about running AI in production.
+const START_HERE = ['tool-call-timeouts', 'agent-identity-is-not-authorization', 'agent-success-is-not-a-200'];
 const start = START_HERE.map(id => posts.find(p => p.id === id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
-
-const TRACE: [ThemeKey, number, number, string, string][] = [
-  ['developer-experience', 0, 10, 'sdk.init', ''],
-  ['identity-security', 10, 22, 'authz.check', ''],
-  ['ai-platform-engineering', 22, 36, 'gateway.route', ''],
-  ['ai-agents', 36, 70, 'tool.call', 'fail'],
-  ['reliability', 74, 94, 'retry key=K1', ''],
-  ['observability', 0, 100, 'every span recorded', ''],
-];
-const featured = PROJECTS.filter(p => p.featured);
-const pill = 'inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors';
+const latest = posts.slice(0, 3);
+const featured = PROJECTS.filter(p => p.featured).slice(0, 3);
 const link = 'font-medium text-brand hover:underline';
+const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
 ---
 <Base nav="/">
   <section class="pt-8 md:pt-14">
@@ -33,78 +25,66 @@ const link = 'font-medium text-brand hover:underline';
       <li><a href="/projects" class={link}>Build</a> open-source tools, such as mlops-toolbox, with live demos you can try in the browser.</li>
       <li>Back every post with diagrams and the public sources behind it. <a href="/about" class={link}>More about me</a>.</li>
     </ul>
-    <Newsletter class="mt-7" />
+    <Newsletter formOnly class="mt-7" />
   </section>
 
-  <section class="mt-14 border-t pt-10">
-    <div class="flex items-end justify-between gap-4">
-      <h2 class="text-[1.75rem] font-semibold tracking-[-0.025em]">Latest writing</h2>
-      <a href="/insights" class="text-sm text-muted-foreground hover:text-foreground">All {posts.length} posts</a>
+  <!-- Writing: a peek at the newest and a few to start with -->
+  <section class="mt-12 border-t pt-8" aria-labelledby="writing-h">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 id="writing-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Writing</h2>
+      <a href="/insights" class={seeAll}>All {posts.length} posts &rsaquo;</a>
     </div>
-    <div class="mt-3 flex flex-col">{posts.slice(0, 5).map(p => <PostRow post={p} />)}</div>
-  </section>
-
-  <section class="mt-14 border-t pt-12">
-    <h2 class="text-[1.75rem] font-semibold tracking-[-0.025em]">Start here</h2>
-    <p class="mt-1 text-sm text-muted-foreground">Four posts that show how I think about running AI in production.</p>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2">
-      {start.map(p => (
-        <a href={`/posts/${p.id}`} class="group flex min-w-0 flex-col overflow-hidden rounded-3xl bg-muted transition-colors hover:bg-accent">
-          <img src={`/posts/thumb/${p.id}.jpg`} alt="" width="480" height="270" loading="lazy" class="aspect-video w-full object-cover" />
-          <div class="flex flex-1 flex-col p-5">
-            <p class="flex items-center gap-2 text-xs text-muted-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(p.data.themes[0])}`}></span>{THEMES[p.data.themes[0]].name}</p>
-            <h3 class="mt-1.5 text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.data.title}</h3>
-            <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{p.data.insight}</p>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class="mt-14 border-t pt-12">
-    <div class="flex items-end justify-between gap-4">
-      <h2 class="text-[1.75rem] font-semibold tracking-[-0.025em]">Projects</h2>
-      <a href="/projects" class="text-sm text-muted-foreground hover:text-foreground">All projects</a>
-    </div>
-    <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {featured.map(p => (
-        <div class="flex min-w-0 flex-col rounded-3xl bg-muted p-5">
-          <div class="flex items-center justify-between gap-3"><h3 class="font-mono text-[15px] font-medium">{p.name}</h3><span class="rounded-full bg-background px-2.5 py-0.5 text-xs text-muted-foreground">{p.status}</span></div>
-          <p class="mt-2 text-[15px] font-medium leading-snug">{p.tagline}</p>
-          <p class="mt-2 line-clamp-4 text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
-          <div class="mt-4 flex flex-wrap gap-1.5">{p.stack.slice(0, 4).map(s => <span class="rounded-full bg-background px-2.5 py-0.5 text-xs text-muted-foreground">{s}</span>)}</div>
-          <div class="mt-auto flex flex-wrap items-center gap-2 pt-4">
-            {p.demo && <a href={p.demo} class:list={[pill, 'bg-primary text-primary-foreground hover:bg-primary/90']}>Try it live</a>}
-            <a href={p.repo} class:list={[pill, p.demo ? 'bg-background hover:bg-accent' : 'bg-primary text-primary-foreground hover:bg-primary/90']}>View on GitHub</a>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="mt-14 border-t pt-12" aria-labelledby="topics-h">
-    <div class="flex items-end justify-between gap-4">
+    <div class="mt-4 grid gap-x-10 gap-y-6 md:grid-cols-2">
       <div>
-        <h2 id="topics-h" class="text-[1.75rem] font-semibold tracking-[-0.025em]">What I write about</h2>
-        <p class="mt-1 text-sm text-muted-foreground">One request through an agent platform, and the six topics it touches. Select a row to read that topic.</p>
+        <h3 class="eyebrow">Latest</h3>
+        <ul class="mt-1 flex flex-col divide-y">
+          {latest.map(p => (
+            <li><a href={`/posts/${p.id}`} class="group flex gap-4 py-2.5"><time class="w-12 shrink-0 pt-px text-xs text-muted-foreground tnum" datetime={p.data.date.toISOString()}>{fmtDate(p.data.date, { day: 'numeric', month: 'short' })}</time><span class="text-[15px] font-medium leading-snug group-hover:text-brand">{p.data.title}</span></a></li>
+          ))}
+        </ul>
       </div>
-      <a href="/themes" class="shrink-0 text-sm text-muted-foreground hover:text-foreground">All topics</a>
+      <div>
+        <h3 class="eyebrow">Start here</h3>
+        <ul class="mt-1 flex flex-col divide-y">
+          {start.map(p => (
+            <li><a href={`/posts/${p.id}`} class="group flex items-baseline gap-3 py-2.5"><span class="h-2 w-2 shrink-0 rounded-full" style={`background:${themeColor(p.data.themes[0])}`}></span><span class="text-[15px] font-medium leading-snug group-hover:text-brand">{p.data.title}</span></a></li>
+          ))}
+        </ul>
+      </div>
     </div>
-    <div class="mt-6 overflow-hidden rounded-3xl bg-muted">
-      <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-3 md:px-[18px]">
-        <p class="font-mono text-[13px] font-medium">agent.create_ticket <span class="text-muted-foreground">· one request, six topics</span></p>
-      </div>
-      {TRACE.map(([k, from, to, label, kind], i) => (
-        <a href={`/themes/${k}`} class="trace-row" style={`--i:${i}`}>
-          <span class="flex items-center gap-2.5 text-[14px] font-medium"><span class="h-2.5 w-2.5 shrink-0 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}<span class="ml-auto text-xs text-muted-foreground tnum">{counts[k] ?? 0}</span></span>
-          <span class="trace-track" aria-hidden="true">
-            <span class:list={['trace-span', kind === 'fail' && 'hatch']} style={`left:${from}%;width:${to - from}%;background:${kind === 'fail' ? 'hsl(var(--fail))' : themeColor(k)}`}>{to - from >= 16 ? label : ''}</span>
-            {to - from < 16 && <span class="trace-lbl" style={`left:calc(${to}% + 6px)`}>{label}</span>}
-            {kind === 'fail' && <span class="absolute inset-y-0 border-l border-dashed" style={`left:${to}%;border-color:hsl(var(--fail))`}></span>}
-          </span>
-        </a>
+  </section>
+
+  <!-- Projects: a peek, one line each -->
+  <section class="mt-10 border-t pt-8" aria-labelledby="projects-h">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 id="projects-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Projects</h2>
+      <a href="/projects" class={seeAll}>All projects &rsaquo;</a>
+    </div>
+    <ul class="mt-3 flex flex-col divide-y">
+      {featured.map(p => (
+        <li class="flex items-center justify-between gap-4 py-3">
+          <a href={p.repo} class="group min-w-0">
+            <span class="block font-mono text-[14px] font-medium group-hover:text-brand">{p.name}</span>
+            <span class="mt-0.5 block text-sm leading-snug text-muted-foreground">{p.tagline}</span>
+          </a>
+          {p.demo
+            ? <a href={p.demo} class="shrink-0 rounded-full bg-primary px-3.5 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90">Try it live</a>
+            : <a href={p.repo} class="shrink-0 rounded-full bg-muted px-3.5 py-1.5 text-xs font-medium hover:bg-accent">GitHub</a>}
+        </li>
       ))}
-      <p class="border-t px-4 py-3 text-[13px] text-muted-foreground md:px-[18px]">A tool call times out at the dashed line. The retry reuses its idempotency key, and every span is recorded. <a href="/posts/tool-call-timeouts" class="font-medium text-brand underline underline-offset-4">Read why that matters</a></p>
+    </ul>
+  </section>
+
+  <!-- Topics: a peek, as chips -->
+  <section class="mt-10 border-t pt-8" aria-labelledby="topics-h">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 id="topics-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Topics</h2>
+      <a href="/themes" class={seeAll}>All topics &rsaquo;</a>
     </div>
+    <ul class="mt-3 flex flex-wrap gap-2">
+      {usedThemes(posts).map(k => (
+        <li><a href={`/themes/${k}`} class="inline-flex items-center gap-2 rounded-full bg-muted px-3.5 py-1.5 text-sm transition-colors hover:bg-accent"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}<span class="text-xs text-muted-foreground tnum">{counts[k]}</span></a></li>
+      ))}
+    </ul>
   </section>
 </Base>
