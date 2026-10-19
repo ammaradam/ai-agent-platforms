@@ -2,8 +2,6 @@
 title: "An agent's identity is not its permission"
 date: 2026-10-13
 themes: ["identity-security", "ai-agents", "ai-platform-engineering"]
-lane: "identity"
-short: "Identity ≠ access"
 insight: "Knowing who an agent is answers only part of the question. Whether an action is allowed depends on the user, the scope they delegated and the resource's own policy."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7515683149171974146/"
 caveats:

@@ -2,8 +2,6 @@
 title: "Gateway errors that help someone fix the problem"
 date: 2026-10-06
 themes: ["ai-platform-engineering", "developer-experience"]
-lane: "platform"
-short: "Helpful errors"
 insight: "A blocked request is more useful when the error says what happened, where, and what to try next, without exposing sensitive details."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7513146097813426177/"
 caveats:

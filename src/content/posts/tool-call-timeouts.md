@@ -2,8 +2,6 @@
 title: "When a tool call times out, did it happen?"
 date: 2026-09-22
 themes: ["ai-agents", "reliability"]
-lane: "tool"
-short: "Timeouts"
 insight: "A timed-out tool call may still have completed, so retrying safely needs the familiar distributed-systems tools: idempotency keys, durable state and verification."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7508072963515162624/"
 caveats:

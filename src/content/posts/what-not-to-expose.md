@@ -2,8 +2,6 @@
 title: "Deciding what not to expose"
 date: 2026-09-14
 themes: ["ai-platform-engineering", "developer-experience"]
-lane: "platform"
-short: "What to hide"
 insight: "Infrastructure was largely designed for people who read docs and debug by hand; building for agents and for non-infrastructure users both raise the question of what to hide."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7505158749809094656/"
 caveats:

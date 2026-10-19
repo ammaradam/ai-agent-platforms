@@ -2,46 +2,12 @@
 import Base from '@/layouts/Base.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import InsightsBrowser from '@/components/InsightsBrowser';
-import NotesMap from '@/components/NotesMap.astro';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 const posts = await getPosts();
-const tab = 'rounded-full px-3.5 py-1 text-[13px] transition-colors';
 ---
 <Base title="Notes" nav="/notes" description="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text.">
   <div class="py-10 md:py-12">
-    <div class="flex items-end justify-between gap-6">
-      <PageHeader title="Notes" lede="Everything I have written, each with a one-line takeaway. Filter by topic, search the full text, or see how the notes connect." />
-      <div class="hidden shrink-0 items-center gap-1 rounded-full border p-1 md:flex" role="group" aria-label="View">
-        <button type="button" data-view="list" aria-pressed="true" class={tab}>List</button>
-        <button type="button" data-view="map" aria-pressed="false" class={tab}>Map</button>
-      </div>
-    </div>
-    <div class="mt-8" data-pane="list"><InsightsBrowser client:load posts={summaries(posts)} counts={themeCounts(posts)} /></div>
-    <div class="mt-8 hidden" data-pane="map">
-      <p class="mb-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">Each note sits where it belongs on an agent request, from the developer building on a platform to the evidence left afterwards. Lines join notes that point to each other.</p>
-      <NotesMap posts={posts} />
-    </div>
+    <PageHeader title="Notes" lede="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text." />
+    <div class="mt-8"><InsightsBrowser client:load posts={summaries(posts)} counts={themeCounts(posts)} /></div>
   </div>
 </Base>
-
-<style>
-  [data-view][aria-pressed='true'] { background: hsl(var(--muted)); color: hsl(var(--foreground)); }
-  [data-view][aria-pressed='false'] { color: hsl(var(--muted-foreground)); }
-  [data-view][aria-pressed='false']:hover { color: hsl(var(--foreground)); }
-</style>
-
-<script is:inline>
-  (function () {
-    var btns = document.querySelectorAll('[data-view]'), panes = document.querySelectorAll('[data-pane]');
-    var wide = matchMedia('(min-width: 768px)');
-    function set(v, push) {
-      if (!wide.matches) v = 'list';
-      btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.view === v)); });
-      panes.forEach(function (p) { p.classList.toggle('hidden', p.dataset.pane !== v); });
-      if (push) { var u = new URL(location.href); if (v === 'map') u.searchParams.set('view', 'map'); else u.searchParams.delete('view'); history.replaceState(null, '', u); }
-    }
-    btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.view, true); }); });
-    wide.addEventListener('change', function () { set(new URL(location.href).searchParams.get('view') || 'list'); });
-    set(new URL(location.href).searchParams.get('view') || 'list');
-  })();
-</script>

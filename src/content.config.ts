@@ -7,8 +7,6 @@ const posts = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     themes: z.array(z.enum(['ai-platform-engineering', 'observability', 'ai-agents', 'identity-security', 'developer-experience', 'reliability'])).min(1),
-    lane: z.enum(['developer', 'platform', 'identity', 'tool', 'observability']).optional(),
-    short: z.string().max(18).optional(),
     insight: z.string(),
     linkedin: z.string().url().optional(),
     caveats: z.array(z.object({ title: z.string(), text: z.string() })).default([]),

@@ -2,8 +2,6 @@
 title: "Patterns for agent tool calls you can trust in production"
 date: 2026-10-19
 themes: ["ai-agents", "identity-security", "reliability"]
-lane: "tool"
-short: "Safe tool calls"
 insight: "Most of what makes an agent safe to run happens at the tool call, not in the prompt: who the call acts for, how risky it is, what happens when it is retried, and whether anyone can see it afterwards."
 caveats:
   - title: "Patterns, not a framework."
