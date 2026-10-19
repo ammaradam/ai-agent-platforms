@@ -2,6 +2,8 @@
 title: "Checking both the user and the agent"
 date: 2026-09-16
 themes: ["identity-security", "ai-agents"]
+lane: "identity"
+short: "User and agent"
 insight: "Workload identity says which software is calling; authorizing an agent's action also needs to know which user it acts for and through which chain of agents."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7505898286952808449/"
 caveats:

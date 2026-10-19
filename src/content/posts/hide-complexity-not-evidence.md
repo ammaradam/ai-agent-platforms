@@ -2,6 +2,8 @@
 title: "Good abstractions hide complexity, not evidence"
 date: 2026-10-15
 themes: ["observability", "ai-platform-engineering"]
+lane: "observability"
+short: "Keep evidence"
 insight: "An abstraction can reduce how much infrastructure a user needs to know without reducing the evidence they need to diagnose a problem."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7516407996646686721/"
 caveats:

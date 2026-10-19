@@ -2,6 +2,8 @@
 title: "First users shape the platform's design"
 date: 2026-09-29
 themes: ["ai-platform-engineering", "developer-experience"]
+lane: "developer"
+short: "First users"
 insight: "A platform's first real users show where its abstractions help and where they get in the way, which makes their feedback part of the design work."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7510609596965744640/"
 caveats:

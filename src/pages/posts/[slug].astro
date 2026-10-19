@@ -9,6 +9,7 @@ import Share from '@/components/Share.astro';
 import Cite from '@/components/Cite.astro';
 import NextReads from '@/components/NextReads.astro';
 import Comments from '@/components/Comments.astro';
+import ConnectedNotes from '@/components/ConnectedNotes.astro';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -102,7 +103,9 @@ const playground = PLAYGROUND[post.id];
       <Comments slug={post.id} class="mt-14 max-w-3xl border-t pt-8" />
 
 
-      <NextReads posts={nextReads} class="mt-16 max-w-3xl" />
+      <ConnectedNotes posts={posts} post={post} class="mt-16 max-w-3xl" />
+
+      <NextReads posts={nextReads} class="mt-12 max-w-3xl" />
     </article>
 
     <aside class="hidden lg:block">

@@ -1,0 +1,88 @@
+---
+// The Notes map: every note placed on an agent request's path (lanes, left to right), with a line
+// for each pair of notes that list each other as related. Solid = both ways, dashed = one way.
+// Hover, focus or tap a note to bring its neighbours forward; click opens it.
+import { LANES, MAP, edgePath, noteGraph } from '@/lib/graph';
+import { THEMES, themeColor } from '@/data/themes';
+import type { Post } from '@/lib/posts';
+interface Props { posts: Post[]; class?: string }
+const { posts, class: cls = '' } = Astro.props;
+const g = noteGraph(posts);
+const at = Object.fromEntries(g.nodes.map(n => [n.id, n]));
+const used = [...new Set(g.nodes.map(n => n.theme))];
+---
+<div class:list={['notes-map', cls]}>
+  <div class="overflow-hidden rounded-2xl border">
+    <svg viewBox={`0 0 ${MAP.width} ${g.height}`} class="block h-auto w-full" role="group" aria-label="Map of notes along an agent request path">
+      <defs><marker id="nm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="currentColor" stroke-width="1.5" /></marker></defs>
+      <line x1="50" y1="46" x2={MAP.width - 40} y2="46" class="text-border" stroke="currentColor" stroke-width="1.2" marker-end="url(#nm-arrow)" />
+      {LANES.map((l, i) => {
+        const x = MAP.left + i * MAP.laneGap;
+        return (
+          <g>
+            <text x={x} y="32" text-anchor="middle" class="fill-muted-foreground text-[13px] font-medium">{l.name}</text>
+            <line x1={x} y1="62" x2={x} y2={g.height - 20} class="text-border" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5" />
+          </g>
+        );
+      })}
+      <g>
+        {g.edges.map(e => (
+          <path d={edgePath(at[e.a], at[e.b])} data-a={e.a} data-b={e.b} fill="none" class="nm-edge text-border"
+            stroke="currentColor" stroke-width={e.mutual ? 2 : 1.3} stroke-dasharray={e.mutual ? undefined : '5 4'} />
+        ))}
+      </g>
+      {g.nodes.map(n => (
+        <a href={`/posts/${n.id}`} class="nm-node" data-id={n.id} data-title={n.title} data-insight={n.insight} aria-label={n.title}>
+          <circle cx={n.x} cy={n.y} r="22" fill="transparent" />
+          <circle cx={n.x} cy={n.y} r={n.big ? 12 : 8} style={`fill:${themeColor(n.theme)}`} class="nm-dot stroke-background" stroke-width="3" />
+          <text x={n.x} y={n.y + (n.big ? 32 : 27)} text-anchor="middle" class="fill-foreground text-[13px]">{n.label}</text>
+        </a>
+      ))}
+    </svg>
+  </div>
+  <div class="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+    <p class="nm-info min-h-[3.25rem] text-sm leading-relaxed text-muted-foreground" aria-live="polite">Hover a note to see what it links to. Solid lines link both ways, dashed lines one way, and the larger dot is a long essay.</p>
+    <ul class="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground md:max-w-sm md:justify-end">
+      {used.map(t => <li class="inline-flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>{THEMES[t].name}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .nm-edge, .nm-node { transition: opacity .2s, color .2s; }
+  .nm-node text { paint-order: stroke; stroke: hsl(var(--background)); stroke-width: 6px; stroke-linejoin: round; }
+  .nm-node:focus { outline: none; }
+  .nm-node:focus-visible .nm-dot, .nm-node.is-on .nm-dot { stroke: hsl(var(--brand)); }
+  .notes-map.has-focus .nm-node:not(.is-near), .notes-map.has-focus .nm-edge:not(.is-on) { opacity: .15; }
+  .nm-edge.is-on { color: hsl(var(--brand)); }
+</style>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('.notes-map').forEach(function (map) {
+      var nodes = [].slice.call(map.querySelectorAll('.nm-node'));
+      var edges = [].slice.call(map.querySelectorAll('.nm-edge'));
+      var info = map.querySelector('.nm-info'), intro = info.textContent;
+      function show(id) {
+        var near = { }; near[id] = 1;
+        edges.forEach(function (e) {
+          var on = e.dataset.a === id || e.dataset.b === id;
+          e.classList.toggle('is-on', on);
+          if (on) { near[e.dataset.a] = 1; near[e.dataset.b] = 1; }
+        });
+        var me;
+        nodes.forEach(function (n) { n.classList.toggle('is-near', !!near[n.dataset.id]); n.classList.toggle('is-on', n.dataset.id === id); if (n.dataset.id === id) me = n; });
+        map.classList.add('has-focus');
+        info.innerHTML = '';
+        var b = document.createElement('strong'); b.className = 'font-medium text-foreground'; b.textContent = me.dataset.title;
+        info.append(b, document.createElement('br'), document.createTextNode(me.dataset.insight + ' (' + (Object.keys(near).length - 1) + ' linked)'));
+      }
+      function clear() { map.classList.remove('has-focus'); nodes.concat(edges).forEach(function (x) { x.classList.remove('is-on', 'is-near'); }); info.textContent = intro; }
+      nodes.forEach(function (n) {
+        n.addEventListener('mouseenter', function () { show(n.dataset.id); });
+        n.addEventListener('focus', function () { show(n.dataset.id); });
+      });
+      map.querySelector('svg').addEventListener('mouseleave', clear);
+    });
+  })();
+</script>

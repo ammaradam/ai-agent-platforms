@@ -2,6 +2,8 @@
 title: "Measure the journey to the first production call"
 date: 2026-10-08
 themes: ["developer-experience", "ai-platform-engineering"]
+lane: "developer"
+short: "First call"
 insight: "Platform metrics are more useful when they cover how quickly a new team gets started, not only how the platform performs once it's running."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7513870865990680576/"
 caveats:

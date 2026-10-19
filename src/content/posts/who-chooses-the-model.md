@@ -2,6 +2,8 @@
 title: "Who chooses the model: the application or the platform?"
 date: 2026-09-24
 themes: ["ai-platform-engineering"]
+lane: "platform"
+short: "Model choice"
 insight: "Pinning a model version gives reproducibility; letting a platform route by requirements eases upgrades. Model retirement schedules make the trade-off concrete."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7508797932775624704/"
 caveats:

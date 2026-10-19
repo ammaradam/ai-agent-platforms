@@ -2,6 +2,8 @@
 title: "A 200 OK doesn't mean the agent succeeded"
 date: 2026-09-18
 themes: ["observability", "ai-agents"]
+lane: "observability"
+short: "200 ≠ success"
 insight: "Infrastructure can be healthy while an agent's task goes wrong, so agent observability leans on execution traces, not only logs and latency."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7506608295965507585/"
 caveats:

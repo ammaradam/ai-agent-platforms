@@ -2,6 +2,8 @@
 title: "What a shared platform should standardise"
 date: 2026-10-01
 themes: ["ai-platform-engineering", "developer-experience"]
+lane: "platform"
+short: "Standardise"
 insight: "Shared platforms tend to work best when they standardise the capabilities every team would otherwise rebuild, and leave use-case decisions to the teams."
 linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7511334244959465472/"
 caveats:
