@@ -5,7 +5,7 @@ const { eyebrow, href, title, lede, dot, class: cls = '' } = Astro.props;
 ---
 <header class:list={['max-w-2xl', cls]}>
   {eyebrow && (href ? <a href={href} class="eyebrow inline-block hover:text-foreground">&lsaquo; {eyebrow}</a> : <p class="eyebrow">{eyebrow}</p>)}
-  <h1 class:list={[eyebrow && 'mt-3', 'flex items-center gap-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl']}>
+  <h1 class:list={[eyebrow && 'mt-3', 'flex items-center gap-3 text-4xl font-semibold tracking-[-0.02em] sm:text-5xl']}>
     {dot && <span class="h-3.5 w-3.5 shrink-0 rounded-full" style={`background:${dot}`} aria-hidden="true"></span>}
     {title}
   </h1>

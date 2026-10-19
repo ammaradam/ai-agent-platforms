@@ -37,7 +37,7 @@ const playground = PLAYGROUND[post.id];
         <a href="/insights" class="hover:text-foreground">Writing</a><span>/</span>
         <a href={`/themes/${k}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</a>
       </nav>
-      <h1 class="mt-4 max-w-3xl text-[2.2rem] font-semibold leading-[1.07] tracking-[-0.035em] sm:text-[3.25rem]">{post.data.title}</h1>
+      <h1 class="mt-4 max-w-3xl text-[2.2rem] font-semibold leading-[1.07] tracking-[-0.022em] sm:text-[3.25rem]">{post.data.title}</h1>
       <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
         <time class="tnum" datetime={post.data.date.toISOString()}>{fmtDate(post.data.date, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
         <span class="tnum">{minutesOf(post)} min read</span>

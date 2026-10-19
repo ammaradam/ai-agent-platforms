@@ -6,7 +6,7 @@ export default {
     container: { center: true, padding: '1rem', screens: { '2xl': '1152px' } },
     extend: {
       fontFamily: {
-        sans: ['"Bricolage Grotesque Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         serif: ['"Source Serif 4 Variable"', 'Georgia', 'serif'],
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
       },
