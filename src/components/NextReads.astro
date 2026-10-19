@@ -7,7 +7,7 @@ const { posts, class: cls = '' } = Astro.props;
 {posts.length > 0 && (
   <section class:list={[cls]} aria-labelledby="next-h">
     <h2 id="next-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Read next</h2>
-    <div class="-mx-4 mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
+    <div class="-mx-4 mt-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
       {posts.map(p => (
         <a href={`/posts/${p.id}`} class="group flex w-[72%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border transition-colors hover:bg-muted/60 sm:w-auto sm:min-w-0">
           <img src={`/posts/thumb/${p.id}.jpg`} alt="" width="480" height="270" loading="lazy" class="aspect-video w-full object-cover" />
