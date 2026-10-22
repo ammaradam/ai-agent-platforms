@@ -2,7 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import MobilePostNav, { DesktopToc } from '@/components/PostNav';
 import { getPosts, headingsOf, minutesOf, recommend, themePosts } from '@/lib/posts';
-import { THEMES, themeColor } from '@/data/themes';
+import { THEMES, themeColor, themeVar } from '@/data/themes';
 import { fmtDate } from '@/lib/utils';
 import { render } from 'astro:content';
 import Share from '@/components/Share.astro';
@@ -29,13 +29,12 @@ const PLAYGROUND: Record<string, string> = { 'tool-call-timeouts': 'timeout', 'a
 const playground = PLAYGROUND[post.id];
 ---
 <Base title={post.data.title} description={post.data.insight} image={`/posts/${post.id}.jpg`} nav="/notes" type="article" published={post.data.date}>
-  <div id="read-bar" aria-hidden="true" class="pointer-events-none fixed left-0 z-50 h-0.5 w-full origin-left scale-x-0" style="top:calc(env(safe-area-inset-top,0px) + 47px);background:hsl(var(--brand))"></div>
+  <div id="read-bar" aria-hidden="true" class="pointer-events-none fixed left-0 z-50 h-0.5 w-full origin-left scale-x-0" style={`top:calc(env(safe-area-inset-top,0px) + 47px);background:${themeColor(k)}`}></div>
   <MobilePostNav client:idle headings={headings} />
   <div class="grid gap-12 py-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
     <article class="min-w-0">
       <nav class="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb">
-        <a href="/notes" class="hover:text-foreground">Notes</a><span>/</span>
-        <a href={`/themes/${k}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}</a>
+        <a href={`/themes/${k}`} class="kicker" style={themeVar(k)}>{THEMES[k].name}</a>
       </nav>
       <h1 class="mt-4 max-w-3xl text-[2.2rem] font-semibold leading-[1.07] tracking-[-0.022em] sm:text-[3.25rem]">{post.data.title}</h1>
       <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
@@ -43,14 +42,14 @@ const playground = PLAYGROUND[post.id];
         <span class="tnum">{minutesOf(post)} min read</span>
         <a href="#sources" class="hover:text-foreground">{post.data.sources.length} sources</a>
         {post.data.linkedin && <a href={post.data.linkedin} class="hover:text-foreground">Discuss on LinkedIn &rsaquo;</a>}
-        {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="inline-flex items-center gap-1.5 hover:text-foreground"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(t)}`}></span>Also in {THEMES[t].name}</a>)}
+        {post.data.themes.slice(1).map(t => <a href={`/themes/${t}`} class="hover:text-foreground">Also in {THEMES[t].name}</a>)}
       </div>
 
       <div class="mt-6 max-w-3xl overflow-hidden rounded-3xl bg-muted">
         <img src={`/posts/${post.id}.jpg`} alt="" width="1280" height="720" class="aspect-[2/1] h-auto w-full object-cover" fetchpriority="high" />
       </div>
 
-      <p class="mt-8 max-w-3xl text-[1.15rem] font-medium leading-snug tracking-[-0.015em] sm:text-[1.45rem]" style={`border-left:3px solid ${themeColor(k)}; padding-left:1rem`}>{post.data.insight}</p>
+      <p class="mt-8 max-w-3xl text-[1.15rem] font-medium leading-snug tracking-[-0.015em] sm:text-[1.45rem]"><span class="hl" style={themeVar(k)}>{post.data.insight}</span></p>
 
       <div class="prose mt-10"><Content /></div>
 

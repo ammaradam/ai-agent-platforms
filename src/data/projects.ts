@@ -1,11 +1,14 @@
 export type Project = {
   name: string; repo: string; tagline: string; summary: string; stack: string[];
   highlights: string[]; status: string; featured?: boolean; demo?: string;
+  /** A screenshot of the live demo, under /public. */
+  shot?: string;
 };
 
 export const PROJECTS: Project[] = [
   {
     name: 'agent-gateway-playground',
+    shot: '/projects/agent-gateway-playground.jpg',
     repo: 'https://github.com/ammaradam/agent-gateway-playground',
     demo: 'https://agent-gateway-playground.vercel.app',
     tagline: 'Break an AI agent on purpose, and watch every step.',
@@ -23,6 +26,7 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'mlops-toolbox',
+    shot: '/projects/mlops-toolbox.jpg',
     repo: 'https://github.com/ammaradam/MLOps-Toolbox',
     demo: 'https://mlops-toolbox-playground.vercel.app',
     tagline: 'A model that carries its own contract from training to production.',

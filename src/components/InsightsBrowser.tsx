@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Search, Clock } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ThemeDot } from './ThemeDot';
 import { THEMES, type ThemeKey } from '@/data/themes';
 import { cn, fmtDate } from '@/lib/utils';
 import type { PostSummary } from './types';
@@ -41,8 +40,9 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
         <div className="-mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:w-full sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden" role="group" aria-label="Filter by theme">
           {chips.map(([k, l, n]) => (
             <button key={k || 'all'} type="button" aria-pressed={f === k} onClick={() => pick(k)}
-              className={cn('inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[13px] transition-colors', f === k ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-accent hover:text-foreground')}>
-              {k && <ThemeDot k={k as ThemeKey} />}{l}<span className={cn('text-[12px] tnum', f === k ? 'opacity-70' : 'opacity-80')}>{n}</span>
+              className={cn('inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[13px] transition-colors',
+                f === k ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-accent hover:text-foreground')}>
+              {l}<span className={cn('text-[12px] tnum', f === k ? 'opacity-75' : 'opacity-70')}>{n}</span>
             </button>
           ))}
         </div>
@@ -64,12 +64,9 @@ export default function InsightsBrowser({ posts, counts }: { posts: PostSummary[
               <a key={p.slug} href={`/posts/${p.slug}`} className="row-in group -mx-3 grid gap-x-6 gap-y-1.5 rounded-lg px-3 py-3.5 transition-colors hover:bg-muted/60 sm:py-4 sm:grid-cols-[6rem_minmax(0,1fr)_9.5rem]">
                 <time className="text-xs text-muted-foreground tnum sm:pt-1.5" dateTime={p.date}>{fmtDate(new Date(p.date), { day: 'numeric', month: 'short' })}</time>
                 <div className="min-w-0">
-                  <h3 className="text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.title}</h3>
+                  <p className="kicker" style={{ '--tc': `var(${THEMES[p.themes[0]].color})` } as React.CSSProperties}>{THEMES[p.themes[0]].name}<span className="ml-2 font-medium normal-case tracking-normal text-muted-foreground">{p.minutes} min read</span></p>
+                  <h3 className="mt-1 text-[18px] font-semibold leading-snug tracking-tight group-hover:text-brand">{p.title}</h3>
                   <p className="mt-1 line-clamp-2 text-[15px] leading-relaxed text-muted-foreground sm:line-clamp-none sm:text-[16px]">{p.insight}</p>
-                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-muted-foreground">
-                    {p.themes.map((t, i) => <span key={t} className={cn('items-center gap-1.5', i ? 'hidden sm:inline-flex' : 'inline-flex')}><ThemeDot k={t} />{THEMES[t].name}</span>)}
-                    <span className="inline-flex items-center gap-1 tnum"><Clock className="h-3 w-3" />{p.minutes} min</span>
-                  </div>
                 </div>
                 <img src={`/posts/thumb/${p.slug}.jpg`} alt="" width={480} height={270} loading="lazy" className="hidden aspect-video w-full rounded-xl object-cover sm:block" />
               </a>

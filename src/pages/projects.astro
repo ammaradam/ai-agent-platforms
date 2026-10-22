@@ -12,6 +12,7 @@ const earlier = PROJECTS.filter(p => !p.featured);
     <div class="mt-10 flex flex-col gap-6">
       {featured.map(p => (
         <article class="rounded-2xl border p-6">
+          {p.shot && <a href={p.demo ?? p.repo} class="mb-6 block overflow-hidden rounded-xl border bg-muted" aria-label={`Open the ${p.name} demo`}><img src={p.shot} alt={`The ${p.name} demo running`} width="1150" height="520" loading="lazy" class="block aspect-[2.7/1] w-full object-cover object-top" /></a>}
           <div class="flex flex-wrap items-center gap-3">
             <h2 class="font-mono text-lg font-medium">{p.name}</h2>
             <span class="rounded-full border px-2 py-0.5 text-[12px] text-muted-foreground">{p.status}</span>

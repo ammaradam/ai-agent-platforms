@@ -2,7 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import { getPosts, themePosts, usedThemes } from '@/lib/posts';
-import { THEMES, themeColor } from '@/data/themes';
+import { THEMES, themeColor, themeVar } from '@/data/themes';
 import { fmtDate } from '@/lib/utils';
 const posts = await getPosts();
 const themes = usedThemes(posts);
@@ -14,9 +14,9 @@ const themes = usedThemes(posts);
       {themes.map(k => {
         const list = themePosts(posts, k);
         return (
-          <a href={`/themes/${k}`} class="group flex flex-col rounded-2xl border p-5 transition-colors hover:bg-muted/60">
-            <div class="flex items-center gap-2.5"><span class="h-3 w-3 rounded-full" style={`background:${themeColor(k)}`}></span><h2 class="text-xl font-semibold tracking-tight group-hover:text-brand">{THEMES[k].name}</h2><span class="ml-auto text-xs text-muted-foreground tnum">{list.length} {list.length === 1 ? 'post' : 'posts'}</span></div>
-            <p class="mt-2 text-[16px] leading-relaxed text-muted-foreground">{THEMES[k].blurb}</p>
+          <a href={`/themes/${k}`} class="group flex flex-col rounded-2xl border p-6 transition-colors hover:bg-muted/60" style={themeVar(k)}>
+            <div class="flex items-baseline gap-2.5"><h2 class="kicker">{THEMES[k].name}</h2><span class="ml-auto text-xs text-muted-foreground tnum">{list.length} {list.length === 1 ? 'post' : 'posts'}</span></div>
+            <p class="mt-2 text-[19px] font-medium leading-snug tracking-[-0.01em] group-hover:text-brand">{THEMES[k].blurb}</p>
             <p class="mt-auto pt-4 text-[12px] text-muted-foreground tnum">Latest: {list[list.length - 1].data.title}, {fmtDate(list[list.length - 1].data.date)}</p>
           </a>
         );

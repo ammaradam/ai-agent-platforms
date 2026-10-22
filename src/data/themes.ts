@@ -9,3 +9,5 @@ export const THEMES = {
 
 export type ThemeKey = keyof typeof THEMES;
 export const themeColor = (k: ThemeKey) => `hsl(var(${THEMES[k].color}))`;
+/** Inline style that sets --tc to the topic's hue, for the .kicker and .hl styles. */
+export const themeVar = (k: ThemeKey) => `--tc: var(${THEMES[k].color})`;

@@ -1,7 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { getPosts, themeCounts, usedThemes } from '@/lib/posts';
-import { THEMES, themeColor } from '@/data/themes';
+import { THEMES, themeColor, themeVar } from '@/data/themes';
 import { PROJECTS } from '@/data/projects';
 import { fmtDate } from '@/lib/utils';
 const posts = await getPosts();
@@ -48,7 +48,7 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
         <h3 class="eyebrow">Start here</h3>
         <ul class="mt-1 flex flex-col divide-y">
           {start.map(p => (
-            <li><a href={`/posts/${p.id}`} class="group flex items-baseline gap-3 py-2.5"><span class="h-2 w-2 shrink-0 rounded-full" style={`background:${themeColor(p.data.themes[0])}`}></span><span class="text-[15px] font-medium leading-snug group-hover:text-brand">{p.data.title}</span></a></li>
+            <li><a href={`/posts/${p.id}`} class="group flex items-baseline gap-3 py-2.5"><span class="text-[15px] font-medium leading-snug group-hover:text-brand">{p.data.title}</span></a></li>
           ))}
         </ul>
       </div>
@@ -82,9 +82,9 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
       <h2 id="topics-h" class="text-[1.4rem] font-semibold tracking-[-0.02em]">Topics</h2>
       <a href="/themes" class={seeAll}>All topics &rsaquo;</a>
     </div>
-    <ul class="mt-3 flex flex-wrap gap-2">
+    <ul class="mt-4 flex flex-wrap gap-x-7 gap-y-3">
       {usedThemes(posts).map(k => (
-        <li><a href={`/themes/${k}`} class="inline-flex items-center gap-2 rounded-full bg-muted px-3.5 py-1.5 text-sm transition-colors hover:bg-accent"><span class="h-2 w-2 rounded-full" style={`background:${themeColor(k)}`}></span>{THEMES[k].name}<span class="text-xs text-muted-foreground tnum">{counts[k]}</span></a></li>
+        <li><a href={`/themes/${k}`} class="kicker text-[13px]" style={themeVar(k)}>{THEMES[k].name}<span class="ml-1.5 font-medium text-muted-foreground">{counts[k]}</span></a></li>
       ))}
     </ul>
   </section>
