@@ -1,6 +1,17 @@
 {
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ammar-site-black.vercel.app"
+        }
+      ],
+      "destination": "https://www.ammaradam.dev/:path*",
+      "permanent": true
+    },
+    {
       "source": "/insights",
       "destination": "/notes",
       "permanent": true

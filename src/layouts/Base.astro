@@ -7,11 +7,11 @@ import SiteNav from '@/components/SiteNav';
 import Logo from '@/components/Logo.astro';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 
-interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date }
-const { image, title, description = 'Ammar Adam is an engineer in Kuala Lumpur. Notes, projects and interactive demos on ML systems, AI platforms and agents.', nav = '', type = 'website', published } = Astro.props;
+interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date; noindex?: boolean }
+const { image, title, description = 'Ammar Adam is an engineer in Kuala Lumpur. Notes, projects and interactive demos on ML systems, AI platforms and agents.', nav = '', type = 'website', published, noindex = false } = Astro.props;
 const posts = await getPosts();
 const counts = themeCounts(posts);
-const fullTitle = title ? `${title} | AmmarAdam` : 'AmmarAdam';
+const fullTitle = title ? `${title} | Ammar Adam` : 'Ammar Adam: notes on running AI in production';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const NAV = [['Notes', '/notes'], ['Projects', '/projects'], ['About', '/about']];
 ---
@@ -23,14 +23,14 @@ const NAV = [['Notes', '/notes'], ['Projects', '/projects'], ['About', '/about']
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title="AmmarAdam" href="/rss.xml" />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <link rel="alternate" type="application/rss+xml" title="Ammar Adam" href="/rss.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content={type} />
-    <meta property="og:title" content={title ?? 'AmmarAdam'} />
+    <meta property="og:title" content={title ?? 'Ammar Adam'} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:site_name" content="AmmarAdam" />
+    <meta property="og:site_name" content="Ammar Adam" />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
     <meta property="og:image" content={new URL(image ?? '/og.jpg', Astro.site)} />
     <meta property="og:image:width" content={image ? '1280' : '1200'} />

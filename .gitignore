@@ -7,3 +7,7 @@ dist/
 
 .vercel
 .claude/
+
+# promo video tooling and output (local only)
+promo/
+brag-output/

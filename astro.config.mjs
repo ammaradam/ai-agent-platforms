@@ -3,9 +3,9 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
-// Change `site` to your real domain before deploying (used for RSS, sitemap and link previews).
+// The public address, used for canonical links, RSS, the sitemap and link previews.
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://ammar-site-black.vercel.app',
+  site: process.env.SITE_URL || 'https://www.ammaradam.dev',
   integrations: [react(), tailwind({ applyBaseStyles: false }), sitemap()],
   trailingSlash: 'ignore',
 });
