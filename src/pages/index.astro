@@ -27,6 +27,14 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
       <li><a href="/projects" class={link}>Projects</a> such as mlops-toolbox and the Agent Gateway Playground, with live demos you can try in the browser.</li>
       <li><a href="/about" class={link}>About me</a>: my work and what I am building next.</li>
     </ul>
+    <!-- A 30-second tour. Nothing downloads until the visitor presses play. -->
+    <figure class="mt-9 max-w-3xl">
+      <video controls playsinline preload="none" poster="/video/ammaradam-launch.jpg" width="1280" height="720"
+        class="block aspect-video w-full rounded-2xl border bg-muted" aria-label="A 30-second tour of the notes and the two live demos">
+        <source src="/video/ammaradam-launch.mp4" type="video/mp4" />
+      </video>
+      <figcaption class="mt-2.5 text-sm text-muted-foreground">A 30-second tour of the notes and both live demos. Sound on.</figcaption>
+    </figure>
   </section>
 
   <!-- Notes: a peek at the newest and a few to start with -->
