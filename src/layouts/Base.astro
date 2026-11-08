@@ -5,6 +5,7 @@ import '@fontsource/ibm-plex-mono/latin-500.css';
 import '@/styles/globals.css';
 import SiteNav from '@/components/SiteNav';
 import Logo from '@/components/Logo.astro';
+import Analytics from '@vercel/analytics/astro';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 
 interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date; noindex?: boolean }
@@ -36,6 +37,7 @@ const NAV = [['Notes', '/notes'], ['Projects', '/projects'], ['About', '/about']
     <meta property="og:image:width" content={image ? '1280' : '1200'} />
     <meta property="og:image:height" content={image ? '720' : '630'} />
     <meta name="twitter:card" content="summary_large_image" />
+    <Analytics />
   </head>
   <body class="flex min-h-screen flex-col">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2">Skip to content</a>
