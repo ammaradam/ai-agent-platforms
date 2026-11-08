@@ -19,16 +19,18 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
   <script is:inline>
     try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('reveal-on'); } catch (e) {}
   </script>
-  <section class="pt-8 md:pt-14">
-    <h1 class="max-w-3xl text-[2.15rem] font-semibold leading-[1.1] tracking-[-0.022em] sm:text-5xl">Hi, I'm Ammar Adam, an engineer in Kuala Lumpur.</h1>
-    <p class="mt-4 max-w-2xl text-[1.1rem] leading-relaxed text-muted-foreground sm:text-[1.2rem]">I write about running ML systems, AI platforms and agents in production, and build open-source tools to test the ideas. Here you will find:</p>
-    <ul class="mt-4 flex max-w-2xl list-disc flex-col gap-2.5 pl-5 text-[1.05rem] leading-relaxed marker:text-muted-foreground">
-      <li><a href="/notes" class={link}>Notes</a> on agent tools, identity, observability and reliability, each backed by a diagram and its public sources.</li>
-      <li><a href="/projects" class={link}>Projects</a> such as mlops-toolbox and the Agent Gateway Playground, with live demos you can try in the browser.</li>
-      <li><a href="/about" class={link}>About me</a>: my work and what I am building next.</li>
-    </ul>
-    <!-- A 30-second tour. Nothing downloads until the visitor presses play. -->
-    <figure class="mt-9 max-w-3xl">
+  <section class="pt-8 md:pt-14 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+    <div>
+      <h1 class="text-[2.15rem] font-semibold leading-[1.1] tracking-[-0.022em] sm:text-5xl">Hi, I'm Ammar Adam, an engineer in Kuala Lumpur.</h1>
+      <p class="mt-4 text-[1.1rem] leading-relaxed text-muted-foreground sm:text-[1.2rem]">I write about running ML systems, AI platforms and agents in production, and build open-source tools to test the ideas. Here you will find:</p>
+      <ul class="mt-4 flex list-disc flex-col gap-2.5 pl-5 text-[1.05rem] leading-relaxed marker:text-muted-foreground">
+        <li><a href="/notes" class={link}>Notes</a> on agent tools, identity, observability and reliability, each backed by a diagram and its public sources.</li>
+        <li><a href="/projects" class={link}>Projects</a> such as mlops-toolbox and the Agent Gateway Playground, with live demos you can try in the browser.</li>
+        <li><a href="/about" class={link}>About me</a>: my work and what I am building next.</li>
+      </ul>
+    </div>
+    <!-- A 30-second tour. Nothing downloads until the visitor presses play. On desktop it sits to the right of the intro. -->
+    <figure class="mt-9 lg:mt-0">
       <video controls playsinline preload="none" poster="/video/ammaradam-launch.jpg" width="1280" height="720"
         class="block aspect-video w-full rounded-2xl border bg-muted" aria-label="A 30-second tour of the notes and the two live demos">
         <source src="/video/ammaradam-launch.mp4" type="video/mp4" />
