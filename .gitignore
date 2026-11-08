@@ -11,3 +11,6 @@ dist/
 # promo video tooling and output (local only)
 promo/
 brag-output/
+
+# LinkedIn drafts (local only)
+linkedin-drafts/
