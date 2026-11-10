@@ -3,6 +3,7 @@ title: "Token budgets are enforcement, not alerts"
 date: 2026-11-08
 themes: ["ai-platform-engineering", "ai-agents", "reliability"]
 insight: "An agent's spend needs a limit the next model call cannot cross, not a chart someone reads the next morning."
+linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7525898075995914240/"
 caveats:
   - title: "Worst-case reservations are pessimistic."
     text: "Tight budgets with large output caps can block calls that would have fit."
