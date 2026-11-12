@@ -3,6 +3,7 @@ title: "Pause the call, not the agent"
 date: 2026-11-08
 themes: ["ai-agents", "identity-security", "reliability"]
 insight: "A kill switch stops an agent after something has gone wrong. A pause stops it at the one call that can't be undone."
+linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7526622525703909376/"
 caveats:
   - title: "A pause is only as good as its reader."
     text: "Busy approvers click yes. Keep pauses rare so each one gets real attention."
