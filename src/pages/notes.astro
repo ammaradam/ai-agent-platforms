@@ -2,6 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import InsightsBrowser from '@/components/InsightsBrowser';
+import Newsletter from '@/components/Newsletter.astro';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 const posts = await getPosts();
 ---
@@ -9,5 +10,19 @@ const posts = await getPosts();
   <div class="py-10 md:py-12">
     <PageHeader title="Notes" lede="Everything I have written, each with a one-line takeaway. Filter by topic or search the full text." />
     <div class="mt-8"><InsightsBrowser client:load posts={summaries(posts)} counts={themeCounts(posts)} /></div>
+    <div class="mt-14 grid gap-6 border-t pt-10 md:grid-cols-2">
+      <Newsletter source="notes" class="h-full" />
+      <section class="flex h-full flex-col justify-between rounded-2xl border p-6" aria-labelledby="next-step-h">
+        <div>
+          <h2 id="next-step-h" class="text-[1.25rem] font-semibold tracking-[-0.02em]">New here? Start with these</h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Two notes that show how I think about running agents in production, and the live demos that go with them.</p>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <a href="/posts/what-to-trace-for-agents" class="font-medium text-brand hover:underline">What to trace for agents &rsaquo;</a>
+          <a href="/posts/tool-call-timeouts" class="font-medium text-brand hover:underline">Tool-call timeouts &rsaquo;</a>
+          <a href="/projects" class="font-medium text-brand hover:underline">Try the live demos &rsaquo;</a>
+        </div>
+      </section>
+    </div>
   </div>
 </Base>

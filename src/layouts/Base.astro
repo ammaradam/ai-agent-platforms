@@ -8,13 +8,23 @@ import Logo from '@/components/Logo.astro';
 import Analytics from '@vercel/analytics/astro';
 import { getPosts, summaries, themeCounts } from '@/lib/posts';
 
-interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date; noindex?: boolean }
-const { image, title, description = 'Ammar Adam is an engineer in Kuala Lumpur. Notes, projects and interactive demos on ML systems, AI platforms and agents.', nav = '', type = 'website', published, noindex = false } = Astro.props;
+interface Props { image?: string; title?: string; description?: string; nav?: string; type?: 'website' | 'article'; published?: Date; noindex?: boolean; tags?: string[] }
+const { image, title, description = 'Ammar Adam is an engineer in Kuala Lumpur. Notes, projects and interactive demos on ML systems, AI platforms and agents.', nav = '', type = 'website', published, noindex = false, tags = [] } = Astro.props;
 const posts = await getPosts();
 const counts = themeCounts(posts);
 const fullTitle = title ? `${title} | Ammar Adam` : 'Ammar Adam: notes on running AI in production';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const NAV = [['Notes', '/notes'], ['Projects', '/projects'], ['About', '/about']];
+const ogImage = new URL(image ?? '/og.jpg', Astro.site).href;
+// Google Search Console HTML-tag verification. Set PUBLIC_GOOGLE_SITE_VERIFICATION in Vercel
+// (not needed if the domain is verified with a DNS TXT record instead).
+const gsv = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const author = { '@type': 'Person', name: 'Ammar Adam', url: new URL('/about', Astro.site).href, sameAs: ['https://www.linkedin.com/in/ammaradam/', 'https://github.com/ammaradam'] };
+const jsonLd = type === 'article'
+  ? { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: title, description, image: ogImage, url: canonical.href, mainEntityOfPage: canonical.href, datePublished: published?.toISOString(), dateModified: published?.toISOString(), keywords: tags.join(', ') || undefined, inLanguage: 'en', author, publisher: author }
+  : Astro.url.pathname === '/'
+    ? { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Ammar Adam', url: new URL('/', Astro.site).href, description, author }
+    : null;
 ---
 <!doctype html>
 <html lang="en">
@@ -33,10 +43,35 @@ const NAV = [['Notes', '/notes'], ['Projects', '/projects'], ['About', '/about']
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Ammar Adam" />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
-    <meta property="og:image" content={new URL(image ?? '/og.jpg', Astro.site)} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={title ?? 'Ammar Adam: notes on running AI in production'} />
+    <meta property="og:locale" content="en_MY" />
     <meta property="og:image:width" content={image ? '1280' : '1200'} />
     <meta property="og:image:height" content={image ? '720' : '630'} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ?? 'Ammar Adam'} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {published && tags.map(t => <meta property="article:tag" content={t} />)}
+    <meta name="author" content="Ammar Adam" />
+    {gsv && <meta name="google-site-verification" content={gsv} />}
+    {jsonLd && !noindex && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <!-- Keep my own visits out of Vercel Analytics: open any page once with ?notrack=1 on each
+         browser/phone you use (?notrack=0 to undo). The flag lives in that browser's localStorage. -->
+    <script is:inline>
+      (function () {
+        try {
+          var u = new URL(location.href), q = u.searchParams.get('notrack');
+          if (q === '1') localStorage.setItem('va-notrack', '1');
+          if (q === '0') localStorage.removeItem('va-notrack');
+          if (q !== null) { u.searchParams.delete('notrack'); history.replaceState(null, '', u.pathname + u.search + u.hash); }
+        } catch (e) {}
+        window.webAnalyticsBeforeSend = function (ev) {
+          try { if (localStorage.getItem('va-notrack') === '1') return null; } catch (e) {}
+          return ev;
+        };
+      })();
+    </script>
     <Analytics />
   </head>
   <body class="flex min-h-screen flex-col">

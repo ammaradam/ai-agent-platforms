@@ -9,6 +9,7 @@ import Share from '@/components/Share.astro';
 import Cite from '@/components/Cite.astro';
 import NextReads from '@/components/NextReads.astro';
 import Comments from '@/components/Comments.astro';
+import Newsletter from '@/components/Newsletter.astro';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -28,7 +29,7 @@ const nextReads = recommend(posts, post, 5);
 const PLAYGROUND: Record<string, string> = { 'tool-call-timeouts': 'timeout', 'agent-identity-is-not-authorization': 'permission', 'agent-success-is-not-a-200': 'wrong200' };
 const playground = PLAYGROUND[post.id];
 ---
-<Base title={post.data.title} description={post.data.insight} image={`/posts/${post.id}.jpg`} nav="/notes" type="article" published={post.data.date}>
+<Base title={post.data.title} description={post.data.insight} image={`/posts/${post.id}.jpg`} nav="/notes" type="article" published={post.data.date} tags={post.data.themes.map(t => THEMES[t].name)}>
   <div id="read-bar" aria-hidden="true" class="pointer-events-none fixed left-0 z-50 h-0.5 w-full origin-left scale-x-0" style={`top:calc(env(safe-area-inset-top,0px) + 47px);background:${themeColor(k)}`}></div>
   <MobilePostNav client:idle headings={headings} />
   <div class="grid gap-12 py-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
@@ -97,6 +98,8 @@ const playground = PLAYGROUND[post.id];
         <p class="text-sm leading-relaxed text-muted-foreground"><strong class="font-semibold text-foreground">Written by Ammar Adam</strong>, an engineer in Kuala Lumpur who writes about ML systems, AI platforms and agents. <a href="/about" class="text-brand hover:underline">More about me &rsaquo;</a></p>
       </aside>
       <Share title={post.data.title} class="mt-4 max-w-3xl" />
+
+      <Newsletter source="post" class="mt-10 max-w-3xl" />
 
       <Comments slug={post.id} class="mt-14 max-w-3xl border-t pt-8" />
 
