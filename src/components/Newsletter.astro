@@ -1,7 +1,7 @@
 ---
 // Email signup through Buttondown. Subscribers confirm by email (double opt-in).
-// To email each new post automatically, turn on "RSS-to-email" in Buttondown with
-// https://www.ammaradam.dev/rss.xml
+// New posts become Buttondown drafts automatically (.github/workflows/newsletter-draft.yml,
+// free API). Review each draft in Buttondown and press Send.
 import { BUTTONDOWN_USERNAME } from '@/data/site';
 interface Props { class?: string; source?: string; title?: string; lede?: string }
 const {
