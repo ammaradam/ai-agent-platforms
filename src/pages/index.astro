@@ -4,13 +4,16 @@ import { getPosts, themeCounts, usedThemes } from '@/lib/posts';
 import { THEMES, themeColor, themeVar } from '@/data/themes';
 import { PROJECTS } from '@/data/projects';
 import { fmtDate } from '@/lib/utils';
+import { PINNED_POST } from '@/data/site';
+import Newsletter from '@/components/Newsletter.astro';
 const posts = await getPosts();
 const counts = themeCounts(posts);
 
 // A short list of posts that show how I think about running AI in production.
 const START_HERE = ['tool-call-timeouts', 'agent-identity-is-not-authorization', 'agent-success-is-not-a-200'];
 const start = START_HERE.map(id => posts.find(p => p.id === id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
-const latest = posts.slice(0, 3);
+const pinned = posts.find(p => p.id === PINNED_POST);
+const latest = posts.filter(p => p.id !== PINNED_POST).slice(0, 3);
 const featured = PROJECTS.filter(p => p.featured).slice(0, 3);
 const link = 'font-medium text-brand hover:underline';
 const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
@@ -39,6 +42,22 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
     </figure>
   </section>
 
+  <!-- Pinned: one post to read first -->
+  {pinned && (
+    <section data-reveal class="mt-12 border-t pt-8" aria-labelledby="pinned-h">
+      <h2 id="pinned-h" class="eyebrow">Most read</h2>
+      <a href={`/posts/${pinned.id}`} class="group mt-3 grid overflow-hidden rounded-2xl border transition-colors hover:bg-muted/50 md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
+        <img src={`/posts/thumb/${pinned.id}.jpg`} alt="" width="480" height="270" loading="lazy" class="aspect-video h-full w-full object-cover" />
+        <div class="flex flex-col justify-center gap-2 p-5 md:p-6">
+          <span class="kicker text-[12px]" style={themeVar(pinned.data.themes[0])}>{THEMES[pinned.data.themes[0]].name}</span>
+          <span class="text-[1.3rem] font-semibold leading-snug tracking-[-0.02em] group-hover:text-brand">{pinned.data.title}</span>
+          <span class="text-[15px] leading-relaxed text-muted-foreground">{pinned.data.insight}</span>
+          <span class="mt-1 text-sm font-medium text-brand">Read the note &rsaquo;</span>
+        </div>
+      </a>
+    </section>
+  )}
+
   <!-- Notes: a peek at the newest and a few to start with -->
   <section data-reveal class="mt-12 border-t pt-8" aria-labelledby="notes-h">
     <div class="flex items-baseline justify-between gap-4">
@@ -64,6 +83,8 @@ const seeAll = 'shrink-0 text-sm text-muted-foreground hover:text-foreground';
       </div>
     </div>
   </section>
+
+  <Newsletter source="home" class="mt-10" />
 
   <!-- Projects: a peek, one line each -->
   <section data-reveal class="mt-10 border-t pt-8" aria-labelledby="projects-h">

@@ -1,0 +1,51 @@
+---
+// Email signup through Buttondown. Subscribers confirm by email (double opt-in).
+// New posts become Buttondown drafts automatically (.github/workflows/newsletter-draft.yml,
+// free API). Review each draft in Buttondown and press Send.
+import { BUTTONDOWN_USERNAME } from '@/data/site';
+interface Props { class?: string; source?: string; title?: string; lede?: string }
+const {
+  class: cls = '',
+  source = 'site',
+  title = 'Get new notes by email',
+  lede = 'One short email when a new note goes up, usually once or twice a week. No spam, unsubscribe any time.',
+} = Astro.props;
+const action = `https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`;
+---
+<section class:list={['newsletter rounded-2xl border bg-muted/40 p-6', cls]} aria-labelledby={`nl-${source}`}>
+  <h2 id={`nl-${source}`} class="text-[1.25rem] font-semibold tracking-[-0.02em]">{title}</h2>
+  <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{lede}</p>
+  <form action={action} method="post" target="_blank" class="mt-4 flex flex-col gap-2 sm:flex-row" data-nl>
+    <label for={`nl-email-${source}`} class="sr-only">Email address</label>
+    <input id={`nl-email-${source}`} type="email" name="email" required autocomplete="email" placeholder="you@example.com"
+      class="h-10 w-full min-w-0 rounded-full sm:flex-1 border border-input bg-background px-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+    <input type="hidden" name="tag" value={source} />
+    <input type="hidden" name="embed" value="1" />
+    <button type="submit" class="h-10 shrink-0 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90">Subscribe</button>
+  </form>
+  <p class="nl-msg mt-2 hidden text-sm" role="status"></p>
+  <p class="mt-3 text-xs text-muted-foreground">Prefer a feed? <a href="/rss.xml" class="hover:text-foreground underline underline-offset-2">RSS</a></p>
+</section>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('form[data-nl]:not([data-ready])').forEach(function (f) {
+      f.setAttribute('data-ready', '1');
+      f.addEventListener('submit', function (e) {
+        if (!window.fetch) return; // fall back to the normal post in a new tab
+        e.preventDefault();
+        var msg = f.parentElement.querySelector('.nl-msg'), btn = f.querySelector('button');
+        btn.disabled = true;
+        fetch(f.action, { method: 'POST', body: new FormData(f), mode: 'no-cors' })
+          .then(function () {
+            msg.textContent = 'Thanks. Check your inbox to confirm your subscription.';
+            msg.classList.remove('hidden', 'text-destructive');
+            f.reset();
+            try { window.va && window.va('event', { name: 'newsletter_signup' }); } catch (x) {}
+          })
+          .catch(function () { f.removeAttribute('data-ready'); f.submit(); })
+          .finally(function () { btn.disabled = false; });
+      });
+    });
+  })();
+</script>

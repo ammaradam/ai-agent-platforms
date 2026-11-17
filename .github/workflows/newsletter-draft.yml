@@ -1,0 +1,46 @@
+# When a new post lands on main, create a Buttondown draft for it (free API, no RSS-to-email plan).
+# Setup: GitHub repo > Settings > Secrets and variables > Actions > New repository secret
+#   Name: BUTTONDOWN_API_KEY   Value: your key from https://buttondown.com/requests
+# Drafts are never sent automatically. Open Buttondown, check the draft, press Send.
+name: Newsletter draft
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/content/posts/**.md']
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Post slug to draft (e.g. testing-agents-in-manglish)'
+        required: true
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Find new posts
+        id: posts
+        env:
+          BEFORE: ${{ github.event.before }}
+          SLUG: ${{ inputs.slug }}
+        run: |
+          if [ -n "$SLUG" ]; then
+            files="src/content/posts/$SLUG.md"
+          elif [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            files=""
+          else
+            files=$(git diff --name-only --diff-filter=A "$BEFORE" "$GITHUB_SHA" -- 'src/content/posts/*.md' | tr '\n' ' ')
+          fi
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+          echo "New posts: ${files:-none}"
+      - name: Create Buttondown drafts
+        if: steps.posts.outputs.files != ''
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+        run: node scripts/newsletter-draft.mjs ${{ steps.posts.outputs.files }}
