@@ -35,13 +35,15 @@ for (const file of files) {
   const tagged = `${url}?utm_source=newsletter&utm_medium=email&utm_campaign=${slug}`;
   const image = `${SITE}/posts/${slug}.jpg`;
   const body = [
+    `**AFTER THE DEMO** · Running AI in production`,
+    '',
     `[![${title}](${image})](${tagged})`,
     '',
     insight,
     '',
     `**[Read the full note →](${tagged})**`,
     '',
-    `Diagrams, sources and limitations are all in the note. Questions or pushback? Just reply to this email.`,
+    `Diagrams, sources and limitations are all in the note. Questions or pushback? Reply to this email.`,
     '',
     `Ammar`,
   ].join('\n');
